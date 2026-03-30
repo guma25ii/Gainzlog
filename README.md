@@ -1,0 +1,2 @@
+# GainzlogTypescript
+Typescript baserad applikation

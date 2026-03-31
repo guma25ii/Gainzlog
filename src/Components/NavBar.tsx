@@ -4,9 +4,9 @@ function NavBar() {
   return (
         <nav className="NavBar">
             <Link to="/" >Home</Link>
-            <Link to="/BuisnessPlan">Affärsplan</Link>
-            <Link to="/ProjectIdea" >Projektidé</Link>
-            <Link to="/Contact" >Kontakt</Link>
+            <Link to="/buisnessplan">Affärsplan</Link>
+            <Link to="/projectidea" >Projektidé</Link>
+            <Link to="/contact" >Kontakt</Link>
         </nav>
   )
 }

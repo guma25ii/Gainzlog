@@ -1,0 +1,120 @@
+.MainDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 80vh;
+  width: 100%;
+  padding: 20px;
+}
+
+
+.Header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 4vh;
+  gap: 2vh;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+
+.Footer {
+  display: flex;
+  align-items: flex-start;
+  padding: 4vh;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+
+.NavBar {
+  display: flex;
+  gap: 30px;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.NavBar a {
+  text-decoration: none;
+  color: black;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.NavBar a:hover {
+  color: #c8c8c8;
+  transform: translateY(-2px);
+  text-shadow: 0 2px 6px rgba(255, 236, 236, 0.3);
+}
+
+.NavBar a:visited {
+  color: #000;
+}
+
+
+.Picture img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+
+.LogoText {
+  font-size: 200px;
+  font-weight: 800;
+  font-family: var(--heading);
+  background: linear-gradient(90deg, black, blue);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 2px red;
+  text-align: center;
+  margin-bottom: 150px;
+}
+
+
+.TextLayout {
+  color: white;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+  max-width: 800px;
+  text-align: center;
+}
+
+.TextLayout p {
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+
+@media (max-width: 768px) {
+  .LogoText {
+    font-size: 60px;
+    margin-bottom: 40px;
+  }
+
+  .NavBar {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .Picture img {
+    width: 120px;
+    height: 120px;
+  }
+
+  .TextLayout {
+    margin-top: 40px;
+    padding: 0 10px;
+  }
+}
+.Ul{
+    list-style: none;
+    padding: 0;
+}

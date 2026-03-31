@@ -1,5 +1,3 @@
-import React from 'react'
-
 function GitLink() {
   return (
     <div>
@@ -8,4 +6,4 @@ function GitLink() {
   )
 }
 
-export default GitLink
+export default GitLink;

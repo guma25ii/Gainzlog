@@ -12,7 +12,8 @@ const StartPage = () => {
             <h1>Startsida</h1>
             <p>Information om Kalorier och förbrukning</p>
             <p>Makros, protein, kolyhdrater, fett</p>
-            <h2>Påbörja Pass, här ska vara en navigatebtn precis som under för att föra en rätt</h2>
+            <button>Påbörja Pass, här ska vara en navigatebtn precis som under för att föra en rätt</button>
+            
         </div>
             <div>
                 <NavigateBtn to ="/workouts">Workouts</NavigateBtn>

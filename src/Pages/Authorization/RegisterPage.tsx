@@ -1,8 +1,12 @@
 import React from 'react'
+import BackBtn from '../../Components/BackBtn'
 
 const RegisterPage = () => {
   return (
-    <div>RegisterPage</div>
+    <div>
+      <h1>Register Page</h1>
+      <BackBtn/>
+    </div>
   )
 }
 

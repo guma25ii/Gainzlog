@@ -4,6 +4,10 @@ import NavigateBtn from '../../Components/NavigateBtn'
 const StartPage = () => {
   return (
     <div>
+      <header>
+        <NavigateBtn to ="/settings">Settings</NavigateBtn>
+        <NavigateBtn to ="/profile">Profile</NavigateBtn>
+      </header>
         <div>
             <h1>Startsida</h1>
             <p>Information om Kalorier och förbrukning</p>

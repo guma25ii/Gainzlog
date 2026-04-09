@@ -23,8 +23,6 @@ function App() {
         <Route path='/settings' element={<SettingsPage/>} />
         <Route path='/profile' element={<ProfilePage/>} />
 
-
-
         <Route path='/' element={<StartPage/>} />
 
         {/* Workout med undersidor */}
@@ -32,11 +30,8 @@ function App() {
           <Route path='/addworkout' element={<AddWorkoutPage/>} />
           <Route path='/review' element={<ReviewWorkout/>} />
           
-
-
         <Route path='/progress' element={<ProgressPage/>} />
           <Route path='/pictures' element={<ProgressPicturesPage/>} />
-
 
         <Route path='/setgoal' element={<SetGoalPage/>} />
 

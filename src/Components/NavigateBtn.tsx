@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 type NavigateBtnProps = {
     to: string
     children: React.ReactNode;
+    className?: string
 }
 
 
@@ -13,9 +14,7 @@ const NavigateBtn = ({to, children} : NavigateBtnProps) => {
 
 
   return (
-    <div>
-        <button onClick={() => navigate(to)}> {children} </button>
-    </div>
+    <button className="navigationBtn" onClick={() => navigate(to)}> {children} </button>
   )
 }
 

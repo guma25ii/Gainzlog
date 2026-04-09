@@ -1,12 +1,15 @@
 import React from 'react'
 import BackBtn from '../../Components/BackBtn'
+import PageLayout from '../../Components/PageLayouts'
 
 const ProfilePage = () => {
   return (
-    <div>
-      <h1>Profile Page</h1>
-      <BackBtn/>
-    </div>
+    <PageLayout>
+      <div>
+        <h1>Profile Page</h1>
+        <BackBtn/>
+      </div>
+    </PageLayout>
   )
 }
 

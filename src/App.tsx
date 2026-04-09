@@ -1,36 +1,47 @@
 
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
-import HomePage from './Components/HomePage'
-import Contact from './Components/Contact'
-import BuisnessPage from './Components/BuisnessPage'
-import NavBar from './Components/NavBar'
-import ProjectIdea from './Components/ProjectIdea'
-
-import GitNav from './Components/GitNav'
+import StartPage from './Pages/StartPages/StartPage'
+import WorkoutPage from './Pages/WorkouPages/WorkoutPage'
+import ProgressPage from './Pages/ProgressPages/ProgressPage'
+import SetGoalPage from './Pages/SetGoalPages/SetGoalPage'
+import MealPage from './Pages/MealPages/MealPage'
+import AddWorkoutPage from './Pages/WorkouPages/AddWorkoutPage'
+import ReviewWorkout from './Pages/WorkouPages/ReviewWorkout'
+import SettingsPage from './Pages/SettingPages/SettingsPage'
+import ProfilePage from './Pages/ProfilePages/ProfilePage'
+import ProgressPicturesPage from './Pages/ProgressPages/ProgressPicturesPage'
+import AddMealPage from './Pages/MealPages/AddMealPage'
 
 function App() {
 
 
   return (
     <div>
-      <header className='Header'>
-      <NavBar/>
-    </header>
-    <main className='MainDiv'>
-    <Routes>
-      <Route path='/' element={<HomePage/>} />
-      <Route path='/contact' element={<Contact/>} />
-      <Route path='/projectidea' element={<ProjectIdea/>} />
-      <Route path='/buisnessplan' element={<BuisnessPage/>} />
-      <Route path='/*' element={<h1>Page not Found</h1>}/>
-    </Routes>
-    </main>
+      <main className='MainDiv'>
+      <Routes>
+        <Route path='/settings' element={<SettingsPage/>} />
+        <Route path='/profile' element={<ProfilePage/>} />
 
-    <footer className='Footer'><GitNav/></footer>
+        <Route path='/' element={<StartPage/>} />
+
+        {/* Workout med undersidor */}
+        <Route path='/workouts' element={<WorkoutPage/>} />
+          <Route path='/addworkout' element={<AddWorkoutPage/>} />
+          <Route path='/review' element={<ReviewWorkout/>} />
+          
+        <Route path='/progress' element={<ProgressPage/>} />
+          <Route path='/pictures' element={<ProgressPicturesPage/>} />
+
+        <Route path='/setgoal' element={<SetGoalPage/>} />
+
+        <Route path='/meals' element={<MealPage/>} />
+          <Route path='/addmeal' element={<AddMealPage/>} />
+
+        <Route path='/*' element={<h1>Page not Found</h1>}/>
+      </Routes>
+      </main>
     </div>
-    
-
   )
 }
 

@@ -1,0 +1,16 @@
+import React from 'react'
+import BackBtn from '../../Components/BackBtn'
+
+const AddMealPage = () => {
+  return (
+    <div>AddMealPage
+      <h1>Add Meal Page</h1>
+      <p>Lägga till måltider via en lista</p>
+      <p>när man lagt till enskild mat ska det komma upp i en lista nedanför</p>
+      <p>Och man ska kunna se makro och kalorier</p>
+      <BackBtn/>
+    </div>
+  )
+}
+
+export default AddMealPage

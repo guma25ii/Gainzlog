@@ -1,4 +1,4 @@
-.MainDiv {
+/* .MainDiv {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -6,10 +6,10 @@
   min-height: 80vh;
   width: 100%;
   padding: 20px;
-}
+} */
 
 
-.Header {
+/* .Header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -18,28 +18,28 @@
   width: 100%;
   border: 1px solid rgba(255, 255, 255, 0.5);
   background-color: rgba(255, 255, 255, 0.4);
-}
+} */
 
 
-.Footer {
+/* .Footer {
   display: flex;
   align-items: flex-start;
   padding: 4vh;
   width: 100%;
   border: 1px solid rgba(255, 255, 255, 0.5);
   background-color: rgba(255, 255, 255, 0.4);
-}
+} */
 
 
-.NavBar {
+/* .NavBar {
   display: flex;
   gap: 30px;
   justify-content: flex-start;
   align-items: center;
   padding: 0 20px;
-}
+} */
 
-.NavBar a {
+/* .NavBar a {
   text-decoration: none;
   color: black;
   font-weight: 600;
@@ -54,16 +54,16 @@
 
 .NavBar a:visited {
   color: #000;
-}
+} */
 
 
-.Picture img {
+/* .Picture img {
   width: 200px;
   height: 200px;
   object-fit: cover;
   border-radius: 50%;
   border: 2px solid white;
-}
+} */
 
 
 .LogoText {
@@ -80,7 +80,7 @@
 }
 
 
-.TextLayout {
+/* .TextLayout {
   color: white;
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
   max-width: 800px;
@@ -90,15 +90,15 @@
 .TextLayout p {
   margin-bottom: 25px;
   line-height: 1.6;
-}
+} */
 
-
+/* 
 @media (max-width: 768px) {
   .LogoText {
     font-size: 60px;
     margin-bottom: 40px;
-  }
-
+  } */
+/* 
   .NavBar {
     flex-wrap: wrap;
     gap: 10px;
@@ -117,4 +117,4 @@
 .Ul{
     list-style: none;
     padding: 0;
-}
+} */

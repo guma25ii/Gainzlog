@@ -1,8 +1,10 @@
 import React from 'react'
 import BackBtn from '../../Components/BackBtn'
+import PageLayout from '../../Components/PageLayouts'
 
 const AddMealPage = () => {
   return (
+    <PageLayout>
     <div>AddMealPage
       <h1>Add Meal Page</h1>
       <p>Lägga till måltider via en lista</p>
@@ -10,6 +12,7 @@ const AddMealPage = () => {
       <p>Och man ska kunna se makro och kalorier</p>
       <BackBtn/>
     </div>
+    </PageLayout>
   )
 }
 

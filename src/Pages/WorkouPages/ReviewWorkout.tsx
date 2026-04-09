@@ -1,7 +1,9 @@
 import React from 'react'
 import BackBtn from '../../Components/BackBtn'
+import PageLayout from '../../Components/PageLayouts'
 const ReviewWorkout = () => {
   return (
+    <PageLayout>
     <div>ReviewWorkout
         <h1>Review Workout</h1>
         <p>Här ska man kunna se sitt träningspass, lägga till det i enskilda pass eller i ett program </p>
@@ -10,6 +12,7 @@ const ReviewWorkout = () => {
         <button>Knapp för att lägga till enskilda pass</button>
         <BackBtn/>
     </div>
+    </PageLayout>
   )
 }
 

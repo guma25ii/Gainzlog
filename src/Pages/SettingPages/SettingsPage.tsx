@@ -4,7 +4,7 @@ import Theme from '../../Components/Theme';
 import PageLayout from '../../Components/PageLayouts';
 
 const SettingsPage: React.FC = () => {
-  const [darkMode, setDarkMode] = useState(false);
+  const [, setDarkMode] = useState(false);
   const [toggleRequested, setToggleRequested] = useState(false);
 
   const handleToggleClick = () => {

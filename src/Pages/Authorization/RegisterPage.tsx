@@ -5,7 +5,7 @@ import PageLayout from '../../Components/PageLayouts'
 const RegisterPage = () => {
   return (
     <PageLayout>
-    <div>
+    <div className='centerContent'>
       <h1>Register Page</h1>
       <BackBtn/>
     </div>

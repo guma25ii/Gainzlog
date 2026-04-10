@@ -9,7 +9,7 @@ const StartPage = () => {
         <NavigateBtn to ="/settings" className="icon-btn">⚙️</NavigateBtn>
         <NavigateBtn to ="/profile" className="icon-btn" >👤</NavigateBtn>
       </header>
-        <div>
+        <div className='centerContent'>
             <h1 className='LogoText'>GainzLog</h1>
             <p>Information om Kalorier och förbrukning</p>
             <p>Makros, protein, kolyhdrater, fett</p>

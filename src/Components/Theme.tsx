@@ -13,7 +13,8 @@ const Theme: React.FC<ThemeProps> = ({ toggleRequested, onToggle }) => {
 
   useEffect(() => {
     localStorage.setItem("darkMode", JSON.stringify(darkMode));
-    document.body.className = darkMode ? "dark" : "light";
+    document.body.classList.remove("light", "dark");
+    document.body.classList.add(darkMode ? "dark" : "light");
     onToggle?.(darkMode);
   }, [darkMode, onToggle]);
 

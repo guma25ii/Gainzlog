@@ -5,8 +5,12 @@ import PageLayout from '../../Components/PageLayouts'
 const ProfilePage = () => {
   return (
     <PageLayout>
-      <div>
+      <div className='centerContent'>
         <h1>Profile Page</h1>
+        <p>Ändra lösenord</p>
+        <p>information om användaren</p>
+        <button>Avregistrera</button>
+        <button>Logga ut</button>
         <BackBtn/>
       </div>
     </PageLayout>

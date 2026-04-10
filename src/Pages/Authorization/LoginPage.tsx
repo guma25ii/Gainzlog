@@ -4,7 +4,9 @@ import PageLayout from '../../Components/PageLayouts'
 const LoginPage = () => {
   return (
     <PageLayout>
-    <div>LoginPage</div>
+    <div className='centerContent'>
+      <h1>LoginPage</h1>
+    </div>
     </PageLayout>
   )
 }

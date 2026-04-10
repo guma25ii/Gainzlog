@@ -4,7 +4,7 @@ import PageLayout from '../../Components/PageLayouts'
 const ReviewWorkout = () => {
   return (
     <PageLayout>
-    <div>ReviewWorkout
+    <div className='centerContent'>
         <h1>Review Workout</h1>
         <p>Här ska man kunna se sitt träningspass, lägga till det i enskilda pass eller i ett program </p>
         <p>Alternativt skapa nytt program</p>

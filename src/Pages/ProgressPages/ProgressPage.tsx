@@ -5,7 +5,7 @@ import PageLayout from '../../Components/PageLayouts'
 const ProgressPage = () => {
   return (
     <PageLayout>
-    <div>
+    <div className='centerContent'>
       <h1>Progress Page</h1>
       <p>Se Rekord</p>
       <p>Se antal avklarade Pass</p>

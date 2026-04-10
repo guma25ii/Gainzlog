@@ -12,7 +12,7 @@ const SettingsPage: React.FC = () => {
   };
   return (
     <PageLayout>
-    <div >
+    <div className='centerContent'>
       <h1>Settings Page</h1>
       <p>Timer</p>
       <button className='navigationBtn' onClick={handleToggleClick}>Dark/Light Mode</button>

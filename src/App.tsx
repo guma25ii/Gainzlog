@@ -18,23 +18,27 @@ function App() {
 
   return (
     <div>
-      <main className='MainDiv'>
+      <main className='MainDiv'> 
       <Routes>
+        <Route path='/' element={<StartPage/>} />
         <Route path='/settings' element={<SettingsPage/>} />
         <Route path='/profile' element={<ProfilePage/>} />
 
-        <Route path='/' element={<StartPage/>} />
+
+        {/* Ska lägga till nested sidor senare, nu har jag bara skapat sidorna */}
 
         {/* Workout med undersidor */}
         <Route path='/workouts' element={<WorkoutPage/>} />
           <Route path='/addworkout' element={<AddWorkoutPage/>} />
           <Route path='/review' element={<ReviewWorkout/>} />
           
+        {/* Progress med undersida */}
         <Route path='/progress' element={<ProgressPage/>} />
           <Route path='/pictures' element={<ProgressPicturesPage/>} />
 
         <Route path='/setgoal' element={<SetGoalPage/>} />
 
+        {/* Meals med undersida */}
         <Route path='/meals' element={<MealPage/>} />
           <Route path='/addmeal' element={<AddMealPage/>} />
 

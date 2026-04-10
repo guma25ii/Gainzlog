@@ -5,7 +5,7 @@ import PageLayout from '../../Components/PageLayouts'
 const SetGoalPage = () => {
   return (
     <PageLayout>
-    <div>
+    <div className='centerContent'>
       <h1>Set Goal Page</h1>
       <p>Kalkylator för längd, vikt, ålder, aktivitetsnivå</p>
       <p>Maintenence</p>

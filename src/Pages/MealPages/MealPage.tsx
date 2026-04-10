@@ -7,7 +7,7 @@ import PageLayout from '../../Components/PageLayouts'
 const MealPage = () => {
   return (
     <PageLayout>
-    <div>
+    <div className='centerContent'>
       <h1>Meal Page</h1>
       <p>Lista med Dagens måltider</p>
       <p>samt kunna se totalen för dagen</p>

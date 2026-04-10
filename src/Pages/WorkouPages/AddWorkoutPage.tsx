@@ -1,5 +1,4 @@
 
-import { Outlet } from 'react-router-dom'
 import BackBtn from '../../Components/BackBtn'
 import PageLayout from '../../Components/PageLayouts'
 

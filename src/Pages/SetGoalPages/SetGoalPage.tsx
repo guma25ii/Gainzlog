@@ -1,17 +1,54 @@
 
+import { useState } from 'react';
 import BackBtn from '../../Components/BackBtn'
 import PageLayout from '../../Components/PageLayouts'
+import UserInput from '../../Components/SetGoalComponents/UserInput';
+import ActivitySelect from '../../Components/SetGoalComponents/ActivitySelect';
+import GoalButtons from '../../Components/SetGoalComponents/GoalButtons';
+import Result from '../../Components/SetGoalComponents/Result';
+import { calculateBMR, calculateTDEE, calculateGoalCalories} from "../../lib/calories";
+import type { ActivityLevel, Goal } from "../../lib/calories";
 
 const SetGoalPage = () => {
+  const [weight, setWeight] = useState(0);
+  const [height, setHeight] = useState(0);
+  const [age, setAge] = useState(0);
+
+  const [activity, setActivity] = useState<ActivityLevel>("moderate");
+  const [goal, setGoal] = useState<Goal>("maintain");
+
+  const bmr = calculateBMR({
+  weight,
+  height,
+  age,
+  gender: "male", // kan bli input senare
+});
+
+const tdee = calculateTDEE(bmr, activity);
+
+const result = calculateGoalCalories(tdee, goal);
   return (
     <PageLayout>
     <div className='centerContent'>
-      <h1>Set Goal Page</h1>
-      <p>Kalkylator för längd, vikt, ålder, aktivitetsnivå</p>
-      <p>Maintenence</p>
-      <p>Fat loss</p>
-      <p>Muscle gain</p>
-      <p> Rullningslista med valet man vill ha</p>
+
+      <UserInput 
+      weight={weight}
+      setWeight= {setWeight}
+      height={height}
+      setHeight={setHeight}
+      age={age}
+      setAge={setAge}
+      />
+      <ActivitySelect
+      activity={activity}
+      setActivity={setActivity}
+       /> 
+      <GoalButtons 
+      goal={goal}
+      setGoal={setGoal}
+      />
+      <Result 
+      result={result} />
       <BackBtn/>
     </div>
     </PageLayout>

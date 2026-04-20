@@ -5,7 +5,12 @@ import App from './App.tsx'
 import { BrowserRouter} from 'react-router-dom'
 
 
+const saved = localStorage.getItem("darkMode");
 
+document.body.classList.remove("light", "dark");
+document.body.classList.add(
+  saved && JSON.parse(saved) ? "dark" : "light"
+);
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

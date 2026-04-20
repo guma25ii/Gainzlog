@@ -9,21 +9,20 @@ type props = {
 
 const GoalButtons = ({goal, setGoal}: props) => {
   return (
-    <div style={{display:"flex", gap: "10px"}}>
-      <button onClick={() => setGoal("lose_weight")} style={{
-          fontWeight: goal === "lose_weight" ? "bold" : "normal",
-          background: goal === "lose_weight" ? "#ddd" : "transparent",
-        }} >Fat loss</button>
+    <div className="goalButtons">
+    <button
+      className={`navigationBtn ${goal === "lose_weight" ? "activeBtn" : ""}`}
+      onClick={() => setGoal("lose_weight")}>Fat loss</button>
 
-        <button  onClick={() => setGoal("maintain")} style={{
-          fontWeight: goal === "lose_weight" ? "bold" : "normal",
-          background: goal === "lose_weight" ? "#ddd" : "transparent",
-        }}>Maintain</button>
+        <button
+        className= {`navigationBtn ${goal === "maintain" ? "activeBtn" : ""}`}
+        onClick={() => setGoal("maintain")}>Maintain</button>
         
-        <button onClick={() => setGoal("gain_muscle")} style={{
-          fontWeight: goal === "lose_weight" ? "bold" : "normal",
-          background: goal === "lose_weight" ? "#ddd" : "transparent",
-        }}>Muscle Gain</button>
+        <button 
+        className= {`navigationBtn ${goal === "gain_muscle" ? "activeBtn" : ""}`}
+        onClick={() => setGoal("gain_muscle")}>Muscle Gain</button>
+        
+        
     </div>
   )
 }

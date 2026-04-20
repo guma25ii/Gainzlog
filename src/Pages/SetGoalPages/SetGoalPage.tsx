@@ -17,42 +17,70 @@ const SetGoalPage = () => {
   const [activity, setActivity] = useState<ActivityLevel>("moderate");
   const [goal, setGoal] = useState<Goal>("maintain");
 
+  const [savedGoal, setSavedGoal] = useState<Goal>("maintain");
+  const [message, setMessage] = useState("");
+
+  const goalLabels: Record<Goal, string> = {
+  lose_weight: "Fat loss 🔥",
+  maintain: "Maintain ⚖️",
+  gain_muscle: "Muscle gain 💪",
+};
+
+  const handleSaveGoal = () => {
+  setSavedGoal(goal);
+  setMessage(`Saved: ${goalLabels[goal]}`);
+  };
+
   const bmr = calculateBMR({
-  weight,
-  height,
-  age,
-  gender: "male", // kan bli input senare
-});
+    weight,
+    height,
+    age,
+    gender: "male",
+  });
 
-const tdee = calculateTDEE(bmr, activity);
+  const tdee = calculateTDEE(bmr, activity);
 
-const result = calculateGoalCalories(tdee, goal);
+  const result = calculateGoalCalories(tdee, savedGoal);
+
+
+
+
   return (
     <PageLayout>
-    <div className='centerContent'>
+      <div className="centerContent">
 
-      <UserInput 
-      weight={weight}
-      setWeight= {setWeight}
-      height={height}
-      setHeight={setHeight}
-      age={age}
-      setAge={setAge}
-      />
-      <ActivitySelect
-      activity={activity}
-      setActivity={setActivity}
-       /> 
-      <GoalButtons 
-      goal={goal}
-      setGoal={setGoal}
-      />
-      <Result 
-      result={result} />
-      <BackBtn/>
-    </div>
+        <UserInput
+          weight={weight}
+          setWeight={setWeight}
+          height={height}
+          setHeight={setHeight}
+          age={age}
+          setAge={setAge}
+        />
+
+        <ActivitySelect
+          activity={activity}
+          setActivity={setActivity}
+        />
+
+        <GoalButtons
+          goal={goal}
+          setGoal={setGoal}
+        />
+
+        <button className="navigationBtn" onClick={handleSaveGoal}>
+          Confirm
+        </button>
+
+        {message && <p>{message}</p>}
+
+        <Result result={result} />
+
+        <BackBtn />
+      </div>
     </PageLayout>
-  )
-}
+  );
+};
 
 export default SetGoalPage;
+

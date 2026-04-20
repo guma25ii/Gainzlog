@@ -58,6 +58,7 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
+  gap: 16px;
 }
 
 
@@ -106,13 +107,79 @@ p {
   box-shadow: 0 0 10px rgba(255, 30, 30, 0.2);
 }
 
+.activeBtn {
+  background: var(--btn-hover);
+  color: var(--btn-text);
+  box-shadow: 0 0 12px rgba(255, 30, 30, 0.35);
+  transform: scale(1.05);
+  font-weight: 600;
+  border: 1px solid var(--btn-text);
+}
+.inputGroup label {
+  color: var(--btn-text);
+}
+
+.inputGroup input::placeholder {
+  color: var(--text-muted);
+}
+
+
+.inputGroup select {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: var(--btn-bg);
+  cursor: pointer;
+  color: var(--btn-text);
+}
+
+.inputGroup select:focus {
+  outline: 2px solid var(--btn-hover);
+}
 .headerNav {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+.goalButtons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.resultCard {
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  text-align: center;
+  color: var(--btn-text);
+  width: 100%;
+  max-width: 400px;
+}
 
+
+.resultCard h2 {
+  color: var(--btn-text);
+  margin-bottom: 10px;
+}
+
+
+.resultCard p {
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--btn-text);
+  margin: 10px 0;
+}
+
+.resultValue {
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--btn-text);
+  margin: 10px 0;
+}
 .footerBtn {
   display: flex;
   justify-content: flex-end;
@@ -174,4 +241,19 @@ p {
     font-size: 60px;
     margin-bottom: 40px;
   }
+  .inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.inputGroup input {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: var(--btn-bg);
+  color: var(--text);
+}
 }

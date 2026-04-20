@@ -1,13 +1,15 @@
 
 import BackBtn from '../../Components/BackBtn'
 import PageLayout from '../../Components/PageLayouts'
+import ProgressSwipe from '../../Components/ProgressPageComponents/ProgressSwipe'
 
 const ProgressPicturesPage = () => {
   return (
     <PageLayout>
     <div className='centerContent'>
         <h1>ProgressPicturesPage</h1>
-        <p> Här ska man kunna se sina uppladdade bilder och svajpa mellan</p>
+        
+        <ProgressSwipe/>
         <BackBtn/>
     </div>
     </PageLayout>

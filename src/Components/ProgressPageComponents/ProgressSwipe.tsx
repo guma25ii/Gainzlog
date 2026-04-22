@@ -1,10 +1,12 @@
 import { useState, type Dispatch, type SetStateAction } from 'react'
 import { motion, useMotionValue, useTransform } from 'framer-motion'
 
+
 export type CardType = {
   id: number;
   url: string;
   category: "front" | "side" | "back";
+  date: string;
 };
 
 const ProgressSwipe = ({ initialCards }: { initialCards: CardType[] }) => {
@@ -28,12 +30,14 @@ const ProgressSwipe = ({ initialCards }: { initialCards: CardType[] }) => {
 const Card = ({
   id,
   url,
+  date,
   cards,
   setCards,
   index,
 }: {
   id: number;
   url: string;
+  date: string;
   cards: CardType[];
   setCards: Dispatch<SetStateAction<CardType[]>>;
   index: number;
@@ -58,6 +62,7 @@ const handleDragEnd = () => {
 };
 
   return (
+    <div >
     <motion.img
       src={url}
       alt="progress"
@@ -76,6 +81,12 @@ const handleDragEnd = () => {
       dragConstraints={{ left: 0, right: 0 }}
       onDragEnd={handleDragEnd}
     />
+
+      <div className="dateLabel">
+      {date}
+    </div>
+
+    </div>
   );
 };
 

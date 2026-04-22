@@ -8,7 +8,6 @@ const ProgressPage = () => {
   return (
     <PageLayout>
     <div className='centerContent'>
-      <h1>Progress Page</h1>
       <p>Se Rekord</p>
       <p>Se antal avklarade Pass</p>
       <p>Kurva med viktnedgång/uppgång över tid</p>

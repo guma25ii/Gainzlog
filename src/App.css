@@ -1,3 +1,5 @@
+
+
 body.light {
   --bg: #f6f7fb;
   --surface: #ffffff;
@@ -7,6 +9,7 @@ body.light {
   --btn-text: #111827;
   --btn-hover: #d1d5db;
   --shadow: rgba(0, 0, 0, 0.05);
+  --h-text: #6b7280;
 }
 
 body.dark {
@@ -18,21 +21,23 @@ body.dark {
   --btn-text: #ff3b3b;
   --btn-hover: #3a3a3a;
   --shadow: rgba(0, 0, 0, 0.6);
+  --h-text: #ff3b3b;
+}
+
+
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
   font-family: Arial, sans-serif;
-
   background: var(--bg);
   color: var(--text);
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
 }
 
 #root {
@@ -45,28 +50,35 @@ body {
 .pageLayout {
   display: flex;
   flex-direction: column;
-
   min-height: 100vh;
   width: 100%;
-
   padding: 16px;
-  margin: 0;
 }
+
+
+
 .centerContent {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   text-align: center;
   gap: 16px;
 }
+
+.headerNav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 
 
 h1,
 h2 {
   font-family: system-ui, Arial, sans-serif;
   font-weight: 600;
-  color: var(--text);
+  color: var(--h-text);
 }
 
 h1 {
@@ -84,19 +96,22 @@ p {
   margin: 0;
 }
 
-
 .navigationBtn,
 .startWorkoutBtn {
   display: flex;
   justify-content: center;
   align-items: center;
+
   border: none;
   border-radius: 14px;
   padding: 12px 16px;
+
   font-size: 16px;
   cursor: pointer;
+
   background: var(--btn-bg);
   color: var(--btn-text);
+
   transition: all 0.2s ease;
 }
 
@@ -104,43 +119,22 @@ p {
 .startWorkoutBtn:hover {
   transform: scale(1.03);
   background: var(--btn-hover);
-  box-shadow: 0 0 10px rgba(255, 30, 30, 0.2);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .activeBtn {
   background: var(--btn-hover);
   color: var(--btn-text);
-  box-shadow: 0 0 12px rgba(255, 30, 30, 0.35);
   transform: scale(1.05);
   font-weight: 600;
   border: 1px solid var(--btn-text);
 }
-.inputGroup label {
-  color: var(--btn-text);
-}
 
-.inputGroup input::placeholder {
-  color: var(--text-muted);
-}
-
-
-.inputGroup select {
-  padding: 10px;
-  border-radius: 10px;
-  border: none;
-  background: var(--btn-bg);
-  cursor: pointer;
-  color: var(--btn-text);
-}
-
-.inputGroup select:focus {
-  outline: 2px solid var(--btn-hover);
-}
-.headerNav {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.icon-btn {
+  background: transparent;
+  font-size: 20px;
+  padding: 8px;
+  color: var(--text);
 }
 .goalButtons {
   display: flex;
@@ -148,42 +142,145 @@ p {
   justify-content: center;
   flex-wrap: wrap;
 }
+
+
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.inputGroup input {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: var(--btn-bg);
+  color: var(--text);
+}
+
+.inputGroup input::placeholder {
+  color: var(--text-muted);
+}
+
+.inputGroup label {
+  color: var(--btn-text);
+}
+
+.inputGroup select {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  cursor: pointer;
+}
+
+.inputGroup select:focus {
+  outline: 2px solid var(--btn-hover);
+}
+
+
 .resultCard {
   margin-top: 20px;
   padding: 16px;
   border-radius: 16px;
+
   background: var(--surface);
   box-shadow: var(--shadow);
+
   text-align: center;
-  color: var(--btn-text);
+  color: var(--text);
+
   width: 100%;
   max-width: 400px;
 }
 
-
 .resultCard h2 {
-  color: var(--btn-text);
-  margin-bottom: 10px;
+  color: var(--text);
 }
 
-
-.resultCard p {
-  font-size: 28px;
-  font-weight: bold;
-  color: var(--btn-text);
-  margin: 10px 0;
-}
-
+.resultCard p,
 .resultValue {
   font-size: 28px;
   font-weight: bold;
-  color: var(--btn-text);
-  margin: 10px 0;
+  color: var(--text);
 }
-.footerBtn {
+
+
+
+.swipeSection {
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 60px;
 }
+
+.swipeContainer {
+  position: relative;
+  width: 200px;
+  height: 300px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.picture {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 200px;
+  height: 300px;
+
+  object-fit: cover;
+  border-radius: 20px;
+
+  box-shadow: 0 10px 30px var(--shadow);
+
+  cursor: grab;
+  transform: translateZ(0);
+}
+
+.picture:active {
+  cursor: grabbing;
+  transform: scale(0.98) translateZ(0);
+}
+.dateLabel {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  font-size: 8px;
+  padding: 4px 8px;
+  border-radius: 10px;
+
+  background:var(--surface);
+  color:var(--btn-text) ;
+
+  z-index: 10; 
+}
+
+
+.LogoText {
+  font-size: 4rem;
+  font-weight: 800;
+
+  background: linear-gradient(90deg, black 0%, blue 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  -webkit-text-stroke: 1px red;
+
+  text-align: center;
+  margin-bottom: 150px;
+}
+
+
 
 .navBtnStartPage {
   margin: 2rem 0;
@@ -193,36 +290,33 @@ p {
   width: 100%;
 }
 
-.icon-btn {
-  background: transparent;
-  font-size: 20px;
-  padding: 8px;
-  color: var(--text);
+
+.footerBtn {
+  display: flex;
+  justify-content: flex-end;
 }
 
-.LogoText {
-  font-size: 4rem;
-  font-weight: 800;
-  font-family: var(--heading, system-ui);
 
-  background: linear-gradient(90deg, black 0%, blue 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke: 1px red;
-  text-align: center;
-  margin-bottom: 150px;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @media (max-width: 768px) {
-
-  h1 {
-    font-size: 32px;
-  }
-
-  h2 {
-    font-size: 20px;
-  }
+  h1 { font-size: 32px; }
+  h2 { font-size: 20px; }
 
   .navigationBtn,
   .startWorkoutBtn {
@@ -241,65 +335,7 @@ p {
     font-size: 60px;
     margin-bottom: 40px;
   }
-  .inputGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 10px;
-  width: 100%;
-}
 
-.inputGroup input {
-  padding: 10px;
-  border-radius: 10px;
-  border: none;
-  background: var(--btn-bg);
-  color: var(--text);
-}
-.swipeContainer {
-  position: relative;
-  height: 320px;
-  margin-bottom: 40px;
-}
 
-.picture {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 200px;
-  height: 300px;
-  
-  object-fit: cover;
-    border-radius: 20px;
-  box-shadow: 
-    0 10px 30px rgba(0,0,0,0.2),
-    0 2px 8px rgba(0,0,0,0.1);
-  cursor: grab;
 
-  transform: translateZ(0); /* 🔥 fixar rendering */
-}
-
-.picture:active {
-  cursor: grabbing;
-  transform: scale(0.98) translateZ(0); /* 🔥 behåll rundning */
-}
-
-}
-.swipeSection {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 60px;
-}
-
-.swipeContainer {
-  position: relative;
-  width: 200px;  
-  height: 300px; 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.swipeSection h2 {
-  color: var(--btn-text);
 }

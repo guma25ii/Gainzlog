@@ -40,6 +40,7 @@ const ProgressPicturesPage = () => {
         <h2>Back</h2>
         <ProgressSwipe initialCards={backCards} />
         </div>
+        <button className='navigationBtn'>Add Picture</button>
         <BackBtn/>
       </div>
     </PageLayout>

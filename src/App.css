@@ -209,7 +209,10 @@ p {
   color: var(--text);
 }
 
-
+.cardWrapper {
+  width: 200px;
+  height: 300px;
+}
 
 .swipeSection {
   display: flex;
@@ -222,10 +225,7 @@ p {
   position: relative;
   width: 200px;
   height: 300px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  overflow: visible;
 }
 
 .picture {
@@ -259,10 +259,12 @@ p {
   padding: 4px 8px;
   border-radius: 10px;
 
-  background:var(--surface);
-  color:var(--btn-text) ;
+  background: var(--surface);
 
-  z-index: 10; 
+ 
+  color: var(--text);
+
+  z-index: 9999;
 }
 
 

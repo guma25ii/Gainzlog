@@ -1,50 +1,60 @@
-import BackBtn from '../../Components/BackBtn'
-import PageLayout from '../../Components/PageLayouts'
-import ProgressSwipe, { type CardType } from '../../Components/ProgressPageComponents/ProgressSwipe'
-
-import arnoldBack from "../../assets/progresspictures/ArnoldBack1.jpg";
-import arnoldFront1 from "../../assets/progresspictures/ArnoldFront1.avif";
-import arnoldFront2 from "../../assets/progresspictures/ArnoldFront2.avif";
-import arnoldSide1 from "../../assets/progresspictures/ArnoldSide1.jpg";
-import arnoldSide2 from "../../assets/progresspictures/ArnoldSide2.jpg";
-
-const cardData: CardType[] = [
-  { id: 1, url: arnoldBack, category: "back", date: "2024-01-10" },
-  { id: 2, url: arnoldFront1, category: "front", date: "2024-01-10"},
-  { id: 3, url: arnoldFront2, category: "front", date: "2024-02-12" },
-  { id: 4, url: arnoldSide1, category: "side", date: "2024-01-10" },
-  { id: 5, url: arnoldSide2, category: "side", date: "2024-02-12" },
-];
+import BackBtn from "../../Components/BackBtn";
+import NavigateBtn from "../../Components/NavigateBtn";
+import PageLayout from "../../Components/PageLayouts";
+import ProgressSwipe, {
+  type CardType,
+} from "../../Components/ProgressPageComponents/ProgressSwipe";
+import { useLocation } from "react-router-dom";
+import { cardData } from "../../Components/ProgressPageComponents/ProgressMockData";
+import { useState, useEffect } from "react";
 
 const ProgressPicturesPage = () => {
+  const location = useLocation();
 
-  const frontCards = cardData.filter(c => c.category === "front");
-  const sideCards = cardData.filter(c => c.category === "side");
-  const backCards = cardData.filter(c => c.category === "back");
+  const [cards, setCards] = useState<CardType[]>(cardData);
+
+  useEffect(() => {
+    const newCard = location.state as CardType | null;
+
+    if (!newCard) return;
+
+    setCards((prev) => {
+      const exists = prev.some((c) => c.id === newCard.id);
+      if (exists) return prev;
+
+      return [newCard, ...prev]; // 🔥 NYASTE ÖVERST
+    });
+
+    window.history.replaceState({}, document.title);
+  }, [location.state]);
+
+  const frontCards = cards.filter((c) => c.category === "front");
+  const sideCards = cards.filter((c) => c.category === "side");
+  const backCards = cards.filter((c) => c.category === "back");
 
   return (
     <PageLayout>
-      <div className='centerContent'>
-
+      <div className="centerContent">
         <div className="swipeSection">
-        <h2>Front</h2>
-        <ProgressSwipe initialCards={frontCards} />
+          <h2>Front</h2>
+          <ProgressSwipe cards={frontCards} setCards={setCards} />
         </div>
 
         <div className="swipeSection">
-        <h2>Side</h2>
-        <ProgressSwipe initialCards={sideCards} />
+          <h2>Side</h2>
+          <ProgressSwipe cards={sideCards} setCards={setCards} />
         </div>
-        
+
         <div className="swipeSection">
-        <h2>Back</h2>
-        <ProgressSwipe initialCards={backCards} />
+          <h2>Back</h2>
+          <ProgressSwipe cards={backCards} setCards={setCards} />
         </div>
-        <button className='navigationBtn'>Add Picture</button>
-        <BackBtn/>
+
+        <NavigateBtn to="/addpicture">Add Picture</NavigateBtn>
+        <BackBtn />
       </div>
     </PageLayout>
-  )
-}
+  );
+};
 
-export default ProgressPicturesPage
+export default ProgressPicturesPage;

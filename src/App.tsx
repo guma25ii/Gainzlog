@@ -12,6 +12,7 @@ import SettingsPage from './Pages/SettingPages/SettingsPage'
 import ProfilePage from './Pages/ProfilePages/ProfilePage'
 import ProgressPicturesPage from './Pages/ProgressPages/ProgressPicturesPage'
 import AddMealPage from './Pages/MealPages/AddMealPage'
+import AddPicturePage from './Pages/ProgressPages/AddPicturePage'
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
         {/* Progress med undersida */}
         <Route path='/progress' element={<ProgressPage/>} />
           <Route path='/pictures' element={<ProgressPicturesPage/>} />
+          <Route path='addpicture' element={<AddPicturePage/>} />
 
         <Route path='/setgoal' element={<SetGoalPage/>} />
 

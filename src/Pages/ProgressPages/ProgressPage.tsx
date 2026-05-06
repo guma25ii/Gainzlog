@@ -1,5 +1,6 @@
 
 import BackBtn from '../../Components/BackBtn'
+import NavigateBtn from '../../Components/NavigateBtn';
 import PageLayout from '../../Components/PageLayouts'
 import { useNavigate } from 'react-router-dom'
 
@@ -12,7 +13,7 @@ const ProgressPage = () => {
       <p>Se antal avklarade Pass</p>
       <p>Kurva med viktnedgång/uppgång över tid</p>
       <button className='navigationBtn' onClick={() => navigate("/pictures")} >Progress Pictures</button>
-      <BackBtn/>
+      <NavigateBtn to="/">Back</NavigateBtn>
     </div>
     </PageLayout>
   )

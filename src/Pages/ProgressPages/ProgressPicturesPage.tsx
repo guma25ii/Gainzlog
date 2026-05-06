@@ -51,7 +51,7 @@ const ProgressPicturesPage = () => {
         </div>
 
         <NavigateBtn to="/addpicture">Add Picture</NavigateBtn>
-        <BackBtn />
+        <NavigateBtn to="/progress">Back</NavigateBtn>
       </div>
     </PageLayout>
   );

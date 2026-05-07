@@ -34,17 +34,17 @@ const StartPage = () => {
   {/* Carbs */}
   <div className="progressTrack">
     <div className="progressFill progressCarbs" style={{ width: `${(goals.currentCarbs / goals.carbGoal) * 100}%`}}/>
-    <span className='progressText'>Carbs: {goals.currentCarbs}</span>
+    <span className='progressText'>Carbs: {goals.currentCarbs}g</span>
   </div>
 
   {/* Fat */}
   <div className="progressTrack">
     <div className="progressFill progressFat" style={{ width: `${(goals.currentFat / goals.fatGoal) * 100}%`}}/>
-    <span className='progressText'>Fats: {goals.currentFat}</span>
+    <span className='progressText'>Fats: {goals.currentFat}g</span>
   </div>
 
 </div>
-            <button className="startWorkoutBtn">Start Workout</button>
+            <button className="startWorkoutBtn">Start Next Workout</button>
    
           <div className='navBtnStartPage'>
               <NavigateBtn to ="/workouts">Workouts</NavigateBtn>

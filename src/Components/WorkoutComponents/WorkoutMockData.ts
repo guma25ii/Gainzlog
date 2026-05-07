@@ -1,11 +1,24 @@
-export const  exercises = [
+type Exercise = {
+  exerciseId: string
+  name: string
+  gifUrl: string
+  targetMuscles: string[],
+  bodyParts: string[]
+  equipments: string[],
+  secondaryMuscles: string[]
+  instructions: string[]
+}
+
+export const exercises: Exercise[] = [
     { 
         "exerciseId": "EIeI8Vf", 
         "name": "barbell bench press", 
         "gifUrl": "https://static.exercisedb.dev/media/EIeI8Vf.gif",
+        "targetMuscles": ["pecs"],
         "bodyParts": ["chest"],
+        "equipments": ["barbell"],
         "secondaryMuscles": ["triceps", "shoulders"],
-        "instruction": [
+        "instructions": [
                 "Step:1 Lie flat on a bench with your feet flat on the ground...",
                 "Step:2 Grasp the barbell with an overhand grip...",
                 "Step:3 Lift the barbell off the rack...",
@@ -94,5 +107,69 @@ export const  exercises = [
             "Step:4 Return slowly...",
             "Step:5 Repeat..."
         ]
+    },
+        {
+    "exerciseId": "ABS111",
+    "name": "crunch",
+    "gifUrl": "https://static.exercisedb.dev/media/ABS111.gif",
+    "targetMuscles": ["abs"],
+    "bodyParts": ["abs"],
+    "equipments": ["bodyweight"],
+    "secondaryMuscles": ["hip flexors"],
+    "instructions": [
+        "Step:1 Lie flat on your back with knees bent...",
+        "Step:2 Place hands behind your head...",
+        "Step:3 Lift upper body using your abs...",
+        "Step:4 Lower back down slowly...",
+        "Step:5 Repeat..."
+    ]
+    },
+        {
+    "exerciseId": "ABS222",
+    "name": "leg raises",
+    "gifUrl": "https://static.exercisedb.dev/media/ABS222.gif",
+    "targetMuscles": ["lower abs"],
+    "bodyParts": ["abs"],
+    "equipments": ["bodyweight"],
+    "secondaryMuscles": ["hip flexors"],
+    "instructions": [
+        "Step:1 Lie flat on your back...",
+        "Step:2 Keep legs straight...",
+        "Step:3 Lift legs upward to 90 degrees...",
+        "Step:4 Lower slowly without touching ground...",
+        "Step:5 Repeat..."
+    ]
+    },
+        {
+    "exerciseId": "CARD111",
+    "name": "running",
+    "gifUrl": "https://static.exercisedb.dev/media/CARD111.gif",
+    "targetMuscles": ["legs", "cardio system"],
+    "bodyParts": ["cardio"],
+    "equipments": ["none"],
+    "secondaryMuscles": ["core"],
+    "instructions": [
+        "Step:1 Start with a steady pace...",
+        "Step:2 Keep upright posture...",
+        "Step:3 Swing arms naturally...",
+        "Step:4 Maintain breathing rhythm...",
+        "Step:5 Continue for desired time..."
+    ]
+    },
+        {
+    "exerciseId": "CARD222",
+    "name": "cycling",
+    "gifUrl": "https://static.exercisedb.dev/media/CARD222.gif",
+    "targetMuscles": ["legs", "glutes"],
+    "bodyParts": ["cardio"],
+    "equipments": ["bicycle"],
+    "secondaryMuscles": ["core"],
+    "instructions": [
+        "Step:1 Adjust seat height...",
+        "Step:2 Start pedaling at steady pace...",
+        "Step:3 Keep back straight...",
+        "Step:4 Maintain cadence...",
+        "Step:5 Continue for duration..."
+    ]
     }
 ];

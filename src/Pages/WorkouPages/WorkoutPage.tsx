@@ -1,16 +1,29 @@
 
+import { useState } from 'react'
 import BackBtn from '../../Components/BackBtn'
 import NavigateBtn from '../../Components/NavigateBtn'
 import PageLayout from '../../Components/PageLayouts'
 
 const WorkoutPage = () => {
+
+  const [activeTab, setActiveTab] = useState("programs");
+
+
+
+
+
   return (
     <PageLayout>
     <div className='centerContent'>
-      <h1>WorkoutPage</h1>
-      <p>Här ska jag ha en Lista för Program <br />alternativt en egen sida för program</p>
-      <p> Här ska jag ha en lista för enskilda pass, <br /> alternativt en egen sida för detta</p>
-      <NavigateBtn to ="/review">Review Workout</NavigateBtn>
+      <header className='navBtnStartPage'>
+      <button className='navigationBtn' onClick={() => setActiveTab("programs")} >Programs</button>
+      <button className='navigationBtn' onClick={() => setActiveTab("workouts")} >Workouts</button>
+      </header> 
+      <div className='workoutsContainer'>
+        {activeTab === "programs" && (<h3> ProgramList </h3>)}
+        {activeTab === "workouts" && (<h3> WorkoutList </h3>)}
+      </div>
+      <NavigateBtn to ="/addworkout">Add Workout</NavigateBtn>
       <BackBtn/>
       </div>
       </PageLayout>

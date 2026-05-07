@@ -26,10 +26,10 @@ const initialGoals: NutritionGoal = {
   proteinGoal: 150,
   carbGoal: 250,
   fatGoal: 70,
-  currentCalories: 0,
-  currentProtein: 0,
-  currentCarbs: 0,
-  currentFat: 0,
+  currentCalories: 1500,
+  currentProtein: 100,
+  currentCarbs: 150,
+  currentFat: 40,
 };
 
 // Provider-komponent som wrappar app och ger datan, children anges för att app ska kunna få tillgång till datan

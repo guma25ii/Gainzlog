@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
 import { BrowserRouter} from 'react-router-dom'
+import { NutritionProvider } from './context/NutritionContext.tsx'
 
 
 const saved = localStorage.getItem("darkMode");
@@ -15,7 +16,9 @@ document.body.classList.add(
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
+    <NutritionProvider>
         <App />
+      </NutritionProvider>
     </BrowserRouter>
   </StrictMode>
 )

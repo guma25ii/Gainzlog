@@ -1,12 +1,18 @@
 
-import { useState } from 'react'
-import BackBtn from '../../Components/BackBtn'
+import { useEffect, useState } from 'react'
 import NavigateBtn from '../../Components/NavigateBtn'
 import PageLayout from '../../Components/PageLayouts'
 
 const WorkoutPage = () => {
 
   const [activeTab, setActiveTab] = useState("programs");
+
+  const [workouts, setWorkouts] = useState<any[]>([])
+
+  useEffect(() => {
+    const storedWorkouts = JSON.parse(localStorage.getItem("workouts") || "[]")
+    setWorkouts(storedWorkouts)
+  },[])
 
 
 
@@ -24,7 +30,7 @@ const WorkoutPage = () => {
         {activeTab === "workouts" && (<h3> WorkoutList </h3>)}
       </div>
       <NavigateBtn to ="/addworkout">Add Workout</NavigateBtn>
-      <BackBtn/>
+      <NavigateBtn to ="/">Back</NavigateBtn>
       </div>
       </PageLayout>
   )

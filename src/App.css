@@ -377,8 +377,90 @@ p {
 
 
 
+.setRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.inputSmall {
+  width: 60px;
+  padding: 6px;
+  text-align: center;
+  border-radius: 14px;
+}
+
+.removeBtn {
+  margin-left: auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  font-size: 18px;
+}
 
 
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalBox {
+  background: var(--surface);
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.workoutsContainer {
+  position: relative;
+}
+
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+
+  background: var(--surface);
+  color: var(--btn-text);
+
+  padding: 12px 18px;
+  border-radius: 10px;
+
+  z-index: 9999;
+
+  animation: toastSlide 1.2s ease forwards;
+}
+@keyframes toastSlide {
+
+  0% {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+
+  15% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  85% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+}
 
 
 

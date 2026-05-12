@@ -50,7 +50,7 @@ const handleAdd = (ex: Exercise) => {
   return (
     <PageLayout>
       <div className='centerContent'>
-        <h1>Add Workout Page</h1>
+        <h1>Add Workout</h1>
 
 
         <div className='categoryContainer'>{categories.map(category => (
@@ -58,7 +58,7 @@ const handleAdd = (ex: Exercise) => {
         </div>
 
         <div className='workoutsContainer'>{exercises.filter(ex => ex.bodyParts.includes(selectedCategory)).map(ex => (
-          <button key={ex.exerciseId} onClick={() => handleAdd(ex) }>{ex.name}</button>))}
+          <button className='navigationBtn' key={ex.exerciseId} onClick={() => handleAdd(ex) }>{ex.name}</button>))}
 
         </div>
 

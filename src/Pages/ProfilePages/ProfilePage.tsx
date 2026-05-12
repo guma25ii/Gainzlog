@@ -9,8 +9,8 @@ const ProfilePage = () => {
         <h1>Profile Page</h1>
         <p>Ändra lösenord</p>
         <p>information om användaren</p>
-        <button>Avregistrera</button>
-        <button>Logga ut</button>
+        <button className='navigationBtn'>Avregistrera</button>
+        <button className='navigationBtn'>Logga ut</button>
         <BackBtn/>
       </div>
     </PageLayout>

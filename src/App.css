@@ -76,7 +76,8 @@ body {
 
 h1,
 h2,
-h3{
+h3,
+h4{
   font-family: system-ui, Arial, sans-serif;
   font-weight: 600;
   color: var(--h-text);
@@ -420,8 +421,32 @@ p {
   flex-direction: column;
   gap: 10px;
 }
+
+
 .workoutsContainer {
   position: relative;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+.workoutsContainer::-webkit-scrollbar {
+  width: 6px;
+}
+
+.workoutsContainer::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 10px;
+}
+
+.doneBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.doneBtn.active {
+  opacity: 0.5;
+  transform: scale(0.9);
 }
 
 .toast {

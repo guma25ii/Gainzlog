@@ -1,4 +1,4 @@
-import React from "react";
+
 import type { Gender } from "../../lib/calories";
 
 type Props = {

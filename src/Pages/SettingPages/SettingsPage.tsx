@@ -1,25 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 import BackBtn from '../../Components/BackBtn';
 import Theme from '../../Components/Theme';
 import PageLayout from '../../Components/PageLayouts';
 
 const SettingsPage: React.FC = () => {
-  const [, setDarkMode] = useState(false);
-  const [toggleRequested, setToggleRequested] = useState(false);
-
-  const handleToggleClick = () => {
-    setToggleRequested(prev => !prev); // Theme reagerar på ändring
-  };
   return (
     <PageLayout>
-    <div className='centerContent'>
-      <h1>Settings Page</h1>
-      <p>Timer</p>
-      <button className='navigationBtn' onClick={handleToggleClick}>Dark/Light Mode</button>
-      <Theme toggleRequested={toggleRequested} onToggle={setDarkMode}/>
-      <p>Sätt alarm</p>
-      <BackBtn/>
-    </div>
+      <div className='centerContent'>
+        
+        <h1>Settings Page</h1>
+
+        <p>Timer</p>
+
+        <Theme />
+
+        <p>Sätt alarm</p>
+
+        <BackBtn />
+
+      </div>
     </PageLayout>
   );
 };

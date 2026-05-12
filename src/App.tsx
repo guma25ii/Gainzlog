@@ -12,6 +12,10 @@ import SettingsPage from './Pages/SettingPages/SettingsPage'
 import ProfilePage from './Pages/ProfilePages/ProfilePage'
 import ProgressPicturesPage from './Pages/ProgressPages/ProgressPicturesPage'
 import AddMealPage from './Pages/MealPages/AddMealPage'
+import AddPicturePage from './Pages/ProgressPages/AddPicturePage'
+import ProgramPage from './Pages/WorkouPages/ProgramPage'
+import WorkoutDetailPage from './Pages/WorkouPages/WorkoutDetailPage'
+import TrainWorkoutPage from './Pages/WorkouPages/TrainWorkoutPage'
 
 function App() {
 
@@ -31,10 +35,21 @@ function App() {
         <Route path='/workouts' element={<WorkoutPage/>} />
           <Route path='/addworkout' element={<AddWorkoutPage/>} />
           <Route path='/review' element={<ReviewWorkout/>} />
+          <Route path="/program/:id" element={<ProgramPage />} />
+          <Route path='/workoutdetail' element={<WorkoutDetailPage/>} />
+          <Route path='/train' element={<TrainWorkoutPage/>} />
+          <Route path="/workout/:id" element={<WorkoutDetailPage />} />
+          <Route  path="/train/:id"element={<TrainWorkoutPage />} />
+          
+
+          
+
+          
           
         {/* Progress med undersida */}
         <Route path='/progress' element={<ProgressPage/>} />
           <Route path='/pictures' element={<ProgressPicturesPage/>} />
+          <Route path='addpicture' element={<AddPicturePage/>} />
 
         <Route path='/setgoal' element={<SetGoalPage/>} />
 

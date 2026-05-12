@@ -1,3 +1,5 @@
+
+
 body.light {
   --bg: #f6f7fb;
   --surface: #ffffff;
@@ -7,6 +9,7 @@ body.light {
   --btn-text: #111827;
   --btn-hover: #d1d5db;
   --shadow: rgba(0, 0, 0, 0.05);
+  --h-text: #6b7280;
 }
 
 body.dark {
@@ -18,21 +21,23 @@ body.dark {
   --btn-text: #ff3b3b;
   --btn-hover: #3a3a3a;
   --shadow: rgba(0, 0, 0, 0.6);
+  --h-text: #ff3b3b;
+}
+
+
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
   font-family: Arial, sans-serif;
-
   background: var(--bg);
   color: var(--text);
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
 }
 
 #root {
@@ -45,27 +50,37 @@ body {
 .pageLayout {
   display: flex;
   flex-direction: column;
-
   min-height: 100vh;
   width: 100%;
-
   padding: 16px;
-  margin: 0;
 }
+
+
+
 .centerContent {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   text-align: center;
+  gap: 16px;
+}
+
+.headerNav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 
+
 h1,
-h2 {
+h2,
+h3,
+h4{
   font-family: system-ui, Arial, sans-serif;
   font-weight: 600;
-  color: var(--text);
+  color: var(--h-text);
 }
 
 h1 {
@@ -83,19 +98,22 @@ p {
   margin: 0;
 }
 
-
 .navigationBtn,
 .startWorkoutBtn {
   display: flex;
   justify-content: center;
   align-items: center;
+
   border: none;
   border-radius: 14px;
   padding: 12px 16px;
+
   font-size: 16px;
   cursor: pointer;
+
   background: var(--btn-bg);
   color: var(--btn-text);
+
   transition: all 0.2s ease;
 }
 
@@ -103,20 +121,170 @@ p {
 .startWorkoutBtn:hover {
   transform: scale(1.03);
   background: var(--btn-hover);
-  box-shadow: 0 0 10px rgba(255, 30, 30, 0.2);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.headerNav {
+.activeBtn {
+  background: var(--btn-hover);
+  color: var(--btn-text);
+  transform: scale(1.05);
+  font-weight: 600;
+  border: 1px solid var(--btn-text);
+}
+
+.icon-btn {
+  background: transparent;
+  font-size: 20px;
+  padding: 8px;
+  color: var(--text);
+}
+.goalButtons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
-.footerBtn {
-  display: flex;
-  justify-content: flex-end;
+.inputGroup input {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: var(--btn-bg);
+  color: var(--text);
 }
+
+.inputGroup input::placeholder {
+  color: var(--text-muted);
+}
+
+.inputGroup label {
+  color: var(--btn-text);
+}
+
+.inputGroup select {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  cursor: pointer;
+}
+
+.inputGroup select:focus {
+  outline: 2px solid var(--btn-hover);
+}
+
+
+.resultCard {
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 16px;
+
+  background: var(--surface);
+  box-shadow: var(--shadow);
+
+  text-align: center;
+  color: var(--text);
+
+  width: 100%;
+  max-width: 400px;
+}
+
+.resultCard h2 {
+  color: var(--text);
+}
+
+.resultCard p,
+.resultValue {
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--text);
+}
+
+.cardWrapper {
+  width: 200px;
+  height: 300px;
+}
+
+.swipeSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 60px;
+}
+
+.swipeContainer {
+  position: relative;
+  width: 200px;
+  height: 300px;
+  overflow: visible;
+}
+
+.picture {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 200px;
+  height: 300px;
+
+  object-fit: cover;
+  border-radius: 20px;
+
+  box-shadow: 0 10px 30px var(--shadow);
+
+  cursor: grab;
+  transform: translateZ(0);
+}
+
+.picture:active {
+  cursor: grabbing;
+  transform: scale(0.98) translateZ(0);
+}
+.dateLabel {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  font-size: 8px;
+  padding: 4px 8px;
+  border-radius: 10px;
+
+  background: var(--surface);
+
+ 
+  color: var(--text);
+
+  z-index: 9999;
+}
+
+
+.LogoText {
+  font-size: 4rem;
+  font-weight: 800;
+
+  background: linear-gradient(90deg, black 0%, blue 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  -webkit-text-stroke: 1px red;
+
+  text-align: center;
+  margin-bottom: 150px;
+}
+
+
 
 .navBtnStartPage {
   margin: 2rem 0;
@@ -126,36 +294,209 @@ p {
   width: 100%;
 }
 
-.icon-btn {
-  background: transparent;
-  font-size: 20px;
-  padding: 8px;
-  color: var(--text);
+
+.footerBtn {
+  display: flex;
+  justify-content: flex-end;
 }
 
-.LogoText {
-  font-size: 4rem;
-  font-weight: 800;
-  font-family: var(--heading, system-ui);
 
-  background: linear-gradient(90deg, black 0%, blue 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke: 1px red;
+.progressBar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--surface);
+  width: 30rem;
+  border-radius: 14px;
+  padding: 1rem;
+}
+
+/* bakgrund (spåret) */
+.progressTrack {
+  position: relative;
+  width: 100%;
+  background-color: #333;
+  border-radius: 14px;
+  overflow: hidden;
+  height: 1.5rem;
+}
+.progressText {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  pointer-events: none;
+}
+
+/* själva fyllningen */
+.progressFill {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+/* färger */
+.progressGoal {
+  background-color: green;
+}
+
+.progressProtein {
+  background-color: blue;
+}
+
+.progressCarbs {
+  background-color: red;
+}
+
+.progressFat {
+  background-color: rgb(170, 170, 19);
+}
+
+
+.workoutsContainer{
+  width: 30rem;
+  height: 30rem;
+  background-color: var(--surface);
+  border-radius: 14px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.categoryContainer {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+
+
+
+
+.setRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.inputSmall {
+  width: 60px;
+  padding: 6px;
   text-align: center;
-  margin-bottom: 150px;
+  border-radius: 14px;
 }
+
+.removeBtn {
+  margin-left: auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  font-size: 18px;
+}
+
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalBox {
+  background: var(--surface);
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+.workoutsContainer {
+  position: relative;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+.workoutsContainer::-webkit-scrollbar {
+  width: 6px;
+}
+
+.workoutsContainer::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 10px;
+}
+
+.doneBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.doneBtn.active {
+  opacity: 0.5;
+  transform: scale(0.9);
+}
+
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+
+  background: var(--surface);
+  color: var(--btn-text);
+
+  padding: 12px 18px;
+  border-radius: 10px;
+
+  z-index: 9999;
+
+  animation: toastSlide 1.2s ease forwards;
+}
+@keyframes toastSlide {
+
+  0% {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+
+  15% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  85% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+}
+
+
+
+
+
+
+
 
 @media (max-width: 768px) {
-
-  h1 {
-    font-size: 32px;
-  }
-
-  h2 {
-    font-size: 20px;
-  }
+  h1 { font-size: 32px; }
+  h2 { font-size: 20px; }
 
   .navigationBtn,
   .startWorkoutBtn {
@@ -174,4 +515,7 @@ p {
     font-size: 60px;
     margin-bottom: 40px;
   }
+
+
+
 }

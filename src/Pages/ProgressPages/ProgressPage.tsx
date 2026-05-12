@@ -1,16 +1,19 @@
 
 import BackBtn from '../../Components/BackBtn'
+import NavigateBtn from '../../Components/NavigateBtn';
 import PageLayout from '../../Components/PageLayouts'
+import { useNavigate } from 'react-router-dom'
 
 const ProgressPage = () => {
+  const navigate = useNavigate();
   return (
     <PageLayout>
     <div className='centerContent'>
-      <h1>Progress Page</h1>
       <p>Se Rekord</p>
       <p>Se antal avklarade Pass</p>
       <p>Kurva med viktnedgång/uppgång över tid</p>
-      <BackBtn/>
+      <button className='navigationBtn' onClick={() => navigate("/pictures")} >Progress Pictures</button>
+      <NavigateBtn to="/">Back</NavigateBtn>
     </div>
     </PageLayout>
   )

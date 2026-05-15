@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace GainzlogBackend.Models;
 
@@ -37,6 +38,7 @@ public class MealItem
     // relation
     public int MealId { get; set; }
 
+    [JsonIgnore]
     public Meal Meal { get; set; }
 
     // per 100g

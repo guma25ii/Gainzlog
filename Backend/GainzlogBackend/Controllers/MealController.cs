@@ -59,16 +59,19 @@ namespace GainzlogBackend.Controllers
             var item = new MealItem
             {
                 FoodId = request.FoodId,
-                Name = request.Name,
+                Name = nutrients.FirstOrDefault()?.Name ?? "Unknown",
                 Grams = request.Grams,
                 BaseNutrition = baseNutrition,
                 Nutrition = Scale(baseNutrition, factor)
             };
 
             meal.Items.Add(item);
+
             await _context.SaveChangesAsync();
 
-            return Ok(meal);
+            Console.WriteLine($"MealItem ID: {item.Id}");
+
+            return Ok(item);
         }
 
         [HttpPatch("{mealId}/items/{foodId}")]

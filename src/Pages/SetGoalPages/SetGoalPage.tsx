@@ -45,13 +45,14 @@ const SetGoalPage = () => {
     const carbGoal = Math.round(calorieGoal * 0.50 / 4);
     const fatGoal = Math.round(calorieGoal * 0.25 / 9);
 
-    setGoals(prev => ({
-      ...prev,
-      calorieGoal,
-      proteinGoal,
-      carbGoal,
-      fatGoal,
-    }));
+  const goals = {
+    calorieGoal,
+    proteinGoal,
+    carbGoal,
+    fatGoal,
+  };
+
+  localStorage.setItem("goals", JSON.stringify(goals));
 
     setMessage(`Saved: ${goalLabels[goal]}`);
   };

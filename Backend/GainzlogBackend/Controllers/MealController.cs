@@ -25,7 +25,7 @@ namespace GainzlogBackend.Controllers
         {
         var meal = new Meal
         {
-            Type = request.Type,
+            Name = request.Name,
             CreatedAt = DateTime.UtcNow
         };
 
@@ -44,15 +44,16 @@ namespace GainzlogBackend.Controllers
                 return NotFound();
 
             var nutrients = await _foodService.GetNutrition(request.FoodId);
+            
 
             double factor = request.Grams / 100.0;
 
             var baseNutrition = new Nutrition
             {
-                Protein = GetValue(nutrients, "PROT"),
-                Fat = GetValue(nutrients, "FAT"),
-                Carbs = GetValue(nutrients, "CHO"),
-                Calories = GetValue(nutrients, "ENERC")
+                Protein = GetValue(nutrients, "Protein"),
+                Fat = GetValue(nutrients, "Fett, totalt"),
+                Carbs = GetValue(nutrients, "Kolhydrater, tillgängliga"),
+                Calories = GetValue(nutrients, "Energi (kcal)")
             };
 
             var item = new MealItem
@@ -113,7 +114,7 @@ namespace GainzlogBackend.Controllers
         [HttpDelete("{mealId}")]
         public async Task<IActionResult> DeleteMeal (int mealId)
         {
-            var meal = _context.Meals.Include(m => m.Items).FirstOrDefault(m => m.Id == mealId);
+            var meal = await _context.Meals.Include(m => m.Items).FirstOrDefaultAsync(m => m.Id == mealId);
             if(meal == null)
             {
                 return NotFound("Meal Not Found");
@@ -155,7 +156,7 @@ namespace GainzlogBackend.Controllers
                 Meals = meals.Select(m => new
                 {
                     m.Id,
-                    Type = m.Type,
+                    Name = m.Name,
                     Items = m.Items.Select(i => new
                     {
                         i.Id,
@@ -188,12 +189,12 @@ namespace GainzlogBackend.Controllers
         // HELPERS
 
 
-        private double GetValue(List<Nutrient> nutrients, string code)
+        private double GetValue(List<Nutrient> nutrients, string name)
         {
             return nutrients
                 .FirstOrDefault(n =>
-                    n.EuroFIRCode != null &&
-                    n.EuroFIRCode.Equals(code, StringComparison.OrdinalIgnoreCase))
+                    n.Name != null &&
+                    n.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
                 ?.Value ?? 0;
         }
 

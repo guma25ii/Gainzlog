@@ -13,4 +13,14 @@ public class AppDbContext : DbContext
     public DbSet<Meal> Meals { get; set; }
 
     public DbSet<MealItem> MealItems { get; set; }
+
+    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<MealItem>()
+            .OwnsOne(m => m.Nutrition);
+
+        modelBuilder.Entity<MealItem>()
+            .OwnsOne(m => m.BaseNutrition);
+    }
 }

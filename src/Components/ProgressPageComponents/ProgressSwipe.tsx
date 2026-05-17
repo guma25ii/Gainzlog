@@ -34,7 +34,7 @@ const Card = ({
   url,
   date,
   index,
-  cards,
+  // cards,
   setCards,
 }: {
   url: string;

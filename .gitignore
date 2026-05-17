@@ -21,3 +21,30 @@ node_modules
 *.njsproj
 *.sln
 *.sw?
+# =========================
+# .NET / Backend
+# =========================
+
+**/bin/
+**/obj/
+**/out/
+**/publish/
+
+*.dll
+*.pdb
+*.exe
+
+# EF Core / database files (safe for InMemory + future SQLite)
+*.db
+*.db-shm
+*.db-wal
+
+# User secrets
+secrets.json
+appsettings.*.Development.json
+
+# ASP.NET Core
+wwwroot/lib/
+
+# Rider / VS cache
+*.DotSettings.user

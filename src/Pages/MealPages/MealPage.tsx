@@ -6,16 +6,7 @@ import NavigateBtn from "../../Components/NavigateBtn";
 import PageLayout from "../../Components/PageLayouts";
 import API_BASE from "../../api/client";
 import EditMealPage from "./EditMealPage";
-import type { Meal } from "../../Components/MealComponents/meal";
-
-
-type MealItem = {
-  id: number;
-  foodId: number;
-  name: string;
-  grams: number;
-};
-
+import type { Meal} from "../../Components/MealComponents/meal";
 
 
 const MealPage = () => {

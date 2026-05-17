@@ -44,7 +44,8 @@ namespace GainzlogBackend.Controllers
                 return NotFound();
 
             var nutrients = await _foodService.GetNutrition(request.FoodId);
-            
+
+            var foodName = await _foodService.GetFoodName(request.FoodId);
 
             double factor = request.Grams / 100.0;
 
@@ -59,7 +60,7 @@ namespace GainzlogBackend.Controllers
             var item = new MealItem
             {
                 FoodId = request.FoodId,
-                Name = nutrients.FirstOrDefault()?.Name ?? "Unknown",
+                Name = foodName, 
                 Grams = request.Grams,
                 BaseNutrition = baseNutrition,
                 Nutrition = Scale(baseNutrition, factor)

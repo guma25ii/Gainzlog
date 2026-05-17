@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 import API_BASE from "../../api/client";
 
 type Food = {
-id: number;
-name: string;
+  id: number;
+  name: string;
 };
 
 type SelectedItem = {
-itemId: number;
-foodId: number;
-name: string;
-grams: number;
+  itemId: number;
+  foodId: number;
+  name: string;
+  grams: number;
 };
 
 type Props = {
@@ -26,7 +26,7 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
   const [items, setItems] = useState<SelectedItem[]>([]);
   const [saving, setSaving] = useState(false);
 
-  // SEARCH FOOD
+  // SEARCH
   useEffect(() => {
     if (query.length < 2) return;
 
@@ -36,43 +36,37 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
         const data = await res.json();
         setResults(data);
       } catch (err) {
-        console.error("Search failed", err);
+        console.error(err);
       }
     }, 300);
 
     return () => clearTimeout(delay);
   }, [query]);
 
-  // ADD ITEM TO MEAL
+  // ADD ITEM
   const addItem = async () => {
     if (!selectedFood) return;
 
     try {
-      const res = await fetch(
-        `${API_BASE}/Meal/${mealId}/items`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            foodId: selectedFood.id,
-            name: selectedFood.name,
-            grams: grams,
-          }),
-        }
-      );
+      const res = await fetch(`${API_BASE}/Meal/${mealId}/items`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          foodId: selectedFood.id,
+          name: selectedFood.name,
+          grams,
+        }),
+      });
 
       const data = await res.json();
-      console.log("Added item:", data);
 
       setItems((prev) => [
         ...prev,
         {
-        itemId: data.id,
-        foodId: selectedFood.id,
-        name: selectedFood.name,
-        grams,
+          itemId: data.id, // viktig
+          foodId: selectedFood.id,
+          name: selectedFood.name,
+          grams,
         },
       ]);
 
@@ -80,33 +74,50 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
       setQuery("");
       setGrams(100);
     } catch (err) {
-      console.error("Failed to add item", err);
+      console.error(err);
     }
   };
 
-  // DONE
+  // DELETE ITEM (FIXAD)
+  const removeItem = async (itemId: number) => {
+    try {
+      await fetch(`${API_BASE}/Meal/${mealId}/items/${itemId}`, {
+        method: "DELETE",
+      });
+
+      setItems((prev) => prev.filter((i) => i.itemId !== itemId));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // UPDATE ITEM (FIXAD → använder itemId istället för foodId)
+  const updateItemGrams = async (itemId: number, newGrams: number) => {
+    try {
+      await fetch(`${API_BASE}/Meal/${mealId}/items/${itemId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ grams: newGrams }),
+      });
+
+      setItems((prev) =>
+        prev.map((i) =>
+          i.itemId === itemId ? { ...i, grams: newGrams } : i
+        )
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const handleDone = async () => {
     setSaving(true);
-
     try {
       onDone("Meal saved");
-    } catch (err) {
-      console.error("Failed to finish meal", err);
     } finally {
       setSaving(false);
     }
   };
-    const removeItem = async (itemId: number) => {
-    try {
-        await fetch(`${API_BASE}/Meal/${mealId}/items/${itemId}`, {
-        method: "DELETE",
-        });
-
-        setItems((prev) => prev.filter((i) => i.itemId !== itemId));
-    } catch (err) {
-        console.error("Failed to delete item", err);
-    }
-    };
 
   return (
     <div className="centerContent">
@@ -120,7 +131,6 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
         onChange={(e) => setQuery(e.target.value)}
       />
 
-      {/* SEARCH RESULTS */}
       <div className="searchResults">
         {results.map((food) => (
           <button
@@ -133,45 +143,60 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
         ))}
       </div>
 
-      {/* SELECTED FOOD */}
+      {/* SELECT */}
       {selectedFood && (
-        <div className="centerContent">
-          <p>Selected: {selectedFood.name}</p>
+        <div>
+          <p>{selectedFood.name}</p>
 
           <input
             type="number"
             value={grams}
             onChange={(e) => setGrams(Number(e.target.value))}
           />
-          <p>Grams</p>
 
-          <button className="navigationBtn" onClick={addItem}>
-            Add to meal
-          </button>
+          <button onClick={addItem}>Add</button>
         </div>
       )}
 
-      {/* ITEMS LIST */}
-      <div className="centerContent">
-        <h3>Meal items</h3>
+      {/* LIST */}
+      <div>
+        {items.map((item) => (
+          <div key={item.itemId} className="mealItem">
+            <span>{item.name}</span>
 
-        {items.map((item, index) => (
-          <div key={index} className="mealItem">
-            {item.name} - {item.grams}g
-                <button className="navigationBtn" onClick={() => removeItem(item.itemId)}>
-      Delete
-    </button>
+            <input
+              type="number"
+              value={item.grams}
+              onChange={(e) => {
+                const value = Number(e.target.value);
+
+                setItems((prev) =>
+                  prev.map((i) =>
+                    i.itemId === item.itemId
+                      ? { ...i, grams: value }
+                      : i
+                  )
+                );
+              }}
+            />
+
+            <button
+              onClick={() =>
+                updateItemGrams(item.itemId, item.grams)
+              }
+            >
+              Update
+            </button>
+
+            <button onClick={() => removeItem(item.itemId)}>
+              Delete
+            </button>
           </div>
         ))}
       </div>
 
-      {/* DONE */}
-      <button
-        className="navigationBtn"
-        disabled={items.length === 0 || saving}
-        onClick={handleDone}
-      >
-        {saving ? "Saving..." : "Done"}
+      <button disabled={saving || items.length === 0} onClick={handleDone}>
+        Done
       </button>
     </div>
   );

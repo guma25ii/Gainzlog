@@ -36,5 +36,14 @@ public class FoodService
         return list;
 
     }
+    public async Task<string> GetFoodName(int foodId)
+        {
+            var url = $"https://dataportal.livsmedelsverket.se/livsmedel/api/v1/livsmedel/{foodId}?sprak=1";
+
+            var response = await _http.GetStringAsync(url);
+            var doc = JsonDocument.Parse(response);
+
+            return doc.RootElement.GetProperty("namn").GetString();
+        }
 
 }

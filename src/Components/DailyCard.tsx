@@ -1,21 +1,18 @@
 import { useEffect, useState } from "react";
-import API_BASE from "../api/client";
 
-type DailyTotals = {
-  protein: number;
-  fat: number;
-  carbs: number;
-  calories: number;
+
+type Props = {
+  totals: {
+    calories: number,
+    protein: number,
+    carbs: number,
+    fat: number,
+  };
 };
 
-type MealResponse = {
-  meals: any[];
-  dailyTotals: DailyTotals;
-};
+const DailyCard = ({ totals }: Props) => {
 
-const DailyCard = () => {
-  const [data, setData] = useState<MealResponse | null>(null);
-  const [loading, setLoading] = useState(true);
+
 
   const [goals, setGoals] = useState({
     calorieGoal: 0,
@@ -23,23 +20,6 @@ const DailyCard = () => {
     carbGoal: 0,
     fatGoal: 0,
   });
-
-  //  Ladda API data
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await fetch(`${API_BASE}/Meal/today`);
-        const json = await res.json();
-        setData(json);
-      } catch (err) {
-        console.error("Failed to load daily data", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchData();
-  }, []);
 
   // Ladda mål
   useEffect(() => {
@@ -54,14 +34,6 @@ const DailyCard = () => {
   const safePercent = (value: number, goal: number) =>
     goal === 0 ? 0 : (value / goal) * 100;
 
-  // lodaing state
-  if (loading) {
-    return <div className="progressBar card">Loading Daily Data...</div>;
-  }
-
-  if (!data) {
-    return <div className="progressBar card">No data available</div>;
-  }
 
   // När Man inte lagt in mål ännu
   if (goals.calorieGoal === 0) {
@@ -73,7 +45,7 @@ const DailyCard = () => {
     );
   }
 
-  const totals = data.dailyTotals;
+
 
   return (
     <div className="progressBar card">
@@ -88,7 +60,7 @@ const DailyCard = () => {
           }}
         />
         <span className="progressText">
-          Calories: {totals.calories} / {goals.calorieGoal} kcal
+          Calories: {Math.round(totals.calories)} / {goals.calorieGoal} kcal
         </span>
       </div>
 
@@ -101,7 +73,7 @@ const DailyCard = () => {
           }}
         />
         <span className="progressText">
-          Protein: {totals.protein}g / {goals.proteinGoal}g
+          Protein: {Math.round(totals.protein)}g / {goals.proteinGoal}g
         </span>
       </div>
 
@@ -114,7 +86,7 @@ const DailyCard = () => {
           }}
         />
         <span className="progressText">
-          Carbs: {totals.carbs}g / {goals.carbGoal}g
+          Carbs: {Math.round(totals.carbs)}g / {goals.carbGoal}g
         </span>
       </div>
 
@@ -127,7 +99,7 @@ const DailyCard = () => {
           }}
         />
         <span className="progressText">
-          Fats: {totals.fat}g / {goals.fatGoal}g
+          Fats: {Math.round(totals.fat)}g / {goals.fatGoal}g
         </span>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 const TrainWorkoutPage = () => {
   const { id } = useParams()
   const navigate = useNavigate()
+  const [feedback, setFeedback] = useState<string | null>(null)
 
   const [isRunning, setIsRunning] = useState(false)
   const [seconds, setSeconds] = useState(0)
@@ -104,8 +105,12 @@ const programId = program?.id
       "completed",
       JSON.stringify([...stored, completedWorkout])
     )
+     setFeedback("Workout finished ")
 
+      setTimeout(() => {
+    setFeedback(null)
     navigate("/workouts")
+  }, 1200)
   }
 
   // lägg till set
@@ -123,6 +128,7 @@ const programId = program?.id
     <div className="centerContent">
       {/* Header */}
       <h1>{workout.name || "Workout"}</h1>
+      <div className="workoutsContainer">
 
       {/* Timer*/}
       {isRunning && (
@@ -148,6 +154,7 @@ const programId = program?.id
         <div key={ex.exerciseId} className="centerContent">
           <h2>{ex.name}</h2>
 
+
           {/* sets */}
           {sets[ex.exerciseId]?.map((set, index) => {
             const completed =
@@ -155,9 +162,9 @@ const programId = program?.id
 
             return (
               <div key={index} className="setRow">
-                <p>Set {index + 1}</p>
-
-                <input type="number"value={set.reps}onChange={(e) => {
+                <p>{index + 1}</p>
+                <p>Set</p>
+                <input className="inputExercise"  value={set.reps}onChange={(e) => {
                     const value = e.target.value
                     if (value === "" || /^[0-9]*$/.test(value)) {
                         setSets(prev => ({
@@ -170,8 +177,9 @@ const programId = program?.id
                         }))
                     }
                     }}
-                />
-                <input type="number" value={set.weight} onChange={(e) => {
+                    
+                /><p>Reps</p>
+                <input className="inputExercise" value={set.weight} onChange={(e) => {
                     const value = e.target.value
                     if (value === "" || /^[0-9]*$/.test(value)) {
                         setSets(prev => ({
@@ -184,22 +192,19 @@ const programId = program?.id
                         }))
                     }
                     }}
-                />
+                /><p>Kg</p>
                 <button className={completed ? "doneBtn active" : "doneBtn"} onClick={() => toggleSet(ex.exerciseId, index)}>✓</button>
               </div>
             )
           })}
-
           {/* lägg till set */}
-          <button className="navigationBtn" onClick={() => addSet(ex.exerciseId)}>+ Add set</button>
-          <button className="navigationBtn"   onClick={() => {
-            if (programId) {
-            navigate(`/program/${programId}`)
-            } else {
-            navigate("/workouts")
-            }}}>Back</button>
-        </div>
-      ))}
+          <button className="navigationBtn" onClick={() => addSet(ex.exerciseId)}>+ Add set</button></div>))}
+      </div> 
+        <button className="navigationBtn"   onClick={() => {
+          if (programId) {
+          navigate(`/program/${programId}`)
+          } else {navigate("/workouts")}}}>Back</button> 
+          {feedback && (<div className="toast">{feedback}</div>)}
     </div>
   )
 }

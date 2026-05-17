@@ -149,8 +149,11 @@ const resetWorkoutBuilder = () => {
   return (
   <PageLayout>
     <div className='centerContent'>
+      
       <h1>Review Workout</h1>
-      {/* EXERCISES */}
+      <h2>Current settings</h2>
+      <div className='workoutsContainer' >
+      {/* övningar */}
       {selectedExercises.map(ex => (
         <div key={ex.exerciseId}>
           <h3>{ex.name}</h3>
@@ -189,18 +192,18 @@ const resetWorkoutBuilder = () => {
           <button onClick={() => addSet(ex.exerciseId)} className='navigationBtn'>+ Add set</button>
         </div>
       ))}
-      {/* SAVE BUTTON */}
+      {/* spara  */}
       <button
         className='navigationBtn'
         onClick={() => { setShowSaveModal(true) 
         setMode("none")
         }}>Save Workout</button>
-      {/* MODAL */}
+      {/* modalen */}
       {showSaveModal && (
         <div className="modalOverlay">
           <div className="modalBox">
 
-            {/*MAIN MENU */}
+            {/*main many */}
             {mode === "none" && (
               <>
                 <h2>What do you want to do?</h2>
@@ -211,7 +214,7 @@ const resetWorkoutBuilder = () => {
               </>
             )}
 
-            {/* NEW PROGRAM */}
+            {/* nytt program */}
             {mode === "new" && (
               <>
                 <h3>Create Program</h3>
@@ -221,7 +224,7 @@ const resetWorkoutBuilder = () => {
                 <button onClick={() => setMode("none")} className='navigationBtn'>Back</button>
               </>
             )}
-                {/* NAME WORKOUT */}
+                {/* namnge workout */}
                 {mode === "workout" && (
                   <>
                     <h3>Name Workout</h3>
@@ -230,7 +233,7 @@ const resetWorkoutBuilder = () => {
                     <button onClick={() => setMode("none")} className='navigationBtn'>Back</button>
                   </>
                 )}
-            {/*EXISTING PROGRAM */}
+            {/*program som finns*/}
             {mode === "existing" && (
               <>
                 <h3>Choose Program</h3>
@@ -245,7 +248,8 @@ const resetWorkoutBuilder = () => {
           </div>
         </div>
       )}
-      <NavigateBtn to ="/addworkout">Back</NavigateBtn>
+    </div>
+    <NavigateBtn to ="/addworkout">Back</NavigateBtn>
     </div>
   </PageLayout>
 )

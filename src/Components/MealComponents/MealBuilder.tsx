@@ -43,7 +43,7 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
     return () => clearTimeout(delay);
   }, [query]);
 
-  // ADD ITEM
+  // add item
   const addItem = async () => {
     if (!selectedFood) return;
 
@@ -78,7 +78,7 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
     }
   };
 
-  // DELETE ITEM (FIXAD)
+  // delete item
   const removeItem = async (itemId: number) => {
     try {
       await fetch(`${API_BASE}/Meal/${mealId}/items/${itemId}`, {
@@ -91,7 +91,7 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
     }
   };
 
-  // UPDATE ITEM (FIXAD → använder itemId istället för foodId)
+  // uppdatera item
   const updateItemGrams = async (itemId: number, newGrams: number) => {
     try {
       await fetch(`${API_BASE}/Meal/${mealId}/items/${itemId}`, {
@@ -123,7 +123,7 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
     <div className="centerContent">
       <h2>Build Meal</h2>
 
-      {/* SEARCH */}
+      {/* sök*/}
       <input
         className="navigationBtn"
         placeholder="Search food..."
@@ -143,7 +143,7 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
         ))}
       </div>
 
-      {/* SELECT */}
+      {/* select */}
       {selectedFood && (
         <div>
           <p>{selectedFood.name}</p>
@@ -158,7 +158,7 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
         </div>
       )}
 
-      {/* LIST */}
+      {/* lista */}
       <div>
         {items.map((item) => (
           <div key={item.itemId} className="mealItem">

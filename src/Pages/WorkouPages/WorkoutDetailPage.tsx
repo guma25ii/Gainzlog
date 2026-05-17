@@ -1,5 +1,6 @@
 
 import { useParams, useNavigate } from 'react-router-dom'
+import PageLayout from '../../Components/PageLayouts'
 
 
 
@@ -38,9 +39,10 @@ const WorkoutDetailPage = () => {
 
 
   return (
+    <PageLayout>
     <div className="centerContent">
       <h1>{workout.name || "Workout"}</h1>
-
+      <div className='workoutsContainer'>
       {workout.exercises.map((ex: any) => (
         <div key={ex.exerciseId}>
           <h3>{ex.name}</h3>
@@ -52,18 +54,16 @@ const WorkoutDetailPage = () => {
           ))}
         </div>
       ))}
-
-      <button className='navigationBtn' onClick={() => navigate(`/train/${workout.id}`)}>
-        Start Workout
-      </button>
-          <button className="navigationBtn"   onClick={() => {
+    </div>
+          <button className='navigationBtn' onClick={() => navigate(`/train/${workout.id}`)}>Start Workout</button>
+      <button className="navigationBtn"   onClick={() => {
     if (programId) {
       navigate(`/program/${programId}`)
     } else {
       navigate("/workouts")
-    }
-  }}>Back</button>
+    }}}>Back</button>
     </div>
+    </PageLayout>
   )
 }
 

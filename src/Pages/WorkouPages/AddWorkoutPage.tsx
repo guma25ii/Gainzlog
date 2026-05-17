@@ -51,26 +51,19 @@ const handleAdd = (ex: Exercise) => {
     <PageLayout>
       <div className='centerContent'>
         <h1>Add Workout</h1>
-
-
+        <div className='workoutsContainer'>
         <div className='categoryContainer'>{categories.map(category => (
           <button className='navigationBtn' key={category} onClick={() => setSelectedCategory(category)}>{category}</button>))}
         </div>
-
-        <div className='workoutsContainer'>{exercises.filter(ex => ex.bodyParts.includes(selectedCategory)).map(ex => (
+        <div className='exerciseContainer'>{exercises.filter(ex => ex.bodyParts.includes(selectedCategory)).map(ex => (
           <button className='navigationBtn' key={ex.exerciseId} onClick={() => handleAdd(ex) }>{ex.name}</button>))}
-
         </div>
-
-        <NavigateBtn to ="/review">Review Workout</NavigateBtn>
-        <NavigateBtn to ="/workouts">Back</NavigateBtn>
       </div>
-              {feedback && (
-  <div className="toast">
-    {feedback}
-  </div>
-)}
-    </PageLayout>
+        {feedback && (<div className="toast">{feedback}</div>)}
+      <NavigateBtn to ="/review">Review Workout</NavigateBtn>
+      <NavigateBtn to ="/workouts">Back</NavigateBtn>
+    </div>
+  </PageLayout>
   )
 }
 

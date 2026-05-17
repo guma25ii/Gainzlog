@@ -41,7 +41,7 @@ const AddMealPage = () => {
 
       console.log("Created Meal", data);
 
-      setMealId(data.id); // 🔥 detta triggar nästa steg
+      setMealId(data.id); 
     } catch (err) {
       console.error("Failed to create Meal", err);
     } finally {
@@ -54,7 +54,7 @@ const AddMealPage = () => {
       <div className="centerContent">
         <h1>Add Meal</h1>
 
-        {/* VISA ENDAST OM INGEN MEAL ÄR SKAPAD */}
+        {/* visas om inget meal är skapt*/}
         {!mealId && (
           <>
             <h3>Choose meal type</h3>

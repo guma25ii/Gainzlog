@@ -122,6 +122,7 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
   return (
     <div className="centerContent">
       <h2>Build Your Meal</h2>
+      
 
       {/* sök*/}
       <input
@@ -192,6 +193,7 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
       <button className="navigationBtn" disabled={saving || items.length === 0} onClick={handleDone}>
         Done
       </button>
+      <h6>Source: Livsmedelsverket</h6>
     </div>
   );
 };

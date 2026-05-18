@@ -48,3 +48,6 @@ wwwroot/lib/
 
 # Rider / VS cache
 *.DotSettings.user
+
+
+*.lscache

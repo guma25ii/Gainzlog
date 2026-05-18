@@ -29,14 +29,14 @@ useEffect(() => {
   return (
     <PageLayout>
       <div className='centerContent'>
+            <h1 className='LogoText'>GainzLog</h1>
+        <div className='workoutsContainer'>
       <header className='headerNav'>
         <NavigateBtn to ="/settings" className="icon-btn">⚙️</NavigateBtn>
         <NavigateBtn to ="/profile" className="icon-btn" >👤</NavigateBtn>
       </header>
 
-        <div>
-            <h1 className='LogoText'>GainzLog</h1>
-          </div>
+
 
           <DailyCard totals={dailyTotals}/>
 
@@ -48,6 +48,7 @@ useEffect(() => {
               <NavigateBtn to ="/progress">Progress</NavigateBtn>
               <NavigateBtn to ="/setgoal">Set Goal</NavigateBtn>
               <NavigateBtn to ="/meals">Meals</NavigateBtn>
+          </div>
           </div>
           </div>
     </PageLayout>

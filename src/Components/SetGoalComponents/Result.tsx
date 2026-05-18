@@ -7,9 +7,9 @@ type props = {
 
 const Result = ({result} : props) => {
   return (
-    <div className="resultCard">
+    <div >
       <h2 >Daily calories:</h2>
-      <p >{Math.round(result)} Kcal</p>
+      <h4>{Math.round(result)} Kcal</h4>
     </div>
   )
 }

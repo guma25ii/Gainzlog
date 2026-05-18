@@ -34,7 +34,10 @@ const ProgressPicturesPage = () => {
 
   return (
     <PageLayout>
+      
       <div className="centerContent">
+        <h1>Progress Pictures</h1>
+        <div className="workoutsContainer">
         <div className="swipeSection">
           <h2>Front</h2>
           <ProgressSwipe cards={frontCards} setCards={setCards} />
@@ -51,6 +54,7 @@ const ProgressPicturesPage = () => {
         </div>
 
         <NavigateBtn to="/addpicture">Add Picture</NavigateBtn>
+        </div>
         <NavigateBtn to="/progress">Back</NavigateBtn>
       </div>
     </PageLayout>

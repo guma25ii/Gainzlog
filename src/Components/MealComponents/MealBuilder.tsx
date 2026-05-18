@@ -121,7 +121,7 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
 
   return (
     <div className="centerContent">
-      <h2>Build Meal</h2>
+      <h2>Build Your Meal</h2>
 
       {/* sök*/}
       <input
@@ -145,27 +145,28 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
 
       {/* select */}
       {selectedFood && (
-        <div>
+        <div className="centerContent">
           <p>{selectedFood.name}</p>
 
-          <input
+          <input className="inputSmall"
             type="number"
             value={grams}
             onChange={(e) => setGrams(Number(e.target.value))}
           />
 
-          <button onClick={addItem}>Add</button>
+          <button className="navigationBtn" onClick={addItem}>Add</button>
         </div>
       )}
 
       {/* lista */}
-      <div>
+      <div className="mealadded ">
         {items.map((item) => (
           <div key={item.itemId} className="mealItem">
             <span>{item.name}</span>
 
             <input
-              type="number"
+            type="number"
+              className="inputSmall"
               value={item.grams}
               onChange={(e) => {
                 const value = Number(e.target.value);
@@ -179,23 +180,16 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
                 );
               }}
             />
-
-            <button
-              onClick={() =>
-                updateItemGrams(item.itemId, item.grams)
-              }
-            >
-              Update
-            </button>
-
-            <button onClick={() => removeItem(item.itemId)}>
-              Delete
-            </button>
+            <div className="mealButtons">
+              
+            <button className="navigationBtn" onClick={() => updateItemGrams(item.itemId, item.grams)}>Update</button>
+            <button className="navigationBtn" onClick={() => removeItem(item.itemId)}>Delete</button>
+            </div>
           </div>
         ))}
       </div>
 
-      <button disabled={saving || items.length === 0} onClick={handleDone}>
+      <button className="navigationBtn" disabled={saving || items.length === 0} onClick={handleDone}>
         Done
       </button>
     </div>

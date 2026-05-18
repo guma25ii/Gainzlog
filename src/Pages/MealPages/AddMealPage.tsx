@@ -53,6 +53,7 @@ const AddMealPage = () => {
     <PageLayout>
       <div className="centerContent">
         <h1>Add Meal</h1>
+        <div className="workoutsContainer" >
 
         {/* visas om inget meal är skapt*/}
         {!mealId && (
@@ -97,6 +98,7 @@ const AddMealPage = () => {
             }}
           />
         )}
+        </div>
         <BackBtn />
       </div>
       {toast && <div className="toast">{toast}</div>}

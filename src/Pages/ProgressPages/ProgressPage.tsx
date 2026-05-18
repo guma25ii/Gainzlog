@@ -8,11 +8,13 @@ const ProgressPage = () => {
   return (
     <PageLayout>
     <div className='centerContent'>
-      <p>Se Rekord</p>
+      <h1>Records</h1>
+      <div className='workoutsContainer'>
       <p>Se antal avklarade Pass</p>
       <p>Kurva med viktnedgång/uppgång över tid</p>
       <button className='navigationBtn' onClick={() => navigate("/pictures")} >Progress Pictures</button>
-      <NavigateBtn to="/">Back</NavigateBtn>
+    </div>
+    <NavigateBtn to="/">Back</NavigateBtn>
     </div>
     </PageLayout>
   )

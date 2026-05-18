@@ -76,11 +76,12 @@ const WorkoutPage = () => {
   return (
     <PageLayout>
     <div className='centerContent'>
-      <header className='navBtnStartPage'>
+      <h1>Handle Your Workouts</h1>
+      <div className='workoutsContainer'>
+              <header className='navBtnStartPage'>
       <button className='navigationBtn' onClick={() => setActiveTab("programs")} >Programs</button>
       <button className='navigationBtn' onClick={() => setActiveTab("workouts")} >Workouts</button>
       </header> 
-      <div className='workoutsContainer'>
         <div className='listContainer'>
         {activeTab === "programs" && (<> <h2 className="listTitle">Programs</h2> 
             {programs.map((program: any) => (

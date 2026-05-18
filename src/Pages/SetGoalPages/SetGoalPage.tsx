@@ -23,9 +23,9 @@ const SetGoalPage = () => {
   const [message, setMessage] = useState("");
 
   const goalLabels: Record<Goal, string> = {
-    lose_weight: "Fat loss 🔥",
-    maintain: "Maintain ⚖️",
-    gain_muscle: "Muscle gain 💪",
+    lose_weight: "Fat loss",
+    maintain: "Maintain",
+    gain_muscle: "Muscle gain",
   };
 
   const bmr = calculateBMR({
@@ -40,7 +40,7 @@ const SetGoalPage = () => {
   const result = calculateGoalCalories(tdee, goal);
 
   const handleSaveGoal = () => {
-    const calorieGoal = result;
+    const calorieGoal = Math.round(result);
     const proteinGoal = Math.round(calorieGoal * 0.25 / 4);
     const carbGoal = Math.round(calorieGoal * 0.50 / 4);
     const fatGoal = Math.round(calorieGoal * 0.25 / 9);
@@ -60,6 +60,8 @@ const SetGoalPage = () => {
   return (
     <PageLayout>
       <div className="centerContent">
+        <h1>Set Your Goal</h1>
+        <div className='workoutsContainer'>
         <UserInput
           weight={weight}
           setWeight={setWeight}
@@ -88,6 +90,7 @@ const SetGoalPage = () => {
         {message && <p>{message}</p>}
 
         <Result result={result} />
+        </div>
 
         <BackBtn />
       </div>

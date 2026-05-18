@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 const TrainWorkoutPage = () => {
   const { id } = useParams()
   const navigate = useNavigate()
+  const [feedback, setFeedback] = useState<string | null>(null)
 
   const [isRunning, setIsRunning] = useState(false)
   const [seconds, setSeconds] = useState(0)
@@ -19,7 +20,7 @@ const TrainWorkoutPage = () => {
 
 const programId = program?.id
 
-  //Hitta workout (från både workouts och programs)
+  //Hitta workout 
   let workout =
     workouts.find((w: any) => w.id === id)
 
@@ -37,12 +38,12 @@ const programId = program?.id
     return <h3>Workout not found</h3>
   }
 
-  // 2. ALLA exercises samlas korrekt
+  // alla övningar
   const exercises = workout.workouts
     ? workout.workouts.flatMap((w: any) => w.exercises)
     : workout.exercises
 
-  //TIMER
+  //Timer
   useEffect(() => {
     let interval: any
 
@@ -55,7 +56,7 @@ const programId = program?.id
     return () => clearInterval(interval)
   }, [isRunning])
 
-  //INIT sets
+  //init sets
   useEffect(() => {
     const initial: Record<string, any[]> = {}
 
@@ -67,7 +68,7 @@ const programId = program?.id
     setSets(initial)
   }, [id])
 
-  //TOGGLE set
+  //TToggle set
   const toggleSet = (exerciseId: string, setIndex: number) => {
     setCompletedSets(prev => {
       const current = prev[exerciseId] || []
@@ -82,7 +83,7 @@ const programId = program?.id
     })
   }
 
-  //START / FINISH
+  //Start, Finish
   const startWorkout = () => {
     setIsRunning(true)
   }
@@ -104,11 +105,15 @@ const programId = program?.id
       "completed",
       JSON.stringify([...stored, completedWorkout])
     )
+     setFeedback("Workout finished ")
 
+      setTimeout(() => {
+    setFeedback(null)
     navigate("/workouts")
+  }, 1200)
   }
 
-  // ADD set
+  // lägg till set
   const addSet = (exerciseId: string) => {
     setSets(prev => ({
       ...prev,
@@ -121,10 +126,11 @@ const programId = program?.id
 
   return (
     <div className="centerContent">
-      {/* HEADER */}
+      {/* Header */}
       <h1>{workout.name || "Workout"}</h1>
+      <div className="workoutsContainer">
 
-      {/* TIMER */}
+      {/* Timer*/}
       {isRunning && (
         <h3>
           Time: {Math.floor(seconds / 60)}:
@@ -132,7 +138,7 @@ const programId = program?.id
         </h3>
       )}
 
-      {/* START / FINISH */}
+      {/* Start, Finish */}
       {!isRunning ? (
         <button className="navigationBtn" onClick={startWorkout}>
           Start Workout
@@ -143,21 +149,22 @@ const programId = program?.id
         </button>
       )}
 
-      {/* EXERCISES */}
+      {/* övningar */}
       {exercises.map((ex: any) => (
         <div key={ex.exerciseId} className="centerContent">
           <h2>{ex.name}</h2>
 
-          {/* SETS */}
+
+          {/* sets */}
           {sets[ex.exerciseId]?.map((set, index) => {
             const completed =
               completedSets[ex.exerciseId]?.includes(index)
 
             return (
               <div key={index} className="setRow">
-                <p>Set {index + 1}</p>
-
-                <input type="number"value={set.reps}onChange={(e) => {
+                <p>{index + 1}</p>
+                <p>Set</p>
+                <input className="inputExercise"  value={set.reps}onChange={(e) => {
                     const value = e.target.value
                     if (value === "" || /^[0-9]*$/.test(value)) {
                         setSets(prev => ({
@@ -170,8 +177,9 @@ const programId = program?.id
                         }))
                     }
                     }}
-                />
-                <input type="number" value={set.weight} onChange={(e) => {
+                    
+                /><p>Reps</p>
+                <input className="inputExercise" value={set.weight} onChange={(e) => {
                     const value = e.target.value
                     if (value === "" || /^[0-9]*$/.test(value)) {
                         setSets(prev => ({
@@ -184,22 +192,19 @@ const programId = program?.id
                         }))
                     }
                     }}
-                />
+                /><p>Kg</p>
                 <button className={completed ? "doneBtn active" : "doneBtn"} onClick={() => toggleSet(ex.exerciseId, index)}>✓</button>
               </div>
             )
           })}
-
-          {/* ADD SET */}
-          <button className="navigationBtn" onClick={() => addSet(ex.exerciseId)}>+ Add set</button>
-          <button className="navigationBtn"   onClick={() => {
-            if (programId) {
-            navigate(`/program/${programId}`)
-            } else {
-            navigate("/workouts")
-            }}}>Back</button>
-        </div>
-      ))}
+          {/* lägg till set */}
+          <button className="navigationBtn" onClick={() => addSet(ex.exerciseId)}>+ Add set</button></div>))}
+      </div> 
+        <button className="navigationBtn"   onClick={() => {
+          if (programId) {
+          navigate(`/program/${programId}`)
+          } else {navigate("/workouts")}}}>Back</button> 
+          {feedback && (<div className="toast">{feedback}</div>)}
     </div>
   )
 }

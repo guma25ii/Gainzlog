@@ -76,58 +76,44 @@ const WorkoutPage = () => {
   return (
     <PageLayout>
     <div className='centerContent'>
-      <header className='navBtnStartPage'>
+      <h1>Handle Your Workouts</h1>
+      <div className='workoutsContainer'>
+              <header className='navBtnStartPage'>
       <button className='navigationBtn' onClick={() => setActiveTab("programs")} >Programs</button>
       <button className='navigationBtn' onClick={() => setActiveTab("workouts")} >Workouts</button>
       </header> 
-      <div className='workoutsContainer'>
-        {activeTab === "programs" && (<>
-            <h2>Programs</h2>
+        <div className='listContainer'>
+        {activeTab === "programs" && (<> <h2 className="listTitle">Programs</h2> 
             {programs.map((program: any) => (
-              <div key={program.id} onClick={() => navigate(`/program/${program.id}`)}>
-                <div className="listRow"> 
+              <div  key={program.id} onClick={() => navigate(`/program/${program.id}`)}> 
+                <div > 
+                <div className="workoutRow">
           <button className="removeBtn"  onClick={(e) => {e.stopPropagation()
            openDeleteModal(program.id, "program")}}>-</button>
-          <h4>{program.name}</h4>
+          <button className='navigationBtn' >{program.name}</button>
+          </div>
         </div>
-              </div>
-            ))}
-          </>
-        )}
-
+            </div>
+            ))}</>)}
         {activeTab === "workouts" && (
           <>
-            <h2>Workouts</h2>
-{workouts.map((workout: any) => (
-  <div
-    key={workout.id}
-    onClick={() =>
-      navigate(`/workout/${workout.id}`)
-    }
-  >
-    <div className="listRow">
-
-      <button
-        className="removeBtn"
-        onClick={(e) => {
-          e.stopPropagation()
-
-          openDeleteModal(
-            workout.id,
-            "workout"
-          )
-        }}
-      >
-        -
-      </button>
-
-      <h4>{workout.name}</h4>
-
-    </div>
-  </div>
-))}
-  </>
-  )}
+            <h2 className="listTitle">Workouts</h2>
+              {workouts.map((workout: any) => (
+                <div key={workout.id} onClick={() => navigate(`/workout/${workout.id}`)}>
+                  <div >
+                    <div className="workoutRow">
+                    <button className="removeBtn" onClick={(e) => {e.stopPropagation()
+                        openDeleteModal(
+                          workout.id,
+                          "workout")}}>-</button>
+              <button className='navigationBtn' >{workout.name}</button>
+              </div>
+              </div>
+            </div>
+            ))}
+          </>
+          )}
+        </div>
     </div>
   <NavigateBtn to ="/addworkout">Add Workout</NavigateBtn>
   <NavigateBtn to ="/">Back</NavigateBtn>

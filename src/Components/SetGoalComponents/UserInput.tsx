@@ -30,7 +30,7 @@ const UserInput = ({
       <div className="inputGroup">
       <label>Weight (kg): </label>
         <input
-          type="number"
+          
           value={weight}
           onChange={(e) => setWeight(Number(e.target.value))}
         /></div>
@@ -38,7 +38,7 @@ const UserInput = ({
       <div className="inputGroup">
       <label>Height (cm): </label>
         <input
-          type="number"
+          
           value={height}
           onChange={(e) => setHeight(Number(e.target.value))}
         /></div>
@@ -47,7 +47,7 @@ const UserInput = ({
       <div className="inputGroup">
       <label>Age : </label>
         <input
-          type="number"
+          
           value={age}
           onChange={(e) => setAge(Number(e.target.value))}
         /></div>

@@ -84,11 +84,12 @@ const MealPage = () => {
   return (
     <PageLayout>
       <div className="centerContent">
-        <h1>Meal Page</h1>
+        <h1>Meals</h1>
+        <div className="workoutsContainer">
 
         <DailyCard totals={dailyTotals} />
 
-        <h2>Today’s Meals</h2>
+        <h2 style={{textDecoration: "underline"}} >Today’s Meals</h2>
 
         <MealSummaryList
           meals={meals}
@@ -97,6 +98,7 @@ const MealPage = () => {
         />
 
         <NavigateBtn to="/addmeal">Add Meal</NavigateBtn>
+        </div>
         <BackBtn />
       </div>
     </PageLayout>

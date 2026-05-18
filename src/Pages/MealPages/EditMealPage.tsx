@@ -57,14 +57,16 @@ const EditMealPage = ({ meal, onDone }: Props) => {
 
   return (
     <div className="centerContent">
-      <h2>Edit {meal.name}</h2>
+      <h1>Edit {meal.name}</h1>
+      <div className="workoutsContainer" >
+      
 
       {items.map((item) => (
-        <div key={item.foodId} className="mealItem">
+        <div key={item.foodId} className="centerContent">
           <span>{item.name}</span>
 
           <input
-            type="number"
+            className="inputSmall"
             value={item.grams}
             onChange={(e) =>
               setItems((prev) =>
@@ -81,10 +83,11 @@ const EditMealPage = ({ meal, onDone }: Props) => {
             onClick={() => deleteItem(item.id)}
             >
             Delete
-</button>
+          </button>
         </div>
       ))}
-
+        </div>
+  
       <button
         className="navigationBtn"
         disabled={saving}
@@ -92,6 +95,7 @@ const EditMealPage = ({ meal, onDone }: Props) => {
       >
         {saving ? "Saving..." : "Done"}
       </button>
+
     </div>
   );
 };

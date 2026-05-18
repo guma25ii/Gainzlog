@@ -24,12 +24,13 @@ const ProgramPage = () => {
 
   return (
     <div className='centerContent'>
-        <div>
+        
         <h1>{program.name}</h1>
+
+        <div className='workoutsContainer'>
         {program.workouts.map(w =>  
-            <div key={w.id}  onClick={() => w.id && navigate(`/workout/${w.id}`)}> <h3>{w.name || "Workout"}</h3>
-            </div>
-        ) }
+            <div key={w.id}  onClick={() => w.id && navigate(`/workout/${w.id}`)}> <button className='navigationBtn'>{w.name || "Workout"}</button>
+            </div>)}
         </div>
         <button className='navigationBtn' onClick={() => navigate(`/workouts`)} >Back</button>
     </div>

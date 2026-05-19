@@ -24,6 +24,7 @@ https://gainzlog-s9rg8.ondigitalocean.app/
 
 ## Portar
 Frontend:
+(Standard)
 http://localhost:5173
 
 Backend:

@@ -27,9 +27,9 @@ public class FoodService
         {
             list.Add(new Nutrient
             {
-                Name = item.GetProperty("namn").GetString(),
+                Name = item.GetProperty("namn").GetString() ?? "",
                 Value = item.GetProperty("varde").GetDouble(),
-                Unit = item.GetProperty("enhet").GetString()
+                Unit = item.GetProperty("enhet").GetString() ?? ""
             });
         }
 
@@ -43,7 +43,7 @@ public class FoodService
             var response = await _http.GetStringAsync(url);
             var doc = JsonDocument.Parse(response);
 
-            return doc.RootElement.GetProperty("namn").GetString();
+            return doc.RootElement.GetProperty("namn").GetString()  ?? "";
         }
 
 }

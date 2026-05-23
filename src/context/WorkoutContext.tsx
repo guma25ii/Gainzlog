@@ -48,14 +48,13 @@ const addExercise = (exercise: Exercise) => {
       ex => ex.exerciseId === exercise.exerciseId
     )
 
-    if (exists) return prev // stoppar duplicates
+    if (exists) return prev 
 
     return [...prev, exercise]
   })
 }
 
   const removeExercise = (id: string) => {
-    //filtrerar bort rätt item via id
     setSelectedExercises(prev => prev.filter(ex => ex.exerciseId !== id))
     
   }

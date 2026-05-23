@@ -86,18 +86,14 @@ const MealPage = () => {
       <div className="centerContent">
         <h1>Meals</h1>
         <div className="workoutsContainer">
-
-        <DailyCard totals={dailyTotals} />
-
-        <h2 style={{textDecoration: "underline"}} >Today’s Meals</h2>
-
-        <MealSummaryList
-          meals={meals}
-          onDelete={deleteMeal}
-          onUpdate={handleUpdateMeal}
-        />
-
-        <NavigateBtn to="/addmeal">Add Meal</NavigateBtn>
+          <DailyCard totals={dailyTotals} />
+          <h2 style={{textDecoration: "underline"}} >Todays Meals</h2>
+            <MealSummaryList
+              meals={meals}
+              onDelete={deleteMeal}
+              onUpdate={handleUpdateMeal}
+            />
+          <NavigateBtn to="/addmeal">Add Meal</NavigateBtn>
         </div>
         <BackBtn />
       </div>

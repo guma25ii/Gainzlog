@@ -26,7 +26,7 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
   const [items, setItems] = useState<SelectedItem[]>([]);
   const [saving, setSaving] = useState(false);
 
-  // SEARCH
+
   useEffect(() => {
     if (query.length < 2) return;
 
@@ -43,7 +43,7 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
     return () => clearTimeout(delay);
   }, [query]);
 
-  // add item
+
   const addItem = async () => {
     if (!selectedFood) return;
 
@@ -78,7 +78,7 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
     }
   };
 
-  // delete item
+
   const removeItem = async (itemId: number) => {
     try {
       await fetch(`${API_BASE}/Meal/${mealId}/items/${itemId}`, {
@@ -91,7 +91,7 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
     }
   };
 
-  // uppdatera item
+
   const updateItemGrams = async (itemId: number, newGrams: number) => {
     try {
       await fetch(`${API_BASE}/Meal/${mealId}/items/${itemId}`, {
@@ -123,8 +123,6 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
     <div className="centerContent">
       <h2>Build Your Meal</h2>
       
-
-      {/* sök*/}
       <input
         className="navigationBtn"
         placeholder="Search food..."
@@ -144,7 +142,6 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
         ))}
       </div>
 
-      {/* select */}
       {selectedFood && (
         <div className="centerContent">
           <p>{selectedFood.name}</p>
@@ -159,7 +156,6 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
         </div>
       )}
 
-      {/* lista */}
       <div className="mealadded ">
         {items.map((item) => (
           <div key={item.itemId} className="mealItem">

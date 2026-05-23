@@ -21,7 +21,6 @@ const DailyCard = ({ totals }: Props) => {
     fatGoal: 0,
   });
 
-  // Ladda mål
   useEffect(() => {
     const saved = localStorage.getItem("goals");
 
@@ -30,12 +29,10 @@ const DailyCard = ({ totals }: Props) => {
     }
   }, []);
 
-  // Kalkylator så det börjar på 0
   const safePercent = (value: number, goal: number) =>
     goal === 0 ? 0 : (value / goal) * 100;
 
 
-  // När Man inte lagt in mål ännu
   if (goals.calorieGoal === 0) {
     return (
       <div className="progressBar card">
@@ -51,7 +48,6 @@ const DailyCard = ({ totals }: Props) => {
     <div className="progressBar card">
       <h3>Daily Intake</h3>
 
-      {/* Calories */}
       <div className="progressTrack">
         <div
           className="progressFill progressGoal"
@@ -64,7 +60,6 @@ const DailyCard = ({ totals }: Props) => {
         </span>
       </div>
 
-      {/* Protein */}
       <div className="progressTrack">
         <div
           className="progressFill progressProtein"
@@ -77,7 +72,6 @@ const DailyCard = ({ totals }: Props) => {
         </span>
       </div>
 
-      {/* Carbs */}
       <div className="progressTrack">
         <div
           className="progressFill progressCarbs"
@@ -90,7 +84,6 @@ const DailyCard = ({ totals }: Props) => {
         </span>
       </div>
 
-      {/* Fat */}
       <div className="progressTrack">
         <div
           className="progressFill progressFat"

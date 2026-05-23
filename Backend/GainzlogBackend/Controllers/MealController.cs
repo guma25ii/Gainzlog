@@ -190,7 +190,7 @@ namespace GainzlogBackend.Controllers
             return Ok(result);
         }
 
-        // HELPERS
+        
 
 
         private double GetValue(List<Nutrient> nutrients, string name)

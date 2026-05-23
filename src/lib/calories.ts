@@ -12,8 +12,6 @@ export type ActivityLevel =
 export type Goal = "lose_weight" | "maintain" | "gain_muscle";
 
 
-
-// 1. BMR (Mifflin-St Jeor)
 export function calculateBMR({
     weight,
     height,
@@ -29,7 +27,6 @@ gender: Gender;
     return gender === "male" ? base + 5 : base - 161;
 };
 
-//Aktivitetsnivå
 const activityMultipliers: Record<ActivityLevel, number> = {
     sedentary: 1.2,
     light: 1.375,
@@ -42,7 +39,6 @@ export function calculateTDEE(bmr: number, activity: ActivityLevel){
     return bmr * activityMultipliers[activity];
 }
 
-// 3. Mål (cut / bulk / maintain)
 export function calculateGoalCalories(tdee: number, goal: Goal){
     switch (goal){
         case "lose_weight":

@@ -6,11 +6,10 @@ import ActivitySelect from '../../Components/SetGoalComponents/ActivitySelect';
 import GoalButtons from '../../Components/SetGoalComponents/GoalButtons';
 import Result from '../../Components/SetGoalComponents/Result';
 import { calculateBMR, calculateTDEE, calculateGoalCalories } from "../../lib/calories";
-import { useNutrition } from '../../context/NutritionContext';
 import type { ActivityLevel, Goal, Gender } from "../../lib/calories";
 
 const SetGoalPage = () => {
-  const { setGoals } = useNutrition();
+
 
   const [weight, setWeight] = useState(0);
   const [height, setHeight] = useState(0);

@@ -17,14 +17,14 @@ https://gainzlog-s9rg8.ondigitalocean.app/
 ## Uppstart av projektet
 - Klona ner repot
 - Öppna terminalen och kör `npm install`
-- Sedan skriver du `./start-all.ps1`
+- Sedan i root mappen skriver du `./start-all.ps1`
 - Detta startar både Backend och frontend
-- Klart!
+- Öppna Localhost som du får via frontend när backend har laddat klart
 - Lycka till!
 
 ## Portar
 Frontend:
-(Standard)
+(Standard, när jag startar upp får jag denna porten)
 http://localhost:5173
 
 Backend:
@@ -42,7 +42,7 @@ i root och i den ligger sedan en undermapp för Backend.
 Backenden är byggd som ett REST API med ASP.NET Core 8.
 
 ## Frontend
-Frontend är byggd med react med typescript
+Frontend är byggd med React och Typescript
 
 ## API
 API:et består av följande endpoints:

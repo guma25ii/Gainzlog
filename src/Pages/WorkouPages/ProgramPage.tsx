@@ -24,9 +24,7 @@ const ProgramPage = () => {
 
   return (
     <div className='centerContent'>
-        
         <h1>{program.name}</h1>
-
         <div className='workoutsContainer'>
         {program.workouts.map(w =>  
             <div key={w.id}  onClick={() => w.id && navigate(`/workout/${w.id}`)}> <button className='navigationBtn'>{w.name || "Workout"}</button>

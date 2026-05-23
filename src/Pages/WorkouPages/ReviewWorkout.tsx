@@ -153,7 +153,6 @@ const resetWorkoutBuilder = () => {
       <h1>Review Workout</h1>
       <h2>Current settings</h2>
       <div className='workoutsContainer' >
-      {/* övningar */}
       {selectedExercises.map(ex => (
         <div key={ex.exerciseId}>
           <h3>{ex.name}</h3>
@@ -192,7 +191,6 @@ const resetWorkoutBuilder = () => {
           <button onClick={() => addSet(ex.exerciseId)} className='navigationBtn'>+ Add set</button>
         </div>
       ))}
-      {/* spara  */}
       <button
         className='navigationBtn'
         onClick={() => { setShowSaveModal(true) 
@@ -202,8 +200,6 @@ const resetWorkoutBuilder = () => {
       {showSaveModal && (
         <div className="modalOverlay">
           <div className="modalBox">
-
-            {/*main many */}
             {mode === "none" && (
               <>
                 <h2>What do you want to do?</h2>
@@ -214,7 +210,6 @@ const resetWorkoutBuilder = () => {
               </>
             )}
 
-            {/* nytt program */}
             {mode === "new" && (
               <>
                 <h3>Create Program</h3>
@@ -224,7 +219,6 @@ const resetWorkoutBuilder = () => {
                 <button onClick={() => setMode("none")} className='navigationBtn'>Back</button>
               </>
             )}
-                {/* namnge workout */}
                 {mode === "workout" && (
                   <>
                     <h3>Name Workout</h3>
@@ -233,7 +227,6 @@ const resetWorkoutBuilder = () => {
                     <button onClick={() => setMode("none")} className='navigationBtn'>Back</button>
                   </>
                 )}
-            {/*program som finns*/}
             {mode === "existing" && (
               <>
                 <h3>Choose Program</h3>

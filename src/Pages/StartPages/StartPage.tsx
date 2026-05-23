@@ -35,14 +35,8 @@ useEffect(() => {
         <NavigateBtn to ="/settings" className="icon-btn">⚙️</NavigateBtn>
         <NavigateBtn to ="/profile" className="icon-btn" >👤</NavigateBtn>
       </header>
-
-
-
           <DailyCard totals={dailyTotals}/>
-
-
             <button className="startWorkoutBtn">Start Next Workout</button>
-   
           <div className='navBtnStartPage'>
               <NavigateBtn to ="/workouts">Workouts</NavigateBtn>
               <NavigateBtn to ="/progress">Progress</NavigateBtn>

@@ -36,10 +36,7 @@ const AddMealPage = () => {
           name: selectedMeal,
         }),
       });
-
       const data = await res.json();
-
-      console.log("Created Meal", data);
 
       setMealId(data.id); 
     } catch (err) {
@@ -54,8 +51,6 @@ const AddMealPage = () => {
       <div className="centerContent">
         <h1>Add Meal</h1>
         <div className="workoutsContainer" >
-
-        {/* visas om inget meal är skapt*/}
         {!mealId && (
           <>
             <h3>Choose meal type</h3>
@@ -85,7 +80,6 @@ const AddMealPage = () => {
             {selectedMeal && <p>Selected: {selectedMeal}</p>}
           </>
         )}
-          {/* visa mealbuilder */}
           {mealId && (
           <MealBuilder
             mealId={mealId}

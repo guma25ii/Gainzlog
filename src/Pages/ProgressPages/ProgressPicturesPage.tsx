@@ -5,7 +5,7 @@ import ProgressSwipe, {
   type CardType,
 } from "../../Components/ProgressPageComponents/ProgressSwipe";
 import { useLocation } from "react-router-dom";
-import { cardData } from "../../Components/ProgressPageComponents/ProgressMockData";
+import { cardData } from "../../context/ProgressMockData";
 import { useState, useEffect } from "react";
 
 const ProgressPicturesPage = () => {

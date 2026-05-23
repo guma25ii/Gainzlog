@@ -20,7 +20,6 @@ const TrainWorkoutPage = () => {
 
 const programId = program?.id
 
-  //Hitta workout 
   let workout =
     workouts.find((w: any) => w.id === id)
 
@@ -38,12 +37,10 @@ const programId = program?.id
     return <h3>Workout not found</h3>
   }
 
-  // alla övningar
   const exercises = workout.workouts
     ? workout.workouts.flatMap((w: any) => w.exercises)
     : workout.exercises
 
-  //Timer
   useEffect(() => {
     let interval: any
 
@@ -56,7 +53,6 @@ const programId = program?.id
     return () => clearInterval(interval)
   }, [isRunning])
 
-  //init sets
   useEffect(() => {
     const initial: Record<string, any[]> = {}
 
@@ -68,7 +64,6 @@ const programId = program?.id
     setSets(initial)
   }, [id])
 
-  //TToggle set
   const toggleSet = (exerciseId: string, setIndex: number) => {
     setCompletedSets(prev => {
       const current = prev[exerciseId] || []
@@ -83,7 +78,6 @@ const programId = program?.id
     })
   }
 
-  //Start, Finish
   const startWorkout = () => {
     setIsRunning(true)
   }
@@ -113,7 +107,6 @@ const programId = program?.id
   }, 1200)
   }
 
-  // lägg till set
   const addSet = (exerciseId: string) => {
     setSets(prev => ({
       ...prev,
@@ -126,11 +119,9 @@ const programId = program?.id
 
   return (
     <div className="centerContent">
-      {/* Header */}
       <h1>{workout.name || "Workout"}</h1>
       <div className="workoutsContainer">
 
-      {/* Timer*/}
       {isRunning && (
         <h3>
           Time: {Math.floor(seconds / 60)}:
@@ -138,7 +129,6 @@ const programId = program?.id
         </h3>
       )}
 
-      {/* Start, Finish */}
       {!isRunning ? (
         <button className="navigationBtn" onClick={startWorkout}>
           Start Workout
@@ -149,13 +139,9 @@ const programId = program?.id
         </button>
       )}
 
-      {/* övningar */}
       {exercises.map((ex: any) => (
         <div key={ex.exerciseId} className="centerContent">
           <h2>{ex.name}</h2>
-
-
-          {/* sets */}
           {sets[ex.exerciseId]?.map((set, index) => {
             const completed =
               completedSets[ex.exerciseId]?.includes(index)
@@ -197,7 +183,6 @@ const programId = program?.id
               </div>
             )
           })}
-          {/* lägg till set */}
           <button className="navigationBtn" onClick={() => addSet(ex.exerciseId)}>+ Add set</button></div>))}
       </div> 
         <button className="navigationBtn"   onClick={() => {

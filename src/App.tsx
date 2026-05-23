@@ -28,10 +28,6 @@ function App() {
         <Route path='/settings' element={<SettingsPage/>} />
         <Route path='/profile' element={<ProfilePage/>} />
 
-
-        {/* Ska lägga till nested sidor senare, nu har jag bara skapat sidorna */}
-
-        {/* Workout med undersidor */}
         <Route path='/workouts' element={<WorkoutPage/>} />
           <Route path='/addworkout' element={<AddWorkoutPage/>} />
           <Route path='/review' element={<ReviewWorkout/>} />
@@ -40,20 +36,13 @@ function App() {
           <Route path='/train' element={<TrainWorkoutPage/>} />
           <Route path="/workout/:id" element={<WorkoutDetailPage />} />
           <Route  path="/train/:id"element={<TrainWorkoutPage />} />
-          
 
-          
-
-          
-          
-        {/* Progress med undersida */}
         <Route path='/progress' element={<ProgressPage/>} />
           <Route path='/pictures' element={<ProgressPicturesPage/>} />
           <Route path='addpicture' element={<AddPicturePage/>} />
 
         <Route path='/setgoal' element={<SetGoalPage/>} />
 
-        {/* Meals med undersida */}
         <Route path='/meals' element={<MealPage/>} />
           <Route path='/addmeal' element={<AddMealPage/>} />
 

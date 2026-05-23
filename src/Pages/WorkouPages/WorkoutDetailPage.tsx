@@ -20,8 +20,6 @@ const WorkoutDetailPage = () => {
 
     const programId = program?.id
 
-    
-
     if (!workout) {
     for (const program of programs) {
         const found = program.workouts.find((w: any) => w.id === id)
@@ -32,11 +30,9 @@ const WorkoutDetailPage = () => {
     }
     }
 
-
     if(!workout){
         return <h3>Workout not found</h3>
     }
-
 
   return (
     <PageLayout>

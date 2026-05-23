@@ -31,7 +31,7 @@ public class MealItem
 
     public int FoodId { get; set; }
 
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
     public double Grams { get; set; }
 
@@ -39,13 +39,13 @@ public class MealItem
     public int MealId { get; set; }
 
     [JsonIgnore]
-    public Meal Meal { get; set; }
+    public Meal Meal { get; set; } = null!;
 
     // per 100g
-    public Nutrition BaseNutrition { get; set; }
+    public Nutrition BaseNutrition { get; set; } = null!;
 
     // scaled
-    public Nutrition Nutrition { get; set; }
+    public Nutrition Nutrition { get; set; } = null!;
 }
 
 public class Nutrition

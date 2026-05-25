@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
+import ErrorBoundary from "../../Components/ErrorBoundary/ErrorBoundary"
 
 const TrainWorkoutPage = () => {
   const { id } = useParams()
@@ -140,7 +141,8 @@ const programId = program?.id
       )}
 
       {exercises.map((ex: any) => (
-        <div key={ex.exerciseId} className="centerContent">
+        <ErrorBoundary key={ex.exerciseId} fallback={<p>Could Not Load This Exercise</p>}>
+        <div  className="centerContent">
           <h2>{ex.name}</h2>
           {sets[ex.exerciseId]?.map((set, index) => {
             const completed =
@@ -183,7 +185,8 @@ const programId = program?.id
               </div>
             )
           })}
-          <button className="navigationBtn" onClick={() => addSet(ex.exerciseId)}>+ Add set</button></div>))}
+          <button className="navigationBtn" onClick={() => addSet(ex.exerciseId)}>+ Add set</button></div>
+          </ErrorBoundary>))}
       </div> 
         <button className="navigationBtn"   onClick={() => {
           if (programId) {

@@ -4,9 +4,10 @@ import DailyCard from "../../Components/DailyCard";
 import MealSummaryList from "../../Components/MealComponents/MealSummaryList";
 import NavigateBtn from "../../Components/NavigateBtn";
 import PageLayout from "../../Components/PageLayouts";
-import API_BASE from "../../api/client";
 import EditMealPage from "./EditMealPage";
-import type { Meal} from "../../Components/MealComponents/meal";
+import type { Meal } from "../../Components/MealComponents/meal";
+import ErrorBoundary from "../../Components/ErrorBoundary/ErrorBoundary";
+import { getTodaysMeals, deleteMeal as deleteMealApi } from "../../api/meals";
 
 
 const MealPage = () => {
@@ -23,8 +24,7 @@ const MealPage = () => {
 
   const fetchMeals = async () => {
     try {
-      const res = await fetch(`${API_BASE}/Meal/today`);
-      const data = await res.json();
+    const data = await getTodaysMeals();
 
       setMeals(data.meals);
       setDailyTotals(data.dailyTotals);
@@ -41,9 +41,7 @@ const MealPage = () => {
 
   const deleteMeal = async (mealId: number) => {
     try {
-      await fetch(`${API_BASE}/Meal/${mealId}`, {
-        method: "DELETE",
-      });
+      await deleteMealApi(mealId);
 
       fetchMeals();
     } catch (err) {
@@ -62,7 +60,7 @@ const MealPage = () => {
 
   if (loading) return <div>Loading...</div>;
 
-  // EDIT MODE
+
   if (editingMeal) {
     return (
       <PageLayout>
@@ -86,7 +84,9 @@ const MealPage = () => {
       <div className="centerContent">
         <h1>Meals</h1>
         <div className="workoutsContainer">
+          <ErrorBoundary fallback={<p>Could Not load Daily Stats</p>}>
           <DailyCard totals={dailyTotals} />
+          </ErrorBoundary>
           <h2 style={{textDecoration: "underline"}} >Todays Meals</h2>
             <MealSummaryList
               meals={meals}

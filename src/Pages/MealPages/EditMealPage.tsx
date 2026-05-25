@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import API_BASE from "../../api/client";
 import type { Meal, MealItem } from "../../Components/MealComponents/meal";
+import { updateMealItemGrams, removeMealItem } from "../../api/meals";
 
 
 type Props = {
@@ -17,15 +17,11 @@ const EditMealPage = ({ meal, onDone }: Props) => {
   }, [meal]);
 
   const updateItem = async (item: MealItem) => {
-    await fetch(`${API_BASE}/Meal/${meal.id}/items/${item.foodId}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        grams: item.grams,
-      }),
-    });
+    await updateMealItemGrams(
+      meal.id,
+      item.foodId,
+      item.grams
+    );
   };
 
   const handleDone = async () => {
@@ -45,9 +41,7 @@ const EditMealPage = ({ meal, onDone }: Props) => {
   };
   const deleteItem = async (itemId: number) => {
   try {
-    await fetch(`${API_BASE}/Meal/${meal.id}/items/${itemId}`, {
-      method: "DELETE",
-    });
+  await removeMealItem(meal.id, itemId);
 
     setItems((prev) => prev.filter((i) => i.id !== itemId));
   } catch (err) {

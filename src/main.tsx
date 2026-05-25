@@ -4,6 +4,7 @@ import './index.css'
 import App from './App.tsx'
 import { BrowserRouter} from 'react-router-dom'
 import { WorkoutProvider } from './context/WorkoutContext.tsx'
+import ErrorBoundary from './Components/ErrorBoundary/ErrorBoundary.tsx'
 
 
 const saved = localStorage.getItem("darkMode");
@@ -15,11 +16,15 @@ document.body.classList.add(
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+
     <BrowserRouter>
-    <WorkoutProvider>
+      <ErrorBoundary>
+      <WorkoutProvider>
         <App />
       </WorkoutProvider>
+      </ErrorBoundary>
     </BrowserRouter>
+
   </StrictMode>
 )
 

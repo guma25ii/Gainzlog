@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import API_BASE from "../../api/client";
+import { updateMealItemGrams, searchFood} from "../../api/meals";
+import {addMealItem, removeMealItem} from "../../api/meals";
 
 type Food = {
   id: number;
@@ -27,88 +28,76 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
   const [saving, setSaving] = useState(false);
 
 
-  useEffect(() => {
-    if (query.length < 2) return;
+useEffect(() => {
+  if (query.length < 2) return;
 
-    const delay = setTimeout(async () => {
-      try {
-        const res = await fetch(`${API_BASE}/Food/search?query=${query}`);
-        const data = await res.json();
-        setResults(data);
-      } catch (err) {
-        console.error(err);
-      }
-    }, 300);
-
-    return () => clearTimeout(delay);
-  }, [query]);
-
-
-  const addItem = async () => {
-    if (!selectedFood) return;
-
+  const delay = setTimeout(async () => {
     try {
-      const res = await fetch(`${API_BASE}/Meal/${mealId}/items`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          foodId: selectedFood.id,
-          name: selectedFood.name,
-          grams,
-        }),
-      });
-
-      const data = await res.json();
-
-      setItems((prev) => [
-        ...prev,
-        {
-          itemId: data.id, // viktig
-          foodId: selectedFood.id,
-          name: selectedFood.name,
-          grams,
-        },
-      ]);
-
-      setSelectedFood(null);
-      setQuery("");
-      setGrams(100);
+      const data = await searchFood(query);
+      setResults(data);
     } catch (err) {
       console.error(err);
     }
-  };
+  }, 300);
+
+  return () => clearTimeout(delay);
+}, [query]);
 
 
-  const removeItem = async (itemId: number) => {
-    try {
-      await fetch(`${API_BASE}/Meal/${mealId}/items/${itemId}`, {
-        method: "DELETE",
-      });
+const addItem = async () => {
+  if (!selectedFood) return;
 
-      setItems((prev) => prev.filter((i) => i.itemId !== itemId));
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  try {
+    const data = await addMealItem(
+      mealId,
+      selectedFood.id,
+      selectedFood.name,
+      grams
+    );
+
+    setItems((prev) => [
+      ...prev,
+      {
+        itemId: data.id,
+        foodId: selectedFood.id,
+        name: selectedFood.name,
+        grams,
+      },
+    ]);
+
+    setSelectedFood(null);
+    setQuery("");
+    setGrams(100);
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 
-  const updateItemGrams = async (itemId: number, newGrams: number) => {
-    try {
-      await fetch(`${API_BASE}/Meal/${mealId}/items/${itemId}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ grams: newGrams }),
-      });
+const removeItem = async (itemId: number) => {
+  try {
+    await removeMealItem(mealId, itemId);
 
-      setItems((prev) =>
-        prev.map((i) =>
-          i.itemId === itemId ? { ...i, grams: newGrams } : i
-        )
-      );
-    } catch (err) {
-      console.error(err);
-    }
-  };
+    setItems((prev) => prev.filter((i) => i.itemId !== itemId));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+
+const updateItemGrams = async (itemId: number, newGrams: number) => {
+  try {
+    await updateMealItemGrams(mealId, itemId, newGrams);
+
+    setItems((prev) =>
+      prev.map((i) =>
+        i.itemId === itemId ? { ...i, grams: newGrams } : i
+      )
+    );
+  } catch (err) {
+    console.error(err);
+  }
+};
 
   const handleDone = async () => {
     setSaving(true);

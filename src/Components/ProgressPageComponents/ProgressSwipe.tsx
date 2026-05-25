@@ -1,4 +1,6 @@
 import { motion, useMotionValue, useTransform } from "framer-motion";
+import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
+
 
 export type CardType = {
   id: string;
@@ -17,14 +19,15 @@ const ProgressSwipe = ({
   return (
     <div className="swipeContainer">
       {cards.map((card, index) => (
+        <ErrorBoundary key={card.id} fallback={<p>Failed To Load Image</p>}>
 <Card
-  key={card.id}
   url={card.url}
   date={card.date}
   index={index}
   cards={cards}
   setCards={setCards}
 />
+</ErrorBoundary>
       ))}
     </div>
   );
@@ -43,6 +46,11 @@ const Card = ({
   cards: CardType[];
   setCards: any;
 }) => {
+
+// Test för Error Boundary, funkar fin fint!
+// if (url.includes("ArnoldBack"))  {
+//   throw new Error("Image is too ripped");  
+// }
   const x = useMotionValue(0);
   const opacity = useTransform(x, [-150, 0, 150], [0, 1, 0]);
 
@@ -61,6 +69,7 @@ const handleDragEnd = () => {
 };
 
   return (
+    
     <motion.div
       className="cardWrapper"
       style={{
@@ -89,6 +98,7 @@ const handleDragEnd = () => {
         {date}
       </div>
     </motion.div>
+
   );
 };
 

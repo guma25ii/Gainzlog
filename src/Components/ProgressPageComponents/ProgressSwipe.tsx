@@ -19,7 +19,7 @@ const ProgressSwipe = ({
   return (
     <div className="swipeContainer">
       {cards.map((card, index) => (
-        <ErrorBoundary key={card.id} fallback={<p>Failed To Load Image</p>}>
+        <ErrorBoundary key={card.id} fallback={<div><p>Failed To Load Image</p> <button className="navigationBtn" onClick={() => window.location.reload()}>Reload</button></div>}>
 <Card
   url={card.url}
   date={card.date}

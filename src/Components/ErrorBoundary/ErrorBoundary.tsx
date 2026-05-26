@@ -30,9 +30,9 @@ class ErrorBoundary extends React.Component<Props, State> {
     if (this.state.hasError) {
       return (
         this.props.fallback ?? (
-          <div>
+          <div className="centerContent">
             <p>Something Went Wrong</p>
-
+            <button className="navigationBtn" onClick={() => window.location.reload()}>Reload</button>
           </div>
         )
       );

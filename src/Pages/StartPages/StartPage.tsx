@@ -1,31 +1,12 @@
 import DailyCard from '../../Components/DailyCard';
 import NavigateBtn from '../../Components/NavigateBtn'
 import PageLayout from '../../Components/PageLayouts'
-import { useState, useEffect } from 'react';
-import API_BASE from '../../api/client';
+import {useDailyTotals} from '../../context/DailyTotalsContext';
 
 
 const StartPage = () => {
-const [dailyTotals, setDailyTotals] = useState({
-  calories: 0,
-  protein: 0,
-  carbs: 0,
-  fat: 0,
-});
-useEffect(() => {
-  const fetchTotals = async () => {
-    try {
-      const res = await fetch(`${API_BASE}/Meal/today`);
-      const data = await res.json();
 
-      setDailyTotals(data.dailyTotals);
-    } catch (err) {
-      console.error("Failed to load totals");
-    }
-  };
-
-  fetchTotals();
-}, []);
+  const {dailyTotals} = useDailyTotals();
   return (
     <PageLayout>
       <div className='centerContent'>

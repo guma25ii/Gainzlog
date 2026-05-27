@@ -1,8 +1,8 @@
 import { useState } from "react";
 import BackBtn from "../../Components/BackBtn";
 import PageLayout from "../../Components/PageLayouts";
-import API_BASE from "../../api/client";
 import MealBuilder from "../../Components/MealComponents/MealBuilder";
+import { createMeal } from "../../api/meals";
 
 const AddMealPage = () => {
   const [selectedMeal, setSelectedMeal] = useState<string | null>(null);
@@ -23,21 +23,9 @@ const AddMealPage = () => {
 
   const handleCreateMeal = async () => {
     if (!selectedMeal) return;
-
     setLoading(true);
-
     try {
-      const res = await fetch(`${API_BASE}/Meal`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: selectedMeal,
-        }),
-      });
-      const data = await res.json();
-
+      const data = await createMeal(selectedMeal);
       setMealId(data.id); 
     } catch (err) {
       console.error("Failed to create Meal", err);

@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import API_BASE from "../../api/client";
+import { updateMealItemGrams, searchFood } from "../../api/meals";
+import { addMealItem, removeMealItem } from "../../api/meals";
+import { useDailyTotals } from "../../context/DailyTotalsContext";
 
 type Food = {
   id: number;
@@ -19,6 +21,8 @@ type Props = {
 };
 
 const MealBuilder = ({ mealId, onDone }: Props) => {
+  const { refreshDailyTotals } = useDailyTotals();
+
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<Food[]>([]);
   const [selectedFood, setSelectedFood] = useState<Food | null>(null);
@@ -26,14 +30,12 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
   const [items, setItems] = useState<SelectedItem[]>([]);
   const [saving, setSaving] = useState(false);
 
-
   useEffect(() => {
     if (query.length < 2) return;
 
     const delay = setTimeout(async () => {
       try {
-        const res = await fetch(`${API_BASE}/Food/search?query=${query}`);
-        const data = await res.json();
+        const data = await searchFood(query);
         setResults(data);
       } catch (err) {
         console.error(err);
@@ -44,31 +46,33 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
   }, [query]);
 
 
+  const refresh = async () => {
+    await refreshDailyTotals();
+  };
+
   const addItem = async () => {
     if (!selectedFood) return;
 
     try {
-      const res = await fetch(`${API_BASE}/Meal/${mealId}/items`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          foodId: selectedFood.id,
-          name: selectedFood.name,
-          grams,
-        }),
-      });
-
-      const data = await res.json();
+      const data = await addMealItem(
+        mealId,
+        selectedFood.id,
+        selectedFood.name,
+        grams
+      );
 
       setItems((prev) => [
         ...prev,
         {
-          itemId: data.id, // viktig
+          itemId: data.id,
           foodId: selectedFood.id,
           name: selectedFood.name,
           grams,
         },
       ]);
+
+
+      await refresh();
 
       setSelectedFood(null);
       setQuery("");
@@ -78,33 +82,30 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
     }
   };
 
-
   const removeItem = async (itemId: number) => {
     try {
-      await fetch(`${API_BASE}/Meal/${mealId}/items/${itemId}`, {
-        method: "DELETE",
-      });
+      await removeMealItem(mealId, itemId);
+
 
       setItems((prev) => prev.filter((i) => i.itemId !== itemId));
+
+      await refresh(); 
     } catch (err) {
       console.error(err);
     }
   };
 
-
   const updateItemGrams = async (itemId: number, newGrams: number) => {
     try {
-      await fetch(`${API_BASE}/Meal/${mealId}/items/${itemId}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ grams: newGrams }),
-      });
+      await updateMealItemGrams(mealId, itemId, newGrams);
 
       setItems((prev) =>
         prev.map((i) =>
           i.itemId === itemId ? { ...i, grams: newGrams } : i
         )
       );
+
+      await refresh(); 
     } catch (err) {
       console.error(err);
     }
@@ -122,7 +123,7 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
   return (
     <div className="centerContent">
       <h2>Build Your Meal</h2>
-      
+
       <input
         className="navigationBtn"
         placeholder="Search food..."
@@ -146,23 +147,26 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
         <div className="centerContent">
           <p>{selectedFood.name}</p>
 
-          <input className="inputSmall"
+          <input
+            className="inputSmall"
             type="number"
             value={grams}
             onChange={(e) => setGrams(Number(e.target.value))}
           />
 
-          <button className="navigationBtn" onClick={addItem}>Add</button>
+          <button className="navigationBtn" onClick={addItem}>
+            Add
+          </button>
         </div>
       )}
 
-      <div className="mealadded ">
+      <div className="mealadded">
         {items.map((item) => (
           <div key={item.itemId} className="mealItem">
             <span>{item.name}</span>
 
             <input
-            type="number"
+              type="number"
               className="inputSmall"
               value={item.grams}
               onChange={(e) => {
@@ -177,18 +181,34 @@ const MealBuilder = ({ mealId, onDone }: Props) => {
                 );
               }}
             />
+
             <div className="mealButtons">
-              
-            <button className="navigationBtn" onClick={() => updateItemGrams(item.itemId, item.grams)}>Update</button>
-            <button className="navigationBtn" onClick={() => removeItem(item.itemId)}>Delete</button>
+              <button
+                className="navigationBtn"
+                onClick={() => updateItemGrams(item.itemId, item.grams)}
+              >
+                Update
+              </button>
+
+              <button
+                className="navigationBtn"
+                onClick={() => removeItem(item.itemId)}
+              >
+                Delete
+              </button>
             </div>
           </div>
         ))}
       </div>
 
-      <button className="navigationBtn" disabled={saving || items.length === 0} onClick={handleDone}>
+      <button
+        className="navigationBtn"
+        disabled={saving || items.length === 0}
+        onClick={handleDone}
+      >
         Done
       </button>
+
       <h6>Source: Livsmedelsverket</h6>
     </div>
   );

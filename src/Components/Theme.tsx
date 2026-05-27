@@ -1,17 +1,24 @@
 import React, { useEffect, useState } from "react";
 
-const Theme: React.FC = () => {
+type ThemeProps = {
+  storageKey?: string;
+  defaultMode?: "light" | "dark";
+};
+
+const Theme: React.FC<ThemeProps> = ({storageKey = "darkMode", defaultMode = "light",}) => {
   const [darkMode, setDarkMode] = useState<boolean>(() => {
-    return JSON.parse(localStorage.getItem("darkMode") || "false");
+    const saved = localStorage.getItem(storageKey);
+
+    return saved ? JSON.parse(saved) : defaultMode === "dark";
   });
 
-  // apply theme + save
+
   useEffect(() => {
-    localStorage.setItem("darkMode", JSON.stringify(darkMode));
+    localStorage.setItem(storageKey, JSON.stringify(darkMode));
 
     document.body.classList.remove("light", "dark");
     document.body.classList.add(darkMode ? "dark" : "light");
-  }, [darkMode]);
+  }, [darkMode, storageKey]);
 
   return (
     <button

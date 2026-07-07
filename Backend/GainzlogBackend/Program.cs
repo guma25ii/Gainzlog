@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Database
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseInMemoryDatabase("GainzlogDb"));
+    options.UseSqlite("Data Source=gainzlog.db"));
 
 // Services
 builder.Services.AddHttpClient();

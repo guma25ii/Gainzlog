@@ -25,5 +25,18 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<MealItem>()
             .OwnsOne(m => m.BaseNutrition);
+            
+        modelBuilder.Entity<ProgramWorkouts>()
+            .HasOne(p => p.WorkoutProgram)
+            .WithMany(w => w.Items)
+            .HasForeignKey(p => p.ProgramId)
+            .IsRequired(false);
+            
+        modelBuilder.Entity<WorkoutExercise>()
+            .HasOne(e => e.ProgramWorkouts)
+            .WithMany(w => w.Exercise)
+            .HasForeignKey(e => e.WorkoutId)
+            .IsRequired(false);
     }
+ 
 }

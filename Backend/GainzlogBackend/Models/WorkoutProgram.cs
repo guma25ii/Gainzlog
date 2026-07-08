@@ -25,9 +25,11 @@ public class WorkoutExercise
 {
     public int Id { get; set; }
     public int? WorkoutId { get; set; } 
-    public string Name { get; set; }
-    public int Set { get; set;}
+    public string Name { get; set; } = string.Empty;
+    public int Sets { get; set;}
     public int Reps { get; set; }
+    public double Weight { get; set; }
+    public int? Time { get; set; }
 
     [JsonIgnore]
     public ProgramWorkouts ProgramWorkouts { get; set; } = null!;

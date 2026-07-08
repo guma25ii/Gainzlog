@@ -74,12 +74,9 @@ namespace GainzlogBackend.Migrations
                     b.Property<int?>("ProgramId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("WorkoutProgramId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("WorkoutProgramId");
+                    b.HasIndex("ProgramId");
 
                     b.ToTable("ProgramWorkouts");
                 });
@@ -94,21 +91,24 @@ namespace GainzlogBackend.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("ProgramWorkoutsId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("Reps")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Set")
+                    b.Property<int>("Sets")
                         .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Time")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("Weight")
+                        .HasColumnType("REAL");
 
                     b.Property<int?>("WorkoutId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProgramWorkoutsId");
+                    b.HasIndex("WorkoutId");
 
                     b.ToTable("WorkoutExercises");
                 });
@@ -199,9 +199,7 @@ namespace GainzlogBackend.Migrations
                 {
                     b.HasOne("GainzlogBackend.Models.WorkoutProgram", "WorkoutProgram")
                         .WithMany("Items")
-                        .HasForeignKey("WorkoutProgramId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProgramId");
 
                     b.Navigation("WorkoutProgram");
                 });
@@ -210,9 +208,7 @@ namespace GainzlogBackend.Migrations
                 {
                     b.HasOne("GainzlogBackend.Models.ProgramWorkouts", "ProgramWorkouts")
                         .WithMany("Exercise")
-                        .HasForeignKey("ProgramWorkoutsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("WorkoutId");
 
                     b.Navigation("ProgramWorkouts");
                 });

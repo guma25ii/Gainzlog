@@ -17,6 +17,35 @@ namespace GainzlogBackend.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
 
+            modelBuilder.Entity("GainzlogBackend.Models.LoggedSet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ExerciseName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("Reps")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Sets")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double?>("Weight")
+                        .HasColumnType("REAL");
+
+                    b.Property<int>("WorkoutLogId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WorkoutLogId");
+
+                    b.ToTable("LoggedSets");
+                });
+
             modelBuilder.Entity("GainzlogBackend.Models.Meal", b =>
                 {
                     b.Property<int>("Id")
@@ -61,7 +90,7 @@ namespace GainzlogBackend.Migrations
                     b.ToTable("MealItems");
                 });
 
-            modelBuilder.Entity("GainzlogBackend.Models.ProgramWorkouts", b =>
+            modelBuilder.Entity("GainzlogBackend.Models.Session", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -78,7 +107,7 @@ namespace GainzlogBackend.Migrations
 
                     b.HasIndex("ProgramId");
 
-                    b.ToTable("ProgramWorkouts");
+                    b.ToTable("Session");
                 });
 
             modelBuilder.Entity("GainzlogBackend.Models.WorkoutExercise", b =>
@@ -113,6 +142,23 @@ namespace GainzlogBackend.Migrations
                     b.ToTable("WorkoutExercises");
                 });
 
+            modelBuilder.Entity("GainzlogBackend.Models.WorkoutLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("SessionId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WorkoutLogs");
+                });
+
             modelBuilder.Entity("GainzlogBackend.Models.WorkoutProgram", b =>
                 {
                     b.Property<int>("Id")
@@ -126,6 +172,17 @@ namespace GainzlogBackend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("WorkoutPrograms");
+                });
+
+            modelBuilder.Entity("GainzlogBackend.Models.LoggedSet", b =>
+                {
+                    b.HasOne("GainzlogBackend.Models.WorkoutLog", "WorkoutLogs")
+                        .WithMany("LoggedSets")
+                        .HasForeignKey("WorkoutLogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("WorkoutLogs");
                 });
 
             modelBuilder.Entity("GainzlogBackend.Models.MealItem", b =>
@@ -195,10 +252,10 @@ namespace GainzlogBackend.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("GainzlogBackend.Models.ProgramWorkouts", b =>
+            modelBuilder.Entity("GainzlogBackend.Models.Session", b =>
                 {
                     b.HasOne("GainzlogBackend.Models.WorkoutProgram", "WorkoutProgram")
-                        .WithMany("Items")
+                        .WithMany("Sessions")
                         .HasForeignKey("ProgramId");
 
                     b.Navigation("WorkoutProgram");
@@ -206,11 +263,11 @@ namespace GainzlogBackend.Migrations
 
             modelBuilder.Entity("GainzlogBackend.Models.WorkoutExercise", b =>
                 {
-                    b.HasOne("GainzlogBackend.Models.ProgramWorkouts", "ProgramWorkouts")
+                    b.HasOne("GainzlogBackend.Models.Session", "Session")
                         .WithMany("Exercise")
                         .HasForeignKey("WorkoutId");
 
-                    b.Navigation("ProgramWorkouts");
+                    b.Navigation("Session");
                 });
 
             modelBuilder.Entity("GainzlogBackend.Models.Meal", b =>
@@ -218,14 +275,19 @@ namespace GainzlogBackend.Migrations
                     b.Navigation("Items");
                 });
 
-            modelBuilder.Entity("GainzlogBackend.Models.ProgramWorkouts", b =>
+            modelBuilder.Entity("GainzlogBackend.Models.Session", b =>
                 {
                     b.Navigation("Exercise");
                 });
 
+            modelBuilder.Entity("GainzlogBackend.Models.WorkoutLog", b =>
+                {
+                    b.Navigation("LoggedSets");
+                });
+
             modelBuilder.Entity("GainzlogBackend.Models.WorkoutProgram", b =>
                 {
-                    b.Navigation("Items");
+                    b.Navigation("Sessions");
                 });
 #pragma warning restore 612, 618
         }

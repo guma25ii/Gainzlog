@@ -3,6 +3,7 @@ import { useEffect, useState, } from 'react'
 import NavigateBtn from '../../Components/NavigateBtn'
 import PageLayout from '../../Components/PageLayouts'
 import { useNavigate } from 'react-router-dom'
+import { deleteProgram, getAllPrograms } from '../../api/workout'
 
 const WorkoutPage = () => {
   const navigate = useNavigate();
@@ -21,13 +22,20 @@ const WorkoutPage = () => {
     setWorkouts(storedWorkouts)
   },[])
 
-  useEffect(() => {
-  const storedPrograms = JSON.parse(
-    localStorage.getItem("programs") || "[]"
-  )
 
-  setPrograms(storedPrograms)
-}, [])
+  const fetchPrograms = async () => {
+    try {
+      const data = await getAllPrograms()
+      setPrograms(data);
+      }
+      catch(err){
+        console.error("Failed To Load Programs");
+      }
+    }
+
+  useEffect(() => {
+    fetchPrograms(); 
+  }, [])
 
   const openDeleteModal = (
     id: string,
@@ -37,21 +45,17 @@ const WorkoutPage = () => {
     setDeleteType(type)
     setDeleteModal(true)
   }
-  const handleDelete = () => {
-    if (deleteType === "program") {
-
-      const updatedPrograms = programs.filter(
-        p => p.id !== selectedId
-      )
-
-      setPrograms(updatedPrograms)
-
-      localStorage.setItem(
-        "programs",
-        JSON.stringify(updatedPrograms)
-      )
+  const handleDelete = async () => {
+    try{
+    if(deleteType === "program"){
+        await deleteProgram(Number(selectedId));
+        fetchPrograms();
+      }
     }
-
+    catch{
+      console.error("Failed To Delete Program");
+    }
+    
     if (deleteType === "workout") {
 
       const updatedWorkouts = workouts.filter(

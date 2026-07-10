@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from 'react'
-
 import PageLayout from '../../Components/PageLayouts'
 import { WorkoutContext } from '../../context/WorkoutContext'
 import { useNavigate } from "react-router-dom"
 import NavigateBtn from '../../Components/NavigateBtn'
+import { createSession, createProgram } from '../../api/workout'
 
 
 const ReviewWorkout = () => {
@@ -15,7 +15,6 @@ const ReviewWorkout = () => {
   const [mode, setMode] = useState<"none" | "existing" | "new" | "workout">("none")
   const [programName, setProgramName] = useState("")
   const [workoutName, setWorkoutName] = useState("")
-  const programs = JSON.parse(localStorage.getItem("programs") || "[]")
  
   const { selectedExercises, removeExercise, resetWorkout } = useContext(WorkoutContext)!
 
@@ -70,68 +69,46 @@ const ReviewWorkout = () => {
   }
 
 
-  const buildWorkout = () => ({
-    id: crypto.randomUUID(),
-    name: workoutName,
-    date: new Date().toISOString(),
+  const saveWorkout = async () => {
+    try{
+      await createSession(workoutName, null)
+      setShowSaveModal(false);
+      setMode("none")
+      resetWorkoutBuilder()
 
-    exercises: selectedExercises.map(ex => ({
-      exerciseId: ex.exerciseId,
-      name: ex.name,
-      sets: sets[ex.exerciseId] || []
-    }))
-  })
-  
-  const saveWorkout = () => {
-    const workout = buildWorkout()
-    const existing = JSON.parse(localStorage.getItem("workouts") || "[]")
-    localStorage.setItem(
-      "workouts",
-      JSON.stringify([...existing, workout])
-    )
-    setShowSaveModal(false);
-    setMode("none")
-    resetWorkoutBuilder()
-  }
-
-  const createNewProgram = () => {
-    const workout = buildWorkout()
-    const program ={
-      id: crypto.randomUUID(),
-      name: programName,
-      workouts: [workout]
+    }catch{
+      throw new Error("Falied To Save As Workout");
     }
-
-    const existing = JSON.parse(localStorage.getItem("programs") || "[]")
-    localStorage.setItem(
-      "programs",
-      JSON.stringify([...existing, program])
-    )
-    setShowSaveModal(false)
-    setMode("none")
-    setProgramName("")
-    resetWorkoutBuilder()
   }
 
-const addToProgram = (programId: string) => {
-  const workout = buildWorkout()
+  const createNewProgram = async () => {
+    try{
+    const program = await createProgram(programName);
 
-  const programs = JSON.parse(localStorage.getItem("programs") || "[]")
+      await createSession(workoutName, program.id)
 
-  const updated = programs.map((p: any) =>
-    p.id === programId
-      ? {
-          ...p,
-          workouts: [...p.workouts, workout]
-        }
-      : p
-  )
+      setShowSaveModal(false)
+      setMode("none")
+      setProgramName("")
+      resetWorkoutBuilder()
 
-  localStorage.setItem("programs", JSON.stringify(updated))
+       }catch{
+        throw new Error("Failed To Create New Program");
+       }
+  }
+
+const addToProgram = async( workoutName:string,  Id: string) => {
+ try {
+  await createSession(workoutName,  Number(Id));
 
   setShowSaveModal(false)
   setMode("none") 
   resetWorkoutBuilder()
+
+ }catch{
+  throw new Error("Failed to Add to Program");
+ }
+
 }
 
 const resetWorkoutBuilder = () => {
@@ -233,7 +210,7 @@ const resetWorkoutBuilder = () => {
                 <input placeholder="Workout Name" value={workoutName} onChange={(e) => setWorkoutName(e.target.value)}/>
                 {programs.map((p: any) => (
                   <button
-                  className='navigationBtn' key={p.id}onClick={() => addToProgram(p.id)}>{p.name}</button>
+                  className='navigationBtn' key={p.id}onClick={() => addToProgram(workoutName, p.id)}>{p.name}</button>
                 ))}
                 <button onClick={() => setMode("none")} className='navigationBtn'>Back</button>
               </>

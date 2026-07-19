@@ -58,5 +58,27 @@ export const createSession = async (name: string, programId: number | null) => {
         throw new Error("Could Not Create Session");
     }
     return response.json()
+}
+export const getSessionById = async (sessionId: number) => {
+    const response = await fetch(`${API_BASE}/Session/${sessionId}`, {
+        method: "GET"
+    });
+    if(!response.ok){
+        throw new Error("Failed To Find Session")
+    }
+    return response.json();
+}
 
+export const createExercise = async (name: string, sessionId: number, reps: number, sets: number, weight: number) => {
+    const response = await fetch(`${API_BASE}/LoggedExercise/`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({name, sessionId, reps, sets, weight})
+    });
+    if(!response.ok){
+        throw new Error("Failed to Create Exercise");
+    }
+    return response.json();
 }

@@ -3,7 +3,7 @@ import PageLayout from '../../Components/PageLayouts'
 import { WorkoutContext } from '../../context/WorkoutContext'
 import { useNavigate } from "react-router-dom"
 import NavigateBtn from '../../Components/NavigateBtn'
-import { createSession, createProgram } from '../../api/workout'
+import { createSession, createProgram, getAllPrograms, createExercise } from '../../api/workout'
 
 
 const ReviewWorkout = () => {
@@ -15,8 +15,22 @@ const ReviewWorkout = () => {
   const [mode, setMode] = useState<"none" | "existing" | "new" | "workout">("none")
   const [programName, setProgramName] = useState("")
   const [workoutName, setWorkoutName] = useState("")
+  const [programs, setPrograms] = useState<any[]>([])
  
   const { selectedExercises, removeExercise, resetWorkout } = useContext(WorkoutContext)!
+
+
+  const fetchPrograms = async () => {
+    try{
+      const data = await getAllPrograms();
+      setPrograms(data);
+    }catch(err){
+      console.error("Failed To Get All Programs")
+    }
+  }
+  useEffect(() => {
+    fetchPrograms()
+  }, [])
 
   //  per exercise: lista av sets
   const [sets, setSets] = useState<
@@ -71,7 +85,8 @@ const ReviewWorkout = () => {
 
   const saveWorkout = async () => {
     try{
-      await createSession(workoutName, null)
+      const session = await createSession(workoutName, null)
+      await saveExercises(session.id)
       setShowSaveModal(false);
       setMode("none")
       resetWorkoutBuilder()
@@ -81,11 +96,30 @@ const ReviewWorkout = () => {
     }
   }
 
+  const saveExercises = async (sessionId: number) => {
+    for (const ex of selectedExercises){
+      console.log("sparar övning:", ex.name)
+      console.log("sessionId som skickas:", sessionId)
+      const exSets = sets[ex.exerciseId]
+        await createExercise(
+          ex.name,
+          sessionId,
+          exSets[0].reps,
+          exSets.length,
+          exSets[0].weight
+        )
+      }
+    }
+
+
+
   const createNewProgram = async () => {
     try{
     const program = await createProgram(programName);
 
-      await createSession(workoutName, program.id)
+
+      const session = await createSession(workoutName, program.id)
+      await saveExercises(session.id)
 
       setShowSaveModal(false)
       setMode("none")
@@ -99,7 +133,9 @@ const ReviewWorkout = () => {
 
 const addToProgram = async( workoutName:string,  Id: string) => {
  try {
-  await createSession(workoutName,  Number(Id));
+
+  const session = await createSession(workoutName, Number(Id))
+  await saveExercises(session.id)
 
   setShowSaveModal(false)
   setMode("none") 

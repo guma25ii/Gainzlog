@@ -1,5 +1,12 @@
 
 import API_BASE from "./client";
+import type { ExerciseSummary, Muscle, Session } from "../types/workoutTypes";
+
+
+
+
+//Program//
+
 
 
 export async function getAllPrograms(){
@@ -46,6 +53,20 @@ export const getProgramById = async ( ProgramId: number) => {
     return response.json();
 };
 
+
+
+//Session//
+
+
+export const getAllSessions = async (): Promise<Session[]>   => {
+    const response = await fetch(`${API_BASE}/Session`,)
+    if(!response.ok){
+        throw new Error("Failed To Get All Sessions")
+    }
+    return response.json();
+}
+
+
 export const createSession = async (name: string, programId: number | null) => {
     const response = await fetch(`${API_BASE}/Session`, {
         method: "POST",
@@ -59,7 +80,7 @@ export const createSession = async (name: string, programId: number | null) => {
     }
     return response.json()
 }
-export const getSessionById = async (sessionId: number) => {
+export const getSessionById = async (sessionId: number): Promise<Session> => {
     const response = await fetch(`${API_BASE}/Session/${sessionId}`, {
         method: "GET"
     });
@@ -68,6 +89,44 @@ export const getSessionById = async (sessionId: number) => {
     }
     return response.json();
 }
+
+export const deleteSession = async (sessionId: number) => {
+    const response = await fetch(`${API_BASE}/Session/${sessionId}`, {
+        method: "DELETE"
+    })
+    if (!response.ok){
+        throw new Error("Failed To Delete Session");
+    }
+    return response.json();
+}
+
+
+
+//Exercise//
+
+
+export const getAllMuscles = async (): Promise<Muscle[]> => {
+    const response = await fetch(`${API_BASE}/Exercise/getAllMuscles`,)
+    if(!response.ok){
+        throw new Error("Failed To Get Exercises")
+    }
+    return response.json();
+
+
+
+}
+
+export const getExercisesByBodypart = async (bodypart: string):Promise <ExerciseSummary[]> => {
+    const response = await fetch(`${API_BASE}/Exercise/getExerciseByBodypart?targetMuscles=${bodypart}`, {
+        method: "GET"
+    })
+    if(!response.ok){
+        throw new Error("Failed to Get Exercises By Bodypart")
+    }
+    return response.json();
+}
+
+
 
 export const createExercise = async (name: string, sessionId: number, reps: number, sets: number, weight: number) => {
     const response = await fetch(`${API_BASE}/LoggedExercise/`, {
@@ -79,6 +138,50 @@ export const createExercise = async (name: string, sessionId: number, reps: numb
     });
     if(!response.ok){
         throw new Error("Failed to Create Exercise");
+    }
+    return response.json();
+}
+
+
+
+//Set//
+
+
+
+export const createSet = async (workoutExerciseId: number, reps: number, weight: number) => {
+    const response = await fetch(`${API_BASE}/Set`, {
+        method: "POST",
+        headers: {
+            "Content-Type" : "application/json"
+        },
+        body: JSON.stringify({workoutExerciseId, reps, weight})
+    });
+    if(!response.ok){
+        throw new Error("Failed To Create Set");
+    }
+    return response.json();
+}
+
+export const updateSet = async (setId: number, reps: number, weight: number) => {
+    const response = await fetch (`${API_BASE}/Set/${setId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type" : "application/json"
+        },
+        body: JSON.stringify({reps, weight})
+    });
+    if(!response.ok){
+        throw new Error("Failed To Update Set");
+    }
+    return response.json();
+}
+
+export const deleteSet = async (setId: number) => {
+    const response = await fetch(`${API_BASE}/Set/${setId}`,{
+        method: "DELETE"
+    });
+    if(!response.ok){
+        throw new Error("Failed To Delete Set");
     }
     return response.json();
 }

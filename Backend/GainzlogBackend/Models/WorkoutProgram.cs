@@ -31,27 +31,21 @@ public class WorkoutExercise
     public int Reps { get; set; }
     public double Weight { get; set; }
     public int? Time { get; set; }
+    public List<Set> LoggedSets { get; set; } = new();
 
     [JsonIgnore]
     public Session Session { get; set; } = null!;
 }
 
-public class WorkoutLog
+public class Set
 {
     public int Id { get; set; }
-    public int SessionId { get; set; }
-    public DateTime Date { get; set; } = DateTime.UtcNow;
-    public List<LoggedSet> LoggedSets { get; set; } = new();
+    public int Reps { get; set; }
+    public double Weight { get; set; }
+    public int WorkoutExerciseId { get; set; }
+    [JsonIgnore]
+    public WorkoutExercise WorkoutExercise { get; set; } = null!;
+
 }
 
-public class LoggedSet
-{
-    public int Id { get; set; }
-    public int WorkoutLogId { get; set; }
-    public string ExerciseName { get; set; } = string.Empty;
-    public int? Reps { get; set; }
-    public int? Sets { get; set; }
-    public double? Weight { get; set; }
-    [JsonIgnore]
-    public WorkoutLog WorkoutLogs { get; set; } = null!;
-}
+

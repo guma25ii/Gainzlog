@@ -1,27 +1,19 @@
 import React, { createContext, useState } from "react"
 import type { ReactNode } from "react"
+import type { ExerciseSummary } from "../types/workoutTypes"
 
-
-export type Exercise = {
-  exerciseId: string
-  name: string
-  gifUrl: string
-  bodyParts: string[]
-  secondaryMuscles: string[]
-  instructions: string[]
-}
 
 type WorkoutContextType = {
-  selectedExercises: Exercise[]
-  setSelectedExercises: React.Dispatch<React.SetStateAction<Exercise[]>>
-  addExercise: (exercise: Exercise) => void;
+  selectedExercises: ExerciseSummary[]
+  setSelectedExercises: React.Dispatch<React.SetStateAction<ExerciseSummary[]>>
+  addExercise: (exercise: ExerciseSummary) => void;
   removeExercise: (id: string) => void;
   resetWorkout: () => void
 }
 
 
 export type WorkoutExercise = {
-  exercise: Exercise
+  exercise: ExerciseSummary
   sets: number
   reps: number
   weight: number
@@ -40,9 +32,9 @@ export const WorkoutProvider = ({ children }: Props) => {
 const resetWorkout = () => {
   setSelectedExercises([])
 }
-const [selectedExercises, setSelectedExercises] = useState<Exercise[]>([])
+const [selectedExercises, setSelectedExercises] = useState<ExerciseSummary[]>([])
 
-const addExercise = (exercise: Exercise) => {
+const addExercise = (exercise: ExerciseSummary) => {
   setSelectedExercises(prev => {
     const exists = prev.some(
       ex => ex.exerciseId === exercise.exerciseId

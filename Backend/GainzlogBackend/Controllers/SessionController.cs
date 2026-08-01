@@ -41,7 +41,7 @@ namespace GainzlogBackend.Controllers
         [HttpGet("{sessionId}")]
         public async Task<IActionResult>GetSessionById(int sessionId)
         {
-            var session = await _context.Session.Include(w => w.Exercise).FirstOrDefaultAsync(w => w.Id == sessionId);
+            var session = await _context.Session.Include(w => w.Exercise).ThenInclude(s => s.LoggedSets).FirstOrDefaultAsync(w => w.Id == sessionId);
             if(session == null)
             {
                 return NotFound("Could Not Find The Session");

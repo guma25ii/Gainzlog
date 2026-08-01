@@ -3,7 +3,8 @@ import PageLayout from '../../Components/PageLayouts'
 import { WorkoutContext } from '../../context/WorkoutContext'
 import { useNavigate } from "react-router-dom"
 import NavigateBtn from '../../Components/NavigateBtn'
-import { createSession, createProgram, getAllPrograms, createExercise } from '../../api/workout'
+import { createSession, createProgram, getAllPrograms, createExercise, createSet } from '../../api/workout'
+
 
 
 const ReviewWorkout = () => {
@@ -98,16 +99,24 @@ const ReviewWorkout = () => {
 
   const saveExercises = async (sessionId: number) => {
     for (const ex of selectedExercises){
-      console.log("sparar övning:", ex.name)
-      console.log("sessionId som skickas:", sessionId)
+
+
       const exSets = sets[ex.exerciseId]
-        await createExercise(
+        const exercise = await createExercise(
           ex.name,
           sessionId,
-          exSets[0].reps,
+          0,
           exSets.length,
-          exSets[0].weight
+          0
         )
+
+        for (const set of  exSets){
+          await createSet(
+            exercise.id,
+            set.reps,
+            set.weight
+          )
+        }
       }
     }
 

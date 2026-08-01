@@ -1,6 +1,13 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import ErrorBoundary from "../../Components/ErrorBoundary/ErrorBoundary"
+import { createExercise, createSet, getSessionById } from "../../api/workout"
+import type { Session, WorkoutExercise } from "../../types/workoutTypes"
+
+
+
+
+
 
 const TrainWorkoutPage = () => {
   const { id } = useParams()
@@ -13,37 +20,40 @@ const TrainWorkoutPage = () => {
   const [sets, setSets] = useState<Record<string, any[]>>({})
   const [completedSets, setCompletedSets] = useState<Record<string, number[]>>({})
 
-  const workouts = JSON.parse(localStorage.getItem("workouts") || "[]")
-  const programs = JSON.parse(localStorage.getItem("programs") || "[]")
-  const program = programs.find((p: any) =>
-  p.workouts?.some((w: any) => w.id === id)
-)
-
-const programId = program?.id
-
-  let workout =
-    workouts.find((w: any) => w.id === id)
-
-  if (!workout) {
-    for (const program of programs) {
-      const found = program.workouts.find((w: any) => w.id === id)
-      if (found) {
-        workout = found
-        break
-      }
-    }
-  }
-
-  if (!workout) {
-    return <h3>Workout not found</h3>
-  }
-
-  const exercises = workout.workouts
-    ? workout.workouts.flatMap((w: any) => w.exercises)
-    : workout.exercises
+  const [session, setSession] = useState<Session | null>(null)
 
   useEffect(() => {
-    let interval: any
+    const fetch = async () => {
+      try{
+        const data = await getSessionById(Number(id))
+        setSession(data)
+        }catch{
+          console.error("Failed To Fetch Session Id")
+        }
+      }
+      fetch()
+    },[])
+
+
+
+  useEffect(() => {
+    if(!session){
+       return 
+    }
+    const data: Record<string, any[]> = {}
+
+    session.exercise.forEach((ex: any) => {
+      data[ex.id] =
+        ex.loggedSets?.length ? ex.loggedSets : [{ reps: 0, weight: 0 }]
+    })
+
+    setSets(data)
+  }, [session])
+
+
+
+  useEffect(() => {
+    let interval: number
 
     if (isRunning) {
       interval = setInterval(() => {
@@ -54,18 +64,8 @@ const programId = program?.id
     return () => clearInterval(interval)
   }, [isRunning])
 
-  useEffect(() => {
-    const initial: Record<string, any[]> = {}
 
-    exercises.forEach((ex: any) => {
-      initial[ex.exerciseId] =
-        ex.sets?.length ? ex.sets : [{ reps: 0, weight: 0 }]
-    })
-
-    setSets(initial)
-  }, [id])
-
-  const toggleSet = (exerciseId: string, setIndex: number) => {
+  const toggleSet = (exerciseId: number, setIndex: number) => {
     setCompletedSets(prev => {
       const current = prev[exerciseId] || []
       const exists = current.includes(setIndex)
@@ -83,32 +83,23 @@ const programId = program?.id
     setIsRunning(true)
   }
 
-  const finishedWorkout = () => {
+  const finishedWorkout = async () => {
     setIsRunning(false)
+     for (const [exerciseId, setsForExercise] of Object.entries(sets)) {
 
-    const completedWorkout = {
-      id: crypto.randomUUID(),
-      workoutId: id,
-      duration: seconds,
-      date: new Date().toISOString(),
-      exercises: exercises
+      for (const set of setsForExercise){
+        await createSet(Number(exerciseId), set.reps, set.weight)
+      }
     }
+    setFeedback("Workout finished ")
 
-    const stored = JSON.parse(localStorage.getItem("completed") || "[]")
-
-    localStorage.setItem(
-      "completed",
-      JSON.stringify([...stored, completedWorkout])
-    )
-     setFeedback("Workout finished ")
-
-      setTimeout(() => {
+    setTimeout(() => {
     setFeedback(null)
     navigate("/workouts")
   }, 1200)
   }
 
-  const addSet = (exerciseId: string) => {
+  const addSet = (exerciseId: number) => {
     setSets(prev => ({
       ...prev,
       [exerciseId]: [
@@ -118,9 +109,13 @@ const programId = program?.id
     }))
   }
 
+      if(!session){
+        return <div>Loading...</div>
+    }
+
   return (
     <div className="centerContent">
-      <h1>{workout.name || "Workout"}</h1>
+      <h1>{session.name || "Workout"}</h1>
       <div className="workoutsContainer">
 
       {isRunning && (
@@ -140,13 +135,13 @@ const programId = program?.id
         </button>
       )}
 
-      {exercises.map((ex: any) => (
-        <ErrorBoundary key={ex.exerciseId} fallback={<p>Could Not Load This Exercise</p>}>
+      {session.exercise.map((ex: WorkoutExercise) => (
+        <ErrorBoundary key={ex.id} fallback={<p>Could Not Load This Exercise</p>}>
         <div  className="centerContent">
           <h2>{ex.name}</h2>
-          {sets[ex.exerciseId]?.map((set, index) => {
+          {sets[ex.id]?.map((set, index) => {
             const completed =
-              completedSets[ex.exerciseId]?.includes(index)
+              completedSets[ex.id]?.includes(index)
 
             return (
               <div key={index} className="setRow">
@@ -157,7 +152,7 @@ const programId = program?.id
                     if (value === "" || /^[0-9]*$/.test(value)) {
                         setSets(prev => ({
                         ...prev,
-                        [ex.exerciseId]: prev[ex.exerciseId].map((s, i) =>
+                        [ex.id]: prev[ex.id].map((s, i) =>
                             i === index
                             ? { ...s, reps: value === "" ? 0 : Number(value) }
                             : s
@@ -172,7 +167,7 @@ const programId = program?.id
                     if (value === "" || /^[0-9]*$/.test(value)) {
                         setSets(prev => ({
                         ...prev,
-                        [ex.exerciseId]: prev[ex.exerciseId].map((s, i) =>
+                        [ex.id]: prev[ex.id].map((s, i) =>
                             i === index
                             ? { ...s, weight: value === "" ? 0 : Number(value) }
                             : s
@@ -181,16 +176,16 @@ const programId = program?.id
                     }
                     }}
                 /><p>Kg</p>
-                <button className={completed ? "doneBtn active" : "doneBtn"} onClick={() => toggleSet(ex.exerciseId, index)}>✓</button>
+                <button className={completed ? "doneBtn active" : "doneBtn"} onClick={() => toggleSet(ex.id, index)}>✓</button>
               </div>
             )
           })}
-          <button className="navigationBtn" onClick={() => addSet(ex.exerciseId)}>+ Add set</button></div>
+          <button className="navigationBtn" onClick={() => addSet(ex.id)}>+ Add set</button></div>
           </ErrorBoundary>))}
       </div> 
         <button className="navigationBtn"   onClick={() => {
-          if (programId) {
-          navigate(`/program/${programId}`)
+          if (session.programId) {
+          navigate(`/program/${session.programId}`)
           } else {navigate("/workouts")}}}>Back</button> 
           {feedback && (<div className="toast">{feedback}</div>)}
     </div>

@@ -1,18 +1,51 @@
 
 import PageLayout from '../../Components/PageLayouts'
-import { exercises } from '../../Components/WorkoutComponents/WorkoutMockData'
 import { useContext, useEffect, useState } from 'react'
 import { WorkoutContext } from '../../context/WorkoutContext'
-import type { Exercise } from '../../context/WorkoutContext'
 import NavigateBtn from '../../Components/NavigateBtn'
 import { useLocation } from "react-router-dom"
+import { getAllMuscles, getExercisesByBodypart } from '../../api/workout'
+import type { ExerciseSummary, Muscle } from '../../types/workoutTypes'
+
 
 const AddWorkoutPage = () => {
   const location = useLocation()
 
   const { addExercise, selectedExercises } = useContext(WorkoutContext)!
   const [selectedCategory, setSelectedCategory] = useState("chest")
+  const [allCategories, setAllCategories]= useState<Muscle[]>([])
+  const [exercisesInCategory, setExercisesInCategory] = useState<ExerciseSummary[]>([])
   const [feedback, setFeedback] = useState<string | null>(null)
+
+
+
+  const fetchCategories = async () => {
+    try{
+        const data = await getAllMuscles();
+      setAllCategories(data);
+    }catch(err){
+      console.error("Failed To fetch Categories")
+    }
+  }
+  useEffect (() => {
+    fetchCategories();
+
+  },[])
+
+  const fetchExerciseByBodypart = async () => {
+    try{
+      const data = await getExercisesByBodypart(selectedCategory);
+      setExercisesInCategory(data);
+    }catch(err){
+      console.error("Failed To Get Exercises In Category")
+    }
+  }
+  useEffect(() => {
+    fetchExerciseByBodypart();
+  },[selectedCategory])
+
+
+
 useEffect(() => {
   if (location.state?.toast) {
     setFeedback(location.state.toast)
@@ -23,12 +56,7 @@ useEffect(() => {
   }
 }, [location.state])
 
-
-  const categories = Array.from(
-    new Set(exercises.map(ex => ex.bodyParts).flat())
-  )
-
-const handleAdd = (ex: Exercise) => {
+const handleAdd = (ex: ExerciseSummary) => {
   const exists = selectedExercises.some(
     e => e.exerciseId === ex.exerciseId
   )
@@ -52,10 +80,10 @@ const handleAdd = (ex: Exercise) => {
       <div className='centerContent'>
         <h1>Add Workout</h1>
         <div className='workoutsContainer'>
-        <div className='categoryContainer'>{categories.map(category => (
-          <button className='navigationBtn' key={category} onClick={() => setSelectedCategory(category)}>{category}</button>))}
+        <div className='categoryContainer'>{allCategories.map(category => (
+          <button className='navigationBtn' key={category.name} onClick={() => setSelectedCategory(category.name)}>{category.name}</button>))}
         </div>
-        <div className='exerciseContainer'>{exercises.filter(ex => ex.bodyParts.includes(selectedCategory)).map(ex => (
+        <div className='exerciseContainer'>{exercisesInCategory.map(ex => (
           <button className='navigationBtn' key={ex.exerciseId} onClick={() => handleAdd(ex) }>{ex.name}</button>))}
         </div>
       </div>

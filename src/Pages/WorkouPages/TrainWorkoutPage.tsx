@@ -1,9 +1,10 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import ErrorBoundary from "../../Components/ErrorBoundary/ErrorBoundary"
-import { createExercise, createSet, getSessionById } from "../../api/workout"
-import type { Session, WorkoutExercise } from "../../types/workoutTypes"
-import { div } from "framer-motion/client"
+import { createExercise, createSet, getExerciseInfo, getSessionById } from "../../api/workout"
+import { type ExerciseDetails, type Session, type WorkoutExercise } from "../../types/workoutTypes"
+
+
 
 
 
@@ -22,6 +23,9 @@ const TrainWorkoutPage = () => {
   const [completedSets, setCompletedSets] = useState<Record<string, number[]>>({})
 
   const [openMenuId, setOpenMenuId] = useState<number | null>(null)
+  const [exerciseInfo, setExerciseInfo] = useState<ExerciseDetails | null>(null)
+
+
 
   const [session, setSession] = useState<Session | null>(null)
 
@@ -112,6 +116,24 @@ const TrainWorkoutPage = () => {
     }))
   }
 
+  const showInfo = async (exerciceId: string) => {
+    if(exerciseInfo?.exerciseId === exerciceId){
+      setExerciseInfo(null)
+      return
+    }
+    try{
+      const info = await getExerciseInfo(exerciceId)
+      setExerciseInfo(info)
+
+    }catch(err){
+      console.error("Failed To Get Exercise Information")
+    }
+  }
+
+
+
+
+
       if(!session){
         return <div>Loading...</div>
     }
@@ -146,7 +168,7 @@ const TrainWorkoutPage = () => {
           {
             openMenuId === ex.id &&(
               <div>
-                <button onClick={() => {}}>Info</button>
+                <button onClick={() => showInfo(ex.exerciseId)}>Info</button>
                 <button onClick={() => {}}>Records</button>
                 <button onClick={() => {}}>Change Exercise</button>
               </div>
@@ -201,7 +223,21 @@ const TrainWorkoutPage = () => {
           navigate(`/program/${session.programId}`)
           } else {navigate("/workouts")}}}>Back</button> 
           {feedback && (<div className="toast">{feedback}</div>)}
+          {exerciseInfo && (
+            <div className="modalOverlay">
+              <div className="modalBox">
+                <h4>{exerciseInfo.name}</h4>
+                <img src={exerciseInfo.gifUrl} alt={exerciseInfo.name} />
+                  {exerciseInfo.instructions.map((item, index) => (
+                    <p key={index}>{item}</p>
+                  ))}
+                  <button onClick={() => setExerciseInfo(null)}>Cancel</button>
+              </div>
+
+            </div>
+          )}
     </div>
+    
   )
 }
 

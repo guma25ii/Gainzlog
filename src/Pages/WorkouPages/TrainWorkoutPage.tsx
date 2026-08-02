@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import ErrorBoundary from "../../Components/ErrorBoundary/ErrorBoundary"
 import { createExercise, createSet, getSessionById } from "../../api/workout"
 import type { Session, WorkoutExercise } from "../../types/workoutTypes"
+import { div } from "framer-motion/client"
 
 
 
@@ -19,6 +20,8 @@ const TrainWorkoutPage = () => {
 
   const [sets, setSets] = useState<Record<string, any[]>>({})
   const [completedSets, setCompletedSets] = useState<Record<string, number[]>>({})
+
+  const [openMenuId, setOpenMenuId] = useState<number | null>(null)
 
   const [session, setSession] = useState<Session | null>(null)
 
@@ -139,6 +142,16 @@ const TrainWorkoutPage = () => {
         <ErrorBoundary key={ex.id} fallback={<p>Could Not Load This Exercise</p>}>
         <div  className="centerContent">
           <h2>{ex.name}</h2>
+          <button className="settings" onClick={() => setOpenMenuId(openMenuId === ex.id ? null: ex.id)}>⚙️</button>
+          {
+            openMenuId === ex.id &&(
+              <div>
+                <button onClick={() => {}}>Info</button>
+                <button onClick={() => {}}>Records</button>
+                <button onClick={() => {}}>Change Exercise</button>
+              </div>
+            )
+          }
           {sets[ex.id]?.map((set, index) => {
             const completed =
               completedSets[ex.id]?.includes(index)

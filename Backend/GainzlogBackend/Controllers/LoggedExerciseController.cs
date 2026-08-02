@@ -25,6 +25,7 @@ namespace GainzlogBackend.Controllers
             {
                 WorkoutId = createExerciseRequest.SessionId,
                 Name = createExerciseRequest.Name,
+                ExerciseId = createExerciseRequest.ExerciseId,
                 Reps = createExerciseRequest.Reps,
                 Sets = createExerciseRequest.Sets,
                 Weight = createExerciseRequest.Weight,

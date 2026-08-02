@@ -75,6 +75,7 @@ const handleAdd = (ex: ExerciseSummary) => {
   return () => clearTimeout(timer)
 }
 
+
   return (
     <PageLayout>
       <div className='centerContent'>

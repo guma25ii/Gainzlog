@@ -104,6 +104,7 @@ const ReviewWorkout = () => {
       const exSets = sets[ex.exerciseId]
         const exercise = await createExercise(
           ex.name,
+          ex.exerciseId,
           sessionId,
           0,
           exSets.length,

@@ -1,6 +1,6 @@
 
 import API_BASE from "./client";
-import type { ExerciseSummary, Muscle, Session } from "../types/workoutTypes";
+import type { ExerciseDetails, ExerciseSummary, Muscle, Session, WorkoutExercise } from "../types/workoutTypes";
 
 
 
@@ -125,16 +125,26 @@ export const getExercisesByBodypart = async (bodypart: string):Promise <Exercise
     }
     return response.json();
 }
+export const getExerciseInfo = async (information: string):Promise <ExerciseDetails> => {
+    const response = await fetch(`${API_BASE}/Exercise/${information}/exerciseInfo`, {
+        method: "GET"
+    })
+    if(!response.ok){
+        throw new Error("Failed to Get Exercise Info")
+    }
+    return response.json();
+
+}
 
 
 
-export const createExercise = async (name: string, sessionId: number, reps: number, sets: number, weight: number) => {
+export const createExercise = async (name: string, exerciseId: string, sessionId: number, reps: number, sets: number, weight: number) => {
     const response = await fetch(`${API_BASE}/LoggedExercise/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({name, sessionId, reps, sets, weight})
+        body: JSON.stringify({name, exerciseId, sessionId, reps, sets, weight})
     });
     if(!response.ok){
         throw new Error("Failed to Create Exercise");

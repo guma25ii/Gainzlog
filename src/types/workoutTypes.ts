@@ -7,6 +7,7 @@ workoutExerciseId: number
 export type WorkoutExercise = {
   id: number,
   workoutId: number,
+  exerciseId: string,
   name: string,
   sets: number,
   reps: number,
@@ -30,4 +31,14 @@ export type ExerciseSummary = {
   name: string,
   gifUrl: string,
   bodyparts: string[]
+}
+
+export type ExerciseDetails = {
+  exerciseId: string,
+  name: string,
+  gifUrl: string,
+  bodyparts: string[],
+  targetMuscles: string[],
+  secondaryMuscles: string[],
+  instructions: string[]
 }

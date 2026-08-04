@@ -17,6 +17,7 @@ public class Session
     public int Id { get; set; }
     public int? ProgramId { get; set; } 
     public string Name { get; set; } = string.Empty;
+    public bool IsComplete { get; set; }
     [JsonIgnore]
     public WorkoutProgram WorkoutProgram {get; set;} = null!;
     public List<WorkoutExercise> Exercise { get; set; } = new();

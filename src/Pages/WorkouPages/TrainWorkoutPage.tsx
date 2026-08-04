@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import ErrorBoundary from "../../Components/ErrorBoundary/ErrorBoundary"
-import { createExercise, createSet, getExerciseInfo, getSessionById } from "../../api/workout"
+import { createSet, getExerciseInfo, getSessionById, updateSet } from "../../api/workout"
 import { type ExerciseDetails, type Session, type WorkoutExercise } from "../../types/workoutTypes"
 
 
@@ -72,8 +72,11 @@ const TrainWorkoutPage = () => {
   }, [isRunning])
 
 
-  const toggleSet = (exerciseId: number, setIndex: number) => {
+  const toggleSet = async (exerciseId: number, setIndex: number) => {
+    const current = completedSets[exerciseId] || []
+    const exists = current.includes(setIndex)
     setCompletedSets(prev => {
+
       const current = prev[exerciseId] || []
       const exists = current.includes(setIndex)
 
@@ -84,6 +87,12 @@ const TrainWorkoutPage = () => {
           : [...current, setIndex]
       }
     })
+    if(!exists){
+      const {id, reps, weight} = sets[exerciseId][setIndex]
+
+      await updateSet(id,reps,weight)
+    }
+    
   }
 
   const startWorkout = () => {
@@ -106,12 +115,15 @@ const TrainWorkoutPage = () => {
   }, 1200)
   }
 
-  const addSet = (exerciseId: number) => {
+
+  
+  const addSet = async (exerciseId: number) => {
+    const newset = await createSet(exerciseId, 0, 0)
     setSets(prev => ({
       ...prev,
       [exerciseId]: [
         ...(prev[exerciseId] || []),
-        { reps: 0, weight: 0 }
+        { id: newset.id, reps: 0, weight: 0 }
       ]
     }))
   }

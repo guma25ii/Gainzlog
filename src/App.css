@@ -482,6 +482,10 @@ p {
   flex-direction: column;
   gap: 10px;
 }
+.modalBox img {
+  max-width: 50%;
+  height: auto;
+}
 
 
 

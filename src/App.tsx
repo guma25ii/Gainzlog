@@ -16,6 +16,7 @@ import AddPicturePage from './Pages/ProgressPages/AddPicturePage'
 import ProgramPage from './Pages/WorkouPages/ProgramPage'
 import WorkoutDetailPage from './Pages/WorkouPages/WorkoutDetailPage'
 import TrainWorkoutPage from './Pages/WorkouPages/TrainWorkoutPage'
+import ChangeExercisePage from './Pages/WorkouPages/ChangeExercisePage'
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
           <Route path='/train' element={<TrainWorkoutPage/>} />
           <Route path="/workout/:id" element={<WorkoutDetailPage />} />
           <Route  path="/train/:id"element={<TrainWorkoutPage />} />
+          <Route path='/changeexercisepage' element={<ChangeExercisePage/>} />
 
         <Route path='/progress' element={<ProgressPage/>} />
           <Route path='/pictures' element={<ProgressPicturesPage/>} />

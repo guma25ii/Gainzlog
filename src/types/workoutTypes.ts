@@ -19,6 +19,7 @@ export type WorkoutExercise = {
   id: number,
   programId: null | number,
   name: string,
+  isComplete: boolean,
   exercise: WorkoutExercise[]
 }
 

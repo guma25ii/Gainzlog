@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import ErrorBoundary from "../../Components/ErrorBoundary/ErrorBoundary"
-import { createSet, getExerciseInfo, getSessionById, updateSet } from "../../api/workout"
+import { createSet, getExerciseInfo, getSessionById, updateSet, completeSession } from "../../api/workout"
 import { type ExerciseDetails, type Session, type WorkoutExercise } from "../../types/workoutTypes"
 
 
@@ -24,6 +24,7 @@ const TrainWorkoutPage = () => {
 
   const [openMenuId, setOpenMenuId] = useState<number | null>(null)
   const [exerciseInfo, setExerciseInfo] = useState<ExerciseDetails | null>(null)
+
 
 
 
@@ -99,16 +100,19 @@ const TrainWorkoutPage = () => {
     setIsRunning(true)
   }
 
-  const finishedWorkout = async () => {
+  const finishedWorkout = async (sessionId: number) => {
     setIsRunning(false)
-     for (const [exerciseId, setsForExercise] of Object.entries(sets)) {
-
-      for (const set of setsForExercise){
-        await createSet(Number(exerciseId), set.reps, set.weight)
-      }
-    }
+  try{
+    await completeSession(sessionId)
+  }catch(err){
+    console.error("Failed To Complete Session")
+    setFeedback("Failed to Save Session, Try Again");
+      setTimeout(() => {
+      setFeedback(null)
+    }, 1200)
+      return
+  }
     setFeedback("Workout finished ")
-
     setTimeout(() => {
     setFeedback(null)
     navigate("/workouts")
@@ -142,6 +146,15 @@ const TrainWorkoutPage = () => {
     }
   }
 
+  const changeexercise = (sessionId: number, id: number) => {
+    navigate("/changeexercisepage", {
+      state: {
+        sessionId: sessionId,
+        oldExerciseId: id
+      }
+    })
+  }
+
 
 
 
@@ -167,7 +180,7 @@ const TrainWorkoutPage = () => {
           Start Workout
         </button>
       ) : (
-        <button className="navigationBtn" onClick={finishedWorkout}>
+        <button className="navigationBtn" onClick={() => finishedWorkout(session.id)}>
           Finish Workout
         </button>
       )}
@@ -182,7 +195,7 @@ const TrainWorkoutPage = () => {
               <div>
                 <button onClick={() => showInfo(ex.exerciseId)}>Info</button>
                 <button onClick={() => {}}>Records</button>
-                <button onClick={() => {}}>Change Exercise</button>
+                <button onClick={() => {changeexercise(session.id , ex.id)}}>Change Exercise</button>
               </div>
             )
           }

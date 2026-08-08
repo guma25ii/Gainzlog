@@ -51,6 +51,21 @@ namespace GainzlogBackend.Controllers
 
 
 
+
+        [HttpPatch("{sessionId}")]
+        public async Task<IActionResult> UpdateSession(int sessionId, UpdateSessionRequest updateSessionRequest)
+        {
+            var session = await _context.Session.FirstOrDefaultAsync(s => s.Id == sessionId);
+            if(session == null)
+            {
+                return NotFound("Could Not Find Specific Session Id");
+            }
+            session.IsComplete = updateSessionRequest.IsComplete;
+            await _context.SaveChangesAsync();
+            return Ok(session);
+        }
+
+
         [HttpDelete("{SessionId}")]
         public async Task<IActionResult> DeleteSession(int sessionId)
         {

@@ -89,6 +89,18 @@ export const getSessionById = async (sessionId: number): Promise<Session> => {
     }
     return response.json();
 }
+export const completeSession = async(sessionId: number) => {
+    const response = await fetch(`${API_BASE}/Session/${sessionId}`,{
+        method: "PATCH",
+        headers: {
+            "Content-Type" : "application/json"
+        },
+        body: JSON.stringify({isComplete: true })
+    })
+    if(!response.ok){
+        throw new Error("Failed To Set completeSession To True")
+    }
+}
 
 export const deleteSession = async (sessionId: number) => {
     const response = await fetch(`${API_BASE}/Session/${sessionId}`, {
@@ -185,6 +197,8 @@ export const updateSet = async (setId: number, reps: number, weight: number) => 
     }
     return response.json();
 }
+
+
 
 export const deleteSet = async (setId: number) => {
     const response = await fetch(`${API_BASE}/Set/${setId}`,{

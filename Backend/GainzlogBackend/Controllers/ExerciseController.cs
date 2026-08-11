@@ -103,7 +103,7 @@ namespace GainzlogBackend.Controllers
             var exerciseInfo = doc.RootElement.GetProperty("data");
             var result = new {
 
-                exerciesId = exerciseInfo.GetProperty("exerciseId").GetString(),
+                exercieId = exerciseInfo.GetProperty("exerciseId").GetString(),
                 name = exerciseInfo.GetProperty("name").GetString(),
                 gifUrl = exerciseInfo.GetProperty("gifUrl").GetString(),
                 bodyparts = exerciseInfo.GetProperty("bodyParts").EnumerateArray().Select(a => a.GetString()).ToList(),

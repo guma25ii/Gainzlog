@@ -1,6 +1,9 @@
 
 import { useParams, useNavigate } from 'react-router-dom'
 import PageLayout from '../../Components/PageLayouts'
+import { useEffect, useState } from 'react'
+import { getSessionById } from '../../api/workout'
+
 
 
 
@@ -10,51 +13,42 @@ const WorkoutDetailPage = () => {
     const { id }= useParams()
     const navigate = useNavigate()
 
-    const workouts = JSON.parse(localStorage.getItem("workouts") || "[]")
-    let workout = workouts.find((w: any) => w.id === id)
-    const programs = JSON.parse(localStorage.getItem("programs") || "[]")
-      
-    const program = programs.find((p: any) =>
-    p.workouts?.some((w: any) => w.id === id)
-    )
 
-    const programId = program?.id
+    const [session, setSession] = useState<any>();
 
-    if (!workout) {
-    for (const program of programs) {
-        const found = program.workouts.find((w: any) => w.id === id)
-        if (found) {
-        workout = found
-        break
+    useEffect(() => {
+      const fetch = async () => {
+        try{
+          const data = await getSessionById(Number(id));
+          setSession(data);
+        }catch{
+          console.error("Failed To Get Session");
         }
-    }
+      }
+      fetch();
+    }, [])
+    if(!session){
+      return <div>Loading...</div>
     }
 
-    if(!workout){
-        return <h3>Workout not found</h3>
-    }
 
+console.log("session:", session)
   return (
     <PageLayout>
     <div className="centerContent">
-      <h1>{workout.name || "Workout"}</h1>
+      <h1>{session.name || "Workout"}</h1>
       <div className='workoutsContainer'>
-      {workout.exercises.map((ex: any) => (
-        <div key={ex.exerciseId}>
+      {session.exercise.map((ex: any) => (
+        <div key={ex.id}>
           <h3>{ex.name}</h3>
-
-          {ex.sets.map((set: any, i: number) => (
-            <p key={i}>
-              Set {i + 1}: {set.reps} reps / {set.weight} kg
-            </p>
-          ))}
+            <p>{ex.sets} Sets {ex.reps} Reps {ex.weight} Kg</p>
         </div>
       ))}
     </div>
-          <button className='navigationBtn' onClick={() => navigate(`/train/${workout.id}`)}>Start Workout</button>
+          <button className='navigationBtn' onClick={() => navigate(`/train/${session.id}`)}>Start Workout</button>
       <button className="navigationBtn"   onClick={() => {
-    if (programId) {
-      navigate(`/program/${programId}`)
+    if (session.programId) {
+      navigate(`/program/${session.programId}`)
     } else {
       navigate("/workouts")
     }}}>Back</button>

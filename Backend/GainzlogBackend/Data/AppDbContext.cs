@@ -16,8 +16,8 @@ public class AppDbContext : DbContext
     public DbSet<Session> Session { get; set; }
     public DbSet<WorkoutProgram> WorkoutPrograms { get; set; }
     public DbSet<WorkoutExercise> WorkoutExercises { get; set; }
-    public DbSet<LoggedSet> LoggedSets { get; set; }
-    public DbSet<WorkoutLog> WorkoutLogs { get; set; }
+    public DbSet<Set> Sets { get; set; }
+
 
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -32,13 +32,15 @@ public class AppDbContext : DbContext
             .HasOne(p => p.WorkoutProgram)
             .WithMany(w => w.Sessions)
             .HasForeignKey(p => p.ProgramId)
-            .IsRequired(false);
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<WorkoutExercise>()
             .HasOne(e => e.Session)
             .WithMany(w => w.Exercise)
             .HasForeignKey(e => e.WorkoutId)
-            .IsRequired(false);
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.Cascade);
     }
  
 }

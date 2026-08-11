@@ -3,69 +3,82 @@ import { useEffect, useState, } from 'react'
 import NavigateBtn from '../../Components/NavigateBtn'
 import PageLayout from '../../Components/PageLayouts'
 import { useNavigate } from 'react-router-dom'
+import { deleteProgram, deleteSession, getAllPrograms, getAllSessions } from '../../api/workout'
+import type { Session } from '../../types/workoutTypes'
 
 const WorkoutPage = () => {
   const navigate = useNavigate();
 
   const [activeTab, setActiveTab] = useState("programs");
 
-  const [workouts, setWorkouts] = useState<any[]>([])
+  const [workouts, setWorkouts] = useState<Session[]>([])
   const [programs, setPrograms] = useState<any[]>([])
-  const [selectedId, setSelectedId] = useState<string | null>(null)
+  const [selectedId, setSelectedId] = useState<number | null>(null)
   const [deleteModal, setDeleteModal] = useState(false)
   const [deleteType, setDeleteType] = useState<"program" | "workout" | null>(null)
   
 
+
+  const fetchWorkouts = async () => {
+    try{
+      const data = await getAllSessions();
+      const filter = data.filter(s => s.programId === null)
+      
+      
+      setWorkouts(filter)
+    }catch{
+      console.error("Failed To Fetch Sessions")
+    }
+  }
   useEffect(() => {
-    const storedWorkouts = JSON.parse(localStorage.getItem("workouts") || "[]")
-    setWorkouts(storedWorkouts)
+    fetchWorkouts();
   },[])
 
-  useEffect(() => {
-  const storedPrograms = JSON.parse(
-    localStorage.getItem("programs") || "[]"
-  )
 
-  setPrograms(storedPrograms)
-}, [])
+  const fetchPrograms = async () => {
+    try {
+      const data = await getAllPrograms()
+      setPrograms(data);
+      }
+      catch(err){
+        console.error("Failed To Load Programs");
+      }
+    }
+
+  useEffect(() => {
+    fetchPrograms(); 
+  }, [])
 
   const openDeleteModal = (
-    id: string,
+    id: number,
     type: "program" | "workout"
   ) => {
     setSelectedId(id)
     setDeleteType(type)
     setDeleteModal(true)
   }
-  const handleDelete = () => {
-    if (deleteType === "program") {
 
-      const updatedPrograms = programs.filter(
-        p => p.id !== selectedId
-      )
 
-      setPrograms(updatedPrograms)
 
-      localStorage.setItem(
-        "programs",
-        JSON.stringify(updatedPrograms)
-      )
+  const handleDelete = async () => {
+    if(selectedId === null){
+      console.error("Failed To Delete")
+        return
     }
-
-    if (deleteType === "workout") {
-
-      const updatedWorkouts = workouts.filter(
-        w => w.id !== selectedId
-      )
-
-      setWorkouts(updatedWorkouts)
-
-      localStorage.setItem(
-        "workouts",
-        JSON.stringify(updatedWorkouts)
-      )
+    try{
+      if(deleteType === "workout"){
+      await deleteSession(selectedId);
+      fetchWorkouts();
+      }
+      if (deleteType === "program"){
+      await deleteProgram(selectedId);
+      fetchPrograms();
+      }
     }
-
+    catch{
+      console.error("Failed To Delete");
+    }
+    
     setDeleteModal(false)
     setSelectedId(null)
     setDeleteType(null)
@@ -98,7 +111,7 @@ const WorkoutPage = () => {
         {activeTab === "workouts" && (
           <>
             <h2 className="listTitle">Workouts</h2>
-              {workouts.map((workout: any) => (
+              {workouts.map((workout: Session) => (
                 <div key={workout.id} onClick={() => navigate(`/workout/${workout.id}`)}>
                   <div >
                     <div className="workoutRow">

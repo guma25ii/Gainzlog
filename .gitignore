@@ -11,6 +11,14 @@ node_modules
 
 *.local
 
+# Build output
+dist/
+
+# Env files
+.env
+.env.*
+!.env.example
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -41,6 +49,7 @@ node_modules
 
 # User secrets
 secrets.json
+appsettings.Development.json
 appsettings.*.Development.json
 
 # ASP.NET Core

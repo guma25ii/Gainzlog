@@ -1,33 +1,25 @@
-using System;
 using GainzlogBackend.Dto;
 using GainzlogBackend.Interfaces;
 using GainzlogBackend.Models;
-using GainzlogBackend.Repositories;
+using System.Linq;
 
-namespace GainzlogBackend;
+namespace GainzlogBackend.Services;
 
 public class ProgramService : IProgramService
 {
-    private readonly ProgramRepository _repository;
+         // Service pratar bara med Repository-interfacet, aldrig med DbContext direkt
+        private readonly IProgramRepository _repository;
 
-    public ProgramService(ProgramRepository repository)
+    public ProgramService(IProgramRepository repository)
     {
         _repository = repository;
     }
-    public async Task<List<WorkoutProgram>> GetAllAsync()
+    public async Task<List<ProgramResponse>> GetAllAsync()
     {
-        List<ProgramResponse> workoutProgram = await _repository.GetAllAsync(); 
-        return workoutProgram.Select(wp => new WorkoutProgram
-        {
-            Id = wp.Id,
-            Name = wp.Name
-        }).ToList();
-    }
-
-    Task<List<ProgramResponse>> IProgramService.GetAllAsync()
-    {
-                List<ProgramResponse> workoutProgram = await _repository.GetAllAsync(); 
-        return workoutProgram.Select(wp => new WorkoutProgram
+        // Hämtar rådata (entiteter) från repository/databasen
+        List<WorkoutProgram> workoutProgram = await _repository.GetAllWorkoutProgramsAsync(); 
+        // Mappar entiteter -> DTO:er, så vi bara skickar ut det klienten faktiskt ska se
+        return workoutProgram.Select(wp => new ProgramResponse
         {
             Id = wp.Id,
             Name = wp.Name

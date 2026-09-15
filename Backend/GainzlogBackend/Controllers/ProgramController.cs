@@ -1,5 +1,6 @@
 using GainzlogBackend.Data;
 using GainzlogBackend.Dto;
+using GainzlogBackend.Interfaces;
 using GainzlogBackend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,12 +11,17 @@ namespace GainzlogBackend.Controllers
     [ApiController]
     public class ProgramController : ControllerBase
     {
-            private readonly AppDbContext _context;
+        //     private readonly AppDbContext _context;
 
-        public ProgramController(AppDbContext context)
-        {
-            _context = context;
-        }
+        // public ProgramController(AppDbContext context)
+        // {
+        //     _context = context;
+        // }
+
+private readonly IProgramService _service;
+public ProgramController(IProgramService service){
+    _service = service;
+}
 
         [HttpPost] 
         public async Task<IActionResult> CreateProgram(CreateProgramRequest request)
@@ -33,12 +39,7 @@ namespace GainzlogBackend.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllPrograms()
         {
-            var programs =  await _context.WorkoutPrograms.ToListAsync();
-            if(programs == null)
-            {
-                return NotFound("Could Not Find Programs");
-            }
-
+            var programs =  await _service.GetAllAsync();
             return Ok(programs);
         }
 

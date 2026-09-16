@@ -25,4 +25,26 @@ public class ProgramService : IProgramService
             Name = wp.Name
         }).ToList();
     }
+
+    public async Task<ProgramResponse> CreateProgramAsync(CreateProgramRequest request)
+    {
+        // Bygger en WorkoutProgram-entitet utifrån det klienten skickade in (bara Name, inget Id än)
+        var program = new WorkoutProgram
+        {
+            Name = request.Name
+        };
+            // Skickar entiteten till Repository för att sparas i databasen.
+            // Det som kommer tillbaka har nu ett Id, ifyllt av databasen
+        var savedProgram = await _repository.CreateProgramAsync(program);
+         // Bygger en ProgramResponse (med Id) utifrån den sparade entiteten,
+        // för att bara skicka tillbaka det klienten faktiskt ska se
+        var response = new ProgramResponse
+        {
+            Id = savedProgram.Id,
+            Name = savedProgram.Name
+        };
+        // Skickas tillbaka till Controller, som i sin tur skickar det vidare till klienten
+        return response;
+
+    }
 }

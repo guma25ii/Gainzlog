@@ -26,13 +26,8 @@ public ProgramController(IProgramService service){
         [HttpPost] 
         public async Task<IActionResult> CreateProgram(CreateProgramRequest request)
         {
-            var program  = new WorkoutProgram {
-                Name = request.Name
-            };
-            _context.WorkoutPrograms.Add(program);
-            await _context.SaveChangesAsync();
-
-            return Ok(program);  
+            var saveProgram = await _service.CreateProgramAsync(request);
+            return Ok(saveProgram);  
         }
 
 

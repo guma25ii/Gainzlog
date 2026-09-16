@@ -8,7 +8,8 @@ public interface IProgramService
 {
     Task<List<ProgramResponse>> GetAllAsync();
 
- // Det som kommer IN i metoden (från controllern)                         Det som skickas UT/retur (till controllern)
- // skickas efter databasen skapat posten → Id finns                       skickas innan något finns i databasen → inget Id att
-    Task<ProgramResponse> CreateProgram(CreateProgramRequest request);
+ // Det som skickas ut från metoden här, returtyp                          Metoden tar emot det som är på denna sidan parameter
+ // skickas efter databasen skapat posten → Id finns                       
+//  Task<VadSomGårUT> MetodNamn(VadSomKommerIN parameter);
+    Task<ProgramResponse> CreateProgramAsync(CreateProgramRequest request);
 }

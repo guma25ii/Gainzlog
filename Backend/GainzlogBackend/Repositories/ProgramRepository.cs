@@ -19,4 +19,11 @@ public class ProgramRepository : IProgramRepository
     {
         return await _context.WorkoutPrograms.ToListAsync();
     }
+
+    public async Task<WorkoutProgram> CreateProgramAsync(WorkoutProgram workoutProgram)
+    {
+        _context.WorkoutPrograms.Add(workoutProgram);
+        await _context.SaveChangesAsync();
+        return  workoutProgram;
+    }
 }

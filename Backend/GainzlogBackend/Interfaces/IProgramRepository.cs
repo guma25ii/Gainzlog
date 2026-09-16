@@ -6,5 +6,6 @@ namespace GainzlogBackend.Interfaces;
 public interface IProgramRepository
 {
     Task<List<WorkoutProgram>> GetAllWorkoutProgramsAsync();
+    Task<WorkoutProgram> CreateProgramAsync(WorkoutProgram workoutProgram);
 
 }

@@ -12,4 +12,6 @@ public interface IProgramService
  // skickas efter databasen skapat posten → Id finns                       
 //  Task<VadSomGårUT> MetodNamn(VadSomKommerIN parameter);
     Task<ProgramResponse> CreateProgramAsync(CreateProgramRequest request);
+
+    Task<ProgramResponse?>DeleteProgramAsync(int programId);
 }

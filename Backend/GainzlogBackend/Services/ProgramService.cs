@@ -45,6 +45,21 @@ public class ProgramService : IProgramService
         };
         // Skickas tillbaka till Controller, som i sin tur skickar det vidare till klienten
         return response;
+    }
 
+    public async Task<ProgramResponse?>DeleteProgramAsync(int programId)
+    {
+        var program = await  _repository.DeleteProgramAsync(programId);
+        if(program == null)
+        {
+            return null;
+        }
+        var response = new ProgramResponse
+        {
+            Id = program.Id,
+            Name = program.Name
+        };
+        return response;
+        
     }
 }

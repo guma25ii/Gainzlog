@@ -14,4 +14,6 @@ public interface IProgramService
     Task<ProgramResponse> CreateProgramAsync(CreateProgramRequest request);
 
     Task<ProgramResponse?>DeleteProgramAsync(int programId);
+
+    Task<ProgramDetailResponse>GetProgramByIdAsync(int programId);
 }

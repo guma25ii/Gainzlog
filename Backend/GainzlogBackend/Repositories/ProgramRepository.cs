@@ -39,4 +39,9 @@ public class ProgramRepository : IProgramRepository
         await _context.SaveChangesAsync();
         return program;
     }
+
+    public async Task<WorkoutProgram?> GetProgramByIdAsync(int programId)
+    {
+        return await _context.WorkoutPrograms.Include(p => p.Sessions).FirstOrDefaultAsync(p => p.Id == programId);
+    }
 }

@@ -42,13 +42,11 @@ public ProgramController(IProgramService service){
         [HttpDelete("{programId}")]
         public async Task<IActionResult> DeleteProgram(int programId)
         {
-            var program = await _context.WorkoutPrograms.FirstOrDefaultAsync(p  => p.Id == programId);
+            var program = await _service.DeleteProgramAsync(programId);
             if(program == null)
             {
-                return NotFound("Could Not Find Program");
+                return NotFound();
             }
-            _context.WorkoutPrograms.Remove(program);
-            await _context.SaveChangesAsync();
             return Ok(program);
         }
 

@@ -2,6 +2,8 @@ using GainzlogBackend.Services;
 using GainzlogBackend.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
+using GainzlogBackend.Interfaces;
+using GainzlogBackend.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Services
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<FoodService>();
+builder.Services.AddScoped<IProgramService, ProgramService>();
+builder.Services.AddScoped<IProgramRepository, ProgramRepository>();
 
 // Controllers + JSON settings
 builder.Services.AddControllers()

@@ -15,5 +15,5 @@ public interface IProgramService
 
     Task<ProgramResponse?>DeleteProgramAsync(int programId);
 
-    Task<ProgramDetailResponse>GetProgramByIdAsync(int programId);
+    Task<ProgramDetailResponse?>GetProgramByIdAsync(int programId);
 }

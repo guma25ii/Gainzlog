@@ -62,4 +62,25 @@ public class ProgramService : IProgramService
         return response;
         
     }
+    public async Task<ProgramDetailResponse?>GetProgramByIdAsync(int programId)
+    {
+        var program = await _repository.GetProgramByIdAsync(programId);
+        if(program == null)
+        {
+            return null;
+        }
+        var response = new ProgramDetailResponse
+        {
+            Id = program.Id,
+            Name = program.Name,
+            Sessions = program.Sessions.Select(s => new SessionDto
+            {
+                Id = s.Id,
+                ProgramId = s.ProgramId,
+                Name = s.Name,
+                IsComplete = s.IsComplete
+            }).ToList()
+        };
+        return response;
+    }
 }

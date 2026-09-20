@@ -54,10 +54,10 @@ public ProgramController(IProgramService service){
         [HttpGet("{programId}")]
         public async Task<IActionResult> GetProgramById(int programId)
         {
-            var program = await _context.WorkoutPrograms.Include(p => p.Sessions).FirstOrDefaultAsync(p => p.Id == programId);
+            var program = await _service.GetProgramByIdAsync(programId);
             if(program == null)
             {
-                return NotFound("Program Not Found");
+                return NotFound();
             }
             return Ok(program);
         }

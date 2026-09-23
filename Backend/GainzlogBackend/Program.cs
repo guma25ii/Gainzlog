@@ -16,6 +16,8 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<FoodService>();
 builder.Services.AddScoped<IProgramService, ProgramService>();
 builder.Services.AddScoped<IProgramRepository, ProgramRepository>();
+builder.Services.AddScoped<ISessionService, SessionService>();
+builder.Services.AddScoped<ISessionRepository, SessionRepository>();
 
 // Controllers + JSON settings
 builder.Services.AddControllers()

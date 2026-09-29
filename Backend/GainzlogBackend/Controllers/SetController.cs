@@ -1,5 +1,6 @@
 using GainzlogBackend.Data;
 using GainzlogBackend.Dto;
+using GainzlogBackend.Interfaces;
 using GainzlogBackend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,26 +11,19 @@ namespace GainzlogBackend.Controllers
     [ApiController]
     public class SetController : ControllerBase
     {
-            private readonly AppDbContext _context;
+            private readonly ISetService _service;
 
-        public SetController(AppDbContext context)
+        public SetController(ISetService service)
         {
-            _context = context;
+            _service = service;
         }
 
 
         [HttpPost]
         public async Task<IActionResult> CreateSet(CreateSetRequest createSetRequest)
         {
-            var set = new Set
-            {
-                WorkoutExerciseId = createSetRequest.WorkoutExerciseId,
-                Reps = createSetRequest.Reps,
-                Weight = createSetRequest.Weight,
+            var set = await  _service.CreateSetAsync(createSetRequest);
 
-            };
-            _context.Sets.Add(set);
-            await _context.SaveChangesAsync();
             return Ok(set);
         }
         [HttpPut("{id}")]

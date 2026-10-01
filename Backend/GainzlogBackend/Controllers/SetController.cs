@@ -44,13 +44,11 @@ namespace GainzlogBackend.Controllers
         [HttpDelete("{setId}")]
         public async Task<IActionResult> DeleteSet(int setId)
         {
-            var set = await _context.Sets.FirstOrDefaultAsync(s => s.Id == setId);
+            var set = await _service.DeleteSetAsync(setId);
             if(set == null)
             {
                 return NotFound("Could Not Find Set");
             }
-            _context.Sets.Remove(set);
-            await _context.SaveChangesAsync();
             return Ok(set);
         }
     }

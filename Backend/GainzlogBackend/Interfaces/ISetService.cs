@@ -8,4 +8,5 @@ public interface ISetService
 {
     Task<SetResponse> CreateSetAsync(CreateSetRequest createSetRequest);
     Task<SetResponse?> DeleteSetAsync(int setId);
+    Task<SetResponse?> UpdateSetAsync(int setId, UpdateSetRequest updateSetRequest);
 }

@@ -33,4 +33,17 @@ public class SetRepository : ISetRepository
         await _context.SaveChangesAsync();
         return set;
     }
+
+    public async Task<Set?> UpdateSetAsync(int setId, double weight, int reps)
+    {
+        var set = await _context.Sets.FirstOrDefaultAsync(s => s.Id == setId);
+        if (set == null)
+        {
+            return null;
+        }
+        set.Weight = weight;
+        set.Reps = reps;
+        await _context.SaveChangesAsync();
+        return set;
+    }
 }

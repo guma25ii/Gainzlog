@@ -52,4 +52,22 @@ public class SetService : ISetService
         };
         return deletedSet;
     }
+
+    public async Task<SetResponse?> UpdateSetAsync(int setId, UpdateSetRequest updateSetRequest)
+    {
+        var set = await _repository.UpdateSetAsync(setId, updateSetRequest.Weight, updateSetRequest.Reps);
+        if(set == null)
+        {
+            return null;
+        }
+
+        var updatedSet = new SetResponse
+        {
+            Id = set.Id,
+            Reps = set.Reps,
+            Weight = set.Weight,
+            WorkoutExerciseId = set.WorkoutExerciseId,
+        };
+        return updatedSet;
+    }
 }

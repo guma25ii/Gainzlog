@@ -8,5 +8,6 @@ public interface ISetRepository
     Task<Set> CreateSetAsync(Set set);
 
     Task<Set?> DeleteSetAsync(int setId);
+    Task<Set?> UpdateSetAsync(int setId, double weight, int reps);
 
 }

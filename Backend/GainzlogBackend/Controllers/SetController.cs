@@ -29,15 +29,11 @@ namespace GainzlogBackend.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateSet(int id, UpdateSetRequest updateSetRequest)
         {
-            var set = await _context.Sets.FirstOrDefaultAsync(s => s.Id == id);
+            var set = await _service.UpdateSetAsync(id, updateSetRequest);
             if(set == null)
             {
                 return NotFound("Could Not Find Set");
             }
-
-            set.Reps = updateSetRequest.Reps;
-            set.Weight = updateSetRequest.Weight;
-            await _context.SaveChangesAsync();
             return Ok(set);
         }
 

@@ -20,6 +20,9 @@ builder.Services.AddScoped<ISessionService, SessionService>();
 builder.Services.AddScoped<ISessionRepository, SessionRepository>();
 builder.Services.AddScoped<ISetService, SetService>();
 builder.Services.AddScoped<ISetRepository, SetRepository>();
+builder.Services.AddScoped<IWorkoutExerciseService, WorkoutExerciseService>();
+builder.Services.AddScoped<IWorkoutExerciseRepository, WorkoutExerciseRepository>();
+
 
 // Controllers + JSON settings
 builder.Services.AddControllers()

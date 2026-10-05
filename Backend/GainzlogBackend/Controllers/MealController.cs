@@ -98,20 +98,14 @@ namespace GainzlogBackend.Controllers
         [HttpDelete("{mealId}/items/{itemId}")]
         public async Task<IActionResult> DeleteItem(int mealId, int itemId)
         {
-            var meal = await _context.Meals.Include(m => m.Items).FirstOrDefaultAsync(m => m.Id == mealId);
+            var meal = await _mealService.DeleteItemAsync(mealId, itemId);
             if(meal == null)
             {
-                return NotFound("Meal Not Found");
+                return NotFound("Meal or item not found");
             };
-            var item = meal.Items.FirstOrDefault(i => i.Id == itemId);
-            if(item == null)
-            {
-                return NotFound("Item Not Found");
-            }
-            meal.Items.Remove(item);
-            await _context.SaveChangesAsync();
             return Ok(meal);
         }
+
         [HttpDelete("{mealId}")]
         public async Task<IActionResult> DeleteMeal (int mealId)
         {

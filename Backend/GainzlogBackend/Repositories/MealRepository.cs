@@ -21,6 +21,23 @@ public class MealRepository : IMealRepository
          return meal;
     }
 
+    public async Task<Meal?> DeleteItemAsync(int mealId, int itemId)
+    {
+        var meal = await _context.Meals.Include(i => i.Items).FirstOrDefaultAsync(m => m.Id == mealId);
+        if(meal == null)
+        {
+            return null;
+        }
+        var item = meal.Items.FirstOrDefault(i => i.Id == itemId);
+        if(item == null)
+        {
+            return null;
+        }
+        meal.Items.Remove(item);
+        await _context.SaveChangesAsync();
+        return meal;
+    }
+
     public async Task<Meal?> DeleteMealAsync(int mealId)
     {
         var meal = await _context.Meals.Include(m => m.Items).FirstOrDefaultAsync(m => m.Id == mealId);

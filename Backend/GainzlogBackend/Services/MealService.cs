@@ -32,6 +32,31 @@ public class MealService : IMealService
         return mealResponse;
     }
 
+    public async Task<MealDetailResponse?> DeleteItemAsync(int mealId, int itemId)
+    {
+        var meal = await _repository.DeleteItemAsync(mealId, itemId);
+        if(meal == null)
+        {
+            return null;
+        }
+        var deletedMeal = new MealDetailResponse
+        {
+            Id = meal.Id,
+            Name = meal.Name,
+            CreatedAt = meal.CreatedAt,
+            Items = meal.Items.Select(i => new MealItemDto
+            {
+                Id = i.Id,
+                FoodId = i.FoodId,
+                Name = i.Name,
+                Grams = i.Grams,
+                Nutrition = i.Nutrition
+            }).ToList()
+
+        };
+        return deletedMeal;
+    } 
+
     public async Task<MealResponse?> DeleteMealAsync(int mealId)
     {
         var meal = await _repository.DeleteMealAsync(mealId);

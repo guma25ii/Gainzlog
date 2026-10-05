@@ -1,9 +1,6 @@
-using GainzlogBackend.Data;
 using GainzlogBackend.Dto;
 using GainzlogBackend.Interfaces;
-using GainzlogBackend.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace GainzlogBackend.Controllers
 {

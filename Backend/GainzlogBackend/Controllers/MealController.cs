@@ -1,5 +1,6 @@
 using GainzlogBackend.Data;
 using GainzlogBackend.Dto;
+using GainzlogBackend.Interfaces;
 using GainzlogBackend.Models;
 using GainzlogBackend.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -13,26 +14,22 @@ namespace GainzlogBackend.Controllers
     {
         private readonly FoodService _foodService;
         private readonly AppDbContext _context;
+        private readonly IMealService _mealService;
 
-        public MealController(FoodService foodService, AppDbContext context)
+        public MealController(FoodService foodService, AppDbContext context, IMealService mealService)
         {
             _foodService = foodService;
             _context = context;
+            _mealService = mealService;
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateMeal(CreateMealRequest request)
         {
-        var meal = new Meal
-        {
-            Name = request.Name,
-            CreatedAt = DateTime.UtcNow
-        };
 
-            _context.Meals.Add(meal);
-            await _context.SaveChangesAsync();
-
+            var meal = await _mealService.CreateMealAsync(request);
             return Ok(meal);
+
         }
         [HttpPost("{mealId}/items")]
         public async Task<IActionResult> AddFoodToMeal(int mealId, AddFoodToMealRequest request)
@@ -118,13 +115,11 @@ namespace GainzlogBackend.Controllers
         [HttpDelete("{mealId}")]
         public async Task<IActionResult> DeleteMeal (int mealId)
         {
-            var meal = await _context.Meals.Include(m => m.Items).FirstOrDefaultAsync(m => m.Id == mealId);
+            var meal = await _mealService.DeleteMealAsync(mealId);
             if(meal == null)
             {
                 return NotFound("Meal Not Found");
             }
-            _context.Meals.Remove(meal);
-            await _context.SaveChangesAsync();
             return Ok("Meal Deleted");
         }
 

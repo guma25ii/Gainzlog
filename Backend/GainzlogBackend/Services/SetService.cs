@@ -1,4 +1,3 @@
-using System;
 using GainzlogBackend.Dto;
 using GainzlogBackend.Interfaces;
 using GainzlogBackend.Models;

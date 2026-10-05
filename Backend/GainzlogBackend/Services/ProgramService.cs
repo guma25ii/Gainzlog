@@ -1,7 +1,6 @@
 using GainzlogBackend.Dto;
 using GainzlogBackend.Interfaces;
 using GainzlogBackend.Models;
-using System.Linq;
 
 namespace GainzlogBackend.Services;
 

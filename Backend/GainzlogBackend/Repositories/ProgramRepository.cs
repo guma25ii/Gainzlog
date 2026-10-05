@@ -1,8 +1,7 @@
-using System;
+
 using GainzlogBackend.Data;
 using GainzlogBackend.Interfaces;
 using GainzlogBackend.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace GainzlogBackend.Repositories;

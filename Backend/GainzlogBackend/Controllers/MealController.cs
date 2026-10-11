@@ -191,15 +191,15 @@ namespace GainzlogBackend.Controllers
                 ?.Value ?? 0;
         }
 
-        private Nutrition Scale(Nutrition n, double factor)
+    private Nutrition Scale(Nutrition n, double factor)
+    {
+        return new Nutrition
         {
-            return new Nutrition
-            {
-                Protein = n.Protein * factor,
-                Fat = n.Fat * factor,
-                Carbs = n.Carbs * factor,
-                Calories = n.Calories * factor
-            };
-        }
+            Protein = n.Protein * factor,
+            Fat = n.Fat * factor,
+            Carbs = n.Carbs * factor,
+            Calories = n.Calories * factor
+        };
+    }
     }
 }

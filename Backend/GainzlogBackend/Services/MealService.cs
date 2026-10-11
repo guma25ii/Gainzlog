@@ -1,4 +1,3 @@
-
 using GainzlogBackend.Dto;
 using GainzlogBackend.Interfaces;
 using GainzlogBackend.Models;
@@ -71,5 +70,30 @@ public class MealService : IMealService
             CreatedAt = meal.CreatedAt,
         };
         return response;
+    }
+
+    public async Task<MealDetailResponse?> UpdateGramsAsync(int mealId, int itemId, UpdateGramsRequest request)
+    {
+        var meal = await _repository.GetMealByIdAsync(mealId);
+        if(meal == null)
+        {
+            return null;
+        }
+        var item = meal.Items.FirstOrDefault(i => i.Id == itemId);
+        if(item == null)
+        {
+            return null;
+        }
+        
+    }
+    private Nutrition Scale(Nutrition n, double factor)
+    {
+        return new Nutrition
+        {
+            Protein = n.Protein * factor,
+            Fat = n.Fat * factor,
+            Carbs = n.Carbs * factor,
+            Calories = n.Calories * factor
+        };
     }
 }

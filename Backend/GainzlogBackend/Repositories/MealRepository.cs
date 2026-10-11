@@ -49,4 +49,15 @@ public class MealRepository : IMealRepository
         await _context.SaveChangesAsync();
         return meal;
     }
+
+    public async Task<Meal?> GetMealByIdAsync(int mealId)
+    {
+        return await _context.Meals.Include(m => m.Items).FirstOrDefaultAsync(m => m.Id == mealId);
+    }
+
+    public async Task<Meal> UpdateMealAsync(Meal meal)
+    {
+        await _context.SaveChangesAsync();
+        return meal;
+    }
 }

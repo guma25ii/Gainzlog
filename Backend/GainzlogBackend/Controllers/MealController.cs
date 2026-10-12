@@ -72,27 +72,15 @@ namespace GainzlogBackend.Controllers
             return Ok(item);
         }
 
-        [HttpPatch("{mealId}/items/{foodId}")]
-        public async  Task<IActionResult> UpdateGrams(int mealId, int foodId, UpdateGramsRequest request)
+        [HttpPatch("{mealId}/items/{itemId}")]
+        public async  Task<IActionResult> UpdateGrams(int mealId, int itemId, UpdateGramsRequest request)
         {
-            var meal = await _context.Meals.Include(m => m.Items).FirstOrDefaultAsync(m => m.Id == mealId);
-
-            if (meal == null)
-                return NotFound("Meal Not Found");
-
-            var item = meal.Items.FirstOrDefault(i => i.FoodId == foodId);
-
-            if (item == null)
-                return NotFound("Item not Found");
-
-            item.Grams = request.Grams;
-
-            double factor = request.Grams / 100.0;
-
-            
-            item.Nutrition = Scale(item.BaseNutrition, factor);
-            await _context.SaveChangesAsync();
-            return Ok(meal);
+             var updatedMeal = await _mealService.UpdateGramsAsync(mealId, itemId, request);
+             if(updatedMeal == null)
+            {
+                return NotFound("Meal or item not found");
+            }
+             return Ok(updatedMeal);
         }
 
         [HttpDelete("{mealId}/items/{itemId}")]

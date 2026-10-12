@@ -84,8 +84,29 @@ public class MealService : IMealService
         {
             return null;
         }
-        
+        item.Grams = request.Grams;
+        double factor = request.Grams / 100.0;
+        item.Nutrition = Scale(item.BaseNutrition, factor);
+
+        var updatedMeal = await _repository.UpdateMealAsync(meal);
+
+        var newMeal = new MealDetailResponse
+        {
+            Id = updatedMeal.Id,
+            Name = updatedMeal.Name,
+            CreatedAt = updatedMeal.CreatedAt,
+            Items = updatedMeal.Items.Select(i => new MealItemDto
+            {
+                Id = i.Id,
+                FoodId = i.FoodId,
+                Name = i.Name,
+                Grams = i.Grams,
+                Nutrition = i.Nutrition
+            }).ToList()
+        };
+        return newMeal;
     }
+
     private Nutrition Scale(Nutrition n, double factor)
     {
         return new Nutrition

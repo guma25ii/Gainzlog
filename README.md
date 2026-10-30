@@ -157,6 +157,3 @@ Fullständig dokumentation finns i Swagger när backend körs.
 
 ---
 
-## Kontakt
-
-Skapad av **[Ditt namn]** – [LinkedIn](https://linkedin.com/in/ditt-namn) · [GitHub](https://github.com/guma25ii)

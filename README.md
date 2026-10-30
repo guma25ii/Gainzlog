@@ -1,16 +1,13 @@
-# GainzLog 💪
+# GainzLog 
 
 **En fullstack-webbapp för tränings- och kostloggning – samlat på ett ställe.**
 
+Den senaste utvecklingen finns i DevMainBranch och Main branchen är deployad.
+
 GainzLog låter användaren bygga träningsprogram, logga pass set för set, registrera måltider med riktiga näringsvärden och räkna ut ett personligt kaloribehov utifrån sina mål. Projektet började som en skoluppgift och har sedan vidareutvecklats på egen hand.
 
-🔗 **Live-demo:** https://gainzlog-s9rg8.ondigitalocean.app/
+ **Live-demo:** https://gainzlog-s9rg8.ondigitalocean.app/
 
-<!-- TIPS: Lägg till 2–3 skärmdumpar eller en GIF här, t.ex.
-![Startsida](docs/screenshots/start.png)
--->
-
----
 
 ## Tech stack
 

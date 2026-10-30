@@ -20,3 +20,8 @@ GainzLog är en applikation för tränings och kostloggning samlat i en och samm
 
 ## Länk till den publicerade applikationen
 https://gainzlog-s9rg8.ondigitalocean.app/
+
+
+## Work in progress
+Håller för närvarande på att uppdatera backend
+Efter detta ska Frontend få sig ett bättre utseende
